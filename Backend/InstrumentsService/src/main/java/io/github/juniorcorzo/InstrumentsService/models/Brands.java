@@ -1,0 +1,16 @@
+package io.github.juniorcorzo.InstrumentsService.models;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+@AllArgsConstructor
+@Data
+@Document(collection = "brandsCollection")
+public class Brands {
+    @MongoId(FieldType.OBJECT_ID)
+    private String id;
+    private String name;
+}
