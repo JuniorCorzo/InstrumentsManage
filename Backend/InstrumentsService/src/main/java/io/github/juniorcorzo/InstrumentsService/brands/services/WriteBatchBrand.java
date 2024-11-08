@@ -1,0 +1,42 @@
+package io.github.juniorcorzo.InstrumentsService.brands.services;
+
+
+import io.github.juniorcorzo.InstrumentsService.brands.models.Brands;
+import io.github.juniorcorzo.InstrumentsService.brands.repositories.BrandsRepository;
+import io.github.juniorcorzo.InstrumentsService.instruments.models.Instruments;
+import io.github.juniorcorzo.InstrumentsService.instruments.repositories.InstrumentsRepository;
+import lombok.AllArgsConstructor;
+import org.springframework.data.mongodb.core.BulkOperations;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.awt.image.ImageProducer;
+
+
+@Service
+@AllArgsConstructor
+public class WriteBatchBrand {
+    private BrandsRepository brandsRepository;
+    private InstrumentsRepository instrumentsRepository;
+    private MongoTemplate mongoTemplate;
+
+    @Transactional
+    public void updateBrands(String idBrand, String newName){
+        BulkOperations bulkOperationsBrand = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, Brands.class);
+        Query queryBrand = new Query(Criteria.where("_id").is(idBrand));
+        Update updateBrand = new Update().set("name", newName);
+        bulkOperationsBrand.updateOne(queryBrand, updateBrand);
+        bulkOperationsBrand.execute();
+
+        BulkOperations bulkOperationsInstruments = mongoTemplate.bulkOps(BulkOperations.BulkMode.UNORDERED, Instruments.class);
+        bulkOperationsInstruments.updateMulti(
+            new Query(Criteria.where("brand.id").is(idBrand)),
+            new Update().set("brand.name", newName)
+        );
+        bulkOperationsInstruments.execute();
+    }
+}

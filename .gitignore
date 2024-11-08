@@ -3,9 +3,11 @@ HELP.md
 .gradle
 /InstrumentsService/build/
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**/build/
+!**/src/main/
 !**/src/test/**/build/
+*.env
 
+Backend/InstrumentsService/build
 ### STS ###
 .apt_generated
 .classpath
