@@ -2,7 +2,6 @@ package io.github.juniorcorzo.InstrumentsService.instruments.validations;
 
 import io.github.juniorcorzo.InstrumentsService.instruments.exceptions.InstrumentIdNotFound;
 import io.github.juniorcorzo.InstrumentsService.instruments.repositories.InstrumentsRepository;
-import io.github.juniorcorzo.InstrumentsService.instruments.service.InstrumentsService;
 import io.github.juniorcorzo.InstrumentsService.shared.exception.FormatIdNotValid;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
