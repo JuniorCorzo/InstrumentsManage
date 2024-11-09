@@ -26,7 +26,7 @@ public class InstrumentsValidations {
     public void validIdWithInstrumentExists(String id) {
         validIdFormat(id);
         if (!this.instrumentsRepository.existsById(id)) {
-            LOGS.error("Instruments with {} not exists", id);
+            LOGS.error("Instruments with {} not found", id);
             throw new InstrumentIdNotFound();
         }
     }
