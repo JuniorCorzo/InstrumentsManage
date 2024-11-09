@@ -3,12 +3,13 @@ package io.github.juniorcorzo.InstrumentsService.brands.services;
 import io.github.juniorcorzo.InstrumentsService.brands.exceptions.BrandIdNotFound;
 import io.github.juniorcorzo.InstrumentsService.brands.models.Brands;
 import io.github.juniorcorzo.InstrumentsService.brands.repositories.BrandsRepository;
+import io.github.juniorcorzo.InstrumentsService.brands.validations.BrandsValidations;
 import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithData;
 import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithoutData;
-import io.github.juniorcorzo.InstrumentsService.shared.exception.FormatIdNotValid;
 import io.github.juniorcorzo.InstrumentsService.shared.utils.ResponseMessages;
 import lombok.AllArgsConstructor;
-import org.bson.types.ObjectId;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,14 @@ import java.util.Collections;
 @Service
 @AllArgsConstructor
 public class BrandsService {
-    private BrandsRepository brandsRepository;
+    private final BrandsRepository brandsRepository;
+    private final BrandsValidations brandsValidations;
 
-    public ResponseWithData<Brands> getAllBrands(){
+    private final Logger LOGS = LoggerFactory.getLogger(BrandsService.class);
+
+    public ResponseWithData<Brands> getAllBrands() {
+        LOGS.info("Fetching all brands");
+
         return new ResponseWithData<>(
                 HttpStatus.OK,
                 this.brandsRepository.findAll(),
@@ -27,7 +33,10 @@ public class BrandsService {
         );
     }
 
-    public ResponseWithData<Brands> getBrandById(String id){
+    public ResponseWithData<Brands> getBrandById(String id) {
+        LOGS.info("Fetching brand with id {}", id);
+        this.brandsValidations.validIdWithBrandExists(id);
+
         return new ResponseWithData<>(
                 HttpStatus.OK,
                 Collections.singletonList(this.brandsRepository.findById(id)
@@ -37,6 +46,7 @@ public class BrandsService {
     }
 
     public ResponseWithoutData createBrand(Brands brands) {
+       LOGS.info("Inserting a new brand");
         this.brandsRepository.save(brands);
 
         return new ResponseWithoutData(
@@ -46,8 +56,8 @@ public class BrandsService {
     }
 
     public ResponseWithoutData deleteBrands(String id) {
-        if (!ObjectId.isValid(id)) throw new FormatIdNotValid();
-        if (!this.brandsRepository.existsById(id)) throw new BrandIdNotFound();
+        LOGS.info("Deleting brand with id {}", id);
+        this.brandsValidations.validIdWithBrandExists(id);
 
         this.brandsRepository.deleteById(id);
         return new ResponseWithoutData(
