@@ -1,11 +1,14 @@
 package io.github.juniorcorzo.InstrumentsService.brands.services;
 
+import io.github.juniorcorzo.InstrumentsService.brands.exceptions.BrandIdNotFound;
 import io.github.juniorcorzo.InstrumentsService.brands.models.Brands;
 import io.github.juniorcorzo.InstrumentsService.brands.repositories.BrandsRepository;
 import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithData;
 import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithoutData;
+import io.github.juniorcorzo.InstrumentsService.exception.FormatIdNotValid;
 import io.github.juniorcorzo.InstrumentsService.utils.ResponseMessages;
 import lombok.AllArgsConstructor;
+import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +31,7 @@ public class BrandsService {
         return new ResponseWithData<>(
                 HttpStatus.OK,
                 Collections.singletonList(this.brandsRepository.findById(id)
-                        .orElseThrow(() -> new RuntimeException("No existe el id de esa marca"))),
+                        .orElseThrow(BrandIdNotFound::new)),
                 ResponseMessages.OK.getMessage()
         );
     }
@@ -43,8 +46,10 @@ public class BrandsService {
     }
 
     public ResponseWithoutData deleteBrands(String id) {
-        this.brandsRepository.deleteById(id);
+        if (!ObjectId.isValid(id)) throw new FormatIdNotValid();
+        if (!this.brandsRepository.existsById(id)) throw new BrandIdNotFound();
 
+        this.brandsRepository.deleteById(id);
         return new ResponseWithoutData(
                 HttpStatus.OK,
                 ResponseMessages.OK.getMessage()
