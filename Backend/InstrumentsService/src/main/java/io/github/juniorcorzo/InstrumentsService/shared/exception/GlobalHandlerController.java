@@ -1,6 +1,6 @@
-package io.github.juniorcorzo.InstrumentsService.exception;
+package io.github.juniorcorzo.InstrumentsService.shared.exception;
 
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithoutData;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithoutData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

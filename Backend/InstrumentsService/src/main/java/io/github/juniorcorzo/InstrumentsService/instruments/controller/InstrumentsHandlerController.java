@@ -1,6 +1,6 @@
 package io.github.juniorcorzo.InstrumentsService.instruments.controller;
 
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithoutData;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithoutData;
 import io.github.juniorcorzo.InstrumentsService.instruments.exceptions.InstrumentIdNotFound;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

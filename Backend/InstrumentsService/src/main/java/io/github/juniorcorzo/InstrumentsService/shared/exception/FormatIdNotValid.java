@@ -1,6 +1,6 @@
-package io.github.juniorcorzo.InstrumentsService.exception;
+package io.github.juniorcorzo.InstrumentsService.shared.exception;
 
-import io.github.juniorcorzo.InstrumentsService.utils.ResponseMessages;
+import io.github.juniorcorzo.InstrumentsService.shared.utils.ResponseMessages;
 
 public class FormatIdNotValid extends RuntimeException {
     public FormatIdNotValid() {

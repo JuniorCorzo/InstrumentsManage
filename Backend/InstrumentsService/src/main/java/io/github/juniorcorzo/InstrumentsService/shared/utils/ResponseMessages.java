@@ -1,4 +1,4 @@
-package io.github.juniorcorzo.InstrumentsService.utils;
+package io.github.juniorcorzo.InstrumentsService.shared.utils;
 
 import lombok.Getter;
 

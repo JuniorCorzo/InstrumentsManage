@@ -3,12 +3,10 @@ package io.github.juniorcorzo.InstrumentsService.brands.controllers;
 import io.github.juniorcorzo.InstrumentsService.brands.models.Brands;
 import io.github.juniorcorzo.InstrumentsService.brands.services.BrandsService;
 import io.github.juniorcorzo.InstrumentsService.brands.services.WriteBatchBrand;
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithData;
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithoutData;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithData;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithoutData;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/brands")

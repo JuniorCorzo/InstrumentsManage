@@ -1,6 +1,6 @@
 package io.github.juniorcorzo.InstrumentsService.instruments.exceptions;
 
-import io.github.juniorcorzo.InstrumentsService.utils.ResponseMessages;
+import io.github.juniorcorzo.InstrumentsService.shared.utils.ResponseMessages;
 
 public class InstrumentIdNotFound extends RuntimeException {
     public InstrumentIdNotFound() {

@@ -1,7 +1,7 @@
 package io.github.juniorcorzo.InstrumentsService.instruments.controller;
 
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithData;
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithoutData;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithData;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithoutData;
 import io.github.juniorcorzo.InstrumentsService.instruments.models.Instruments;
 import io.github.juniorcorzo.InstrumentsService.instruments.service.InstrumentsService;
 import lombok.AllArgsConstructor;

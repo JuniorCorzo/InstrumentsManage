@@ -1,4 +1,4 @@
-package io.github.juniorcorzo.InstrumentsService.dto;
+package io.github.juniorcorzo.InstrumentsService.shared.dto;
 
 import org.springframework.http.HttpStatus;
 

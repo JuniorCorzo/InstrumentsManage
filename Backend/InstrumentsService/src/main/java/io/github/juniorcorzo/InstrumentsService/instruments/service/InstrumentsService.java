@@ -1,12 +1,12 @@
 package io.github.juniorcorzo.InstrumentsService.instruments.service;
 
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithData;
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithoutData;
-import io.github.juniorcorzo.InstrumentsService.exception.FormatIdNotValid;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithData;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithoutData;
+import io.github.juniorcorzo.InstrumentsService.shared.exception.FormatIdNotValid;
 import io.github.juniorcorzo.InstrumentsService.instruments.exceptions.InstrumentIdNotFound;
 import io.github.juniorcorzo.InstrumentsService.instruments.models.Instruments;
 import io.github.juniorcorzo.InstrumentsService.instruments.repositories.InstrumentsRepository;
-import io.github.juniorcorzo.InstrumentsService.utils.ResponseMessages;
+import io.github.juniorcorzo.InstrumentsService.shared.utils.ResponseMessages;
 import lombok.AllArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;

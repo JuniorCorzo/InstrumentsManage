@@ -1,7 +1,7 @@
 package io.github.juniorcorzo.InstrumentsService.brands.controllers;
 
 import io.github.juniorcorzo.InstrumentsService.brands.exceptions.BrandIdNotFound;
-import io.github.juniorcorzo.InstrumentsService.dto.ResponseWithoutData;
+import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithoutData;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
