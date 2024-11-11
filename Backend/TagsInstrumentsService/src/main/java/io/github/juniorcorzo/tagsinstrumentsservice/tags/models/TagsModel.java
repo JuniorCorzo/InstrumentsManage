@@ -1,0 +1,24 @@
+package io.github.juniorcorzo.tagsinstrumentsservice.tags.models;
+
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.FieldType;
+import org.springframework.data.mongodb.core.mapping.MongoId;
+
+@Document("tagsCollection")
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+public class TagsModel {
+    @MongoId(FieldType.OBJECT_ID)
+    private String id;
+    private String tag;
+    private String description;
+    private String instrument;
+    private String unitProcess;
+    private Alarms alarms;
+    private boolean shutdown;
+}
