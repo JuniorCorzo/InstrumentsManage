@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class Alarms {
-    private final int HH;
-    private final int H;
-    private final int L;
-    private final int LL;
+    private final double HH;
+    private final double H;
+    private final double L;
+    private final double LL;
 }
 
