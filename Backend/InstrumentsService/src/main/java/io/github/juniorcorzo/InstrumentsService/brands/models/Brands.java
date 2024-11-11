@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @AllArgsConstructor
 @Data
-@Document(collection = "brandsColletion")
+@Document(collection = "brandsCollection")
 public class Brands {
     @MongoId(FieldType.OBJECT_ID)
     private String id;
