@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class TagsModel {
+public class Tags {
     @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String tag;
