@@ -17,8 +17,9 @@ public class Tags {
     private String id;
     private String tag;
     private String description;
-    private String instrument;
+    private String instruments;
     private String unitProcess;
+    private String typeUnit;
     private Alarms alarms;
     private boolean shutdown;
 }
