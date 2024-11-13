@@ -1,11 +1,12 @@
 /DB/
 HELP.md
 .gradle
-/InstrumentsService/build/
+
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/
 !**/src/test/**/build/
 *.env
+**/build/
 
 Backend/InstrumentsService/build
 ### STS ###
