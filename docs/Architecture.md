@@ -33,13 +33,18 @@ Spring Boot de base de datos se uso MongoDB
 
 ```json5
 {
-  UnitProcess: {
+  UnitProcessCollection: {
     _id: "id",
     name: "string",
     camp: {
       _id: "id",
       name: "string",
     },
+  },
+
+  campCollection: {
+    _id: "id",
+    name: "string",
   },
 }
 ```
