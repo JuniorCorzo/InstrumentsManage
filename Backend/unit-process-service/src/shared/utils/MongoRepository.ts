@@ -1,5 +1,5 @@
 import { Inject } from "@nestjs/common";
-import { Collection, OptionalUnlessRequiredId, WithId } from "mongodb"
+import { Collection, Document, OptionalUnlessRequiredId, UpdateFilter, WithId } from "mongodb"
 import { ConnectDB } from "src/shared/config/ConnectDB";
 import { UnitProcess } from "src/unitProcess/model/unit-process.model";
 
@@ -40,7 +40,7 @@ export class MongoRepository<T, ID> {
         }
     }
 
-    public async update(document: []) {
+    public async update(document: UpdateFilter<T>) {
         try {
             await this.collection.updateOne({_id: document['id']}, document)            
         } catch (error) {
