@@ -19,7 +19,7 @@ export class UnitProcessService {
     this.unitProccesRepository.insert(unitProcess)
   }
 
-  public updateUnitProcess(unitProcess: UnitProcess) : void {
+  public updateUnitProcess(unitProcess: WithId<UnitProcess>) : void {
     this.unitProccesRepository.update(unitProcess)
   }
 
