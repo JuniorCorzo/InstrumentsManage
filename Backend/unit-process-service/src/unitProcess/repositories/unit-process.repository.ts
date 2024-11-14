@@ -8,7 +8,5 @@ import { Collection } from "src/common/decorator/collection.decorator";
 
 @Injectable()
 export class UnitProcessRepository extends MongoRepository<UnitProcess, string>{
-    constructor(private readonly mongoClient: ConnectDB) {
-        super(mongoClient , 'unitProcessCollection')
-    }   
+       
 }
