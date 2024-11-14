@@ -1,5 +1,5 @@
 import { Inject } from "@nestjs/common";
-import { Collection, Document, OptionalUnlessRequiredId, UpdateFilter, WithId } from "mongodb"
+import { Collection, Document, ObjectId, OptionalUnlessRequiredId, UpdateFilter, WithId } from "mongodb"
 import { ConnectDB } from "src/common/config/ConnectDB";
 import { UnitProcess } from "src/unitProcess/model/unit-process.model";
 
@@ -7,7 +7,7 @@ import { UnitProcess } from "src/unitProcess/model/unit-process.model";
 export class MongoRepository<T, ID> {
     private readonly collection: Collection<T>
 
-    constructor(clientMongo: ConnectDB, collectionName: string){
+    constructor(@Inject() clientMongo: ConnectDB){
 
         this.collection = clientMongo.getConnection()
                                     .db('unitProcess')
@@ -40,15 +40,20 @@ export class MongoRepository<T, ID> {
         }
     }
 
-    public async update(document: UpdateFilter<T>) {
+    public async update(document: WithId<T>) {
         try {
-            await this.collection.updateOne({_id: document['id']}, document)            
+            const {_id, ...documentWithoutId} = document
+            await this.collection.updateOne(
+                    {_id: _id as UpdateFilter<T> },
+                    {$set: documentWithoutId as Partial<T>})
         } catch (error) {
             console.log(error)
         }
     }
 
     public async delete(id: ID) {
-        await this.collection.deleteOne({_id: id})
+        await this.collection
+            .deleteOne({ _id:  new ObjectId(id as string )} as WithId<T>)
+            
     }
 }
