@@ -1,8 +1,10 @@
 import { ObjectId } from "mongodb"
-import { camp } from "./camp.model"
+import { camp } from "./camp.model" 
+import { Collection } from "src/shared/decorator/collection.decorator"
 
-export interface unitProcess {
+@Collection("unitProcessCollection")
+export class UnitProcess {
     id: ObjectId
     name: string
-    camp: camp 
+    camp: camp
 }

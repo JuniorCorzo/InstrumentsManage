@@ -1,13 +1,17 @@
 import { Inject } from "@nestjs/common";
 import { Collection, OptionalUnlessRequiredId, WithId } from "mongodb"
 import { ConnectDB } from "src/shared/config/ConnectDB";
+import { UnitProcess } from "src/unitProcess/model/unit-process.model";
+
 
 export class MongoRepository<T, ID> {
     private readonly collection: Collection<T>
+
     constructor(clientMongo: ConnectDB, collectionName: string){
+
         this.collection = clientMongo.getConnection()
                                     .db('unitProcess')
-                                    .collection(collectionName)
+                                    .collection(Reflect.getMetadata('collection_name', UnitProcess))
     }
 
     public async findAll(): Promise<WithId<T>[]>{
