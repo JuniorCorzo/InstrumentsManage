@@ -7,7 +7,7 @@ import { ConnectDB } from "src/shared/config/ConnectDB";
 import { CommonModule } from "src/shared/module/common.module";
 
 @Module({
-    imports: [forwardRef(() => AppModule), CommonModule],
+    imports: [CommonModule],
     controllers: [UnitProcessController],
     providers: [UnitProcessService, UnitProcessRepository],
     

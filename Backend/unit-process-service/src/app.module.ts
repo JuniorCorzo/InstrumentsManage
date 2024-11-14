@@ -6,6 +6,6 @@ import { UnitProcessRepository } from './unitProcess/repositories/unit-process.r
 import { UnitProcessModule } from './unitProcess/modules/unit-process.module';
 
 @Module({
-  imports: [forwardRef(()=> UnitProcessModule)],
+  imports: [UnitProcessModule],
 })
 export class AppModule {}
