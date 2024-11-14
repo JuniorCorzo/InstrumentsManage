@@ -26,5 +26,4 @@ export class UnitProcessService {
   public deleteUnitProcess(id: string): void {
     this.unitProccesRepository.delete(id)
   }
-
 }

@@ -1,6 +1,6 @@
 import { Inject } from "@nestjs/common";
 import { Collection, Document, OptionalUnlessRequiredId, UpdateFilter, WithId } from "mongodb"
-import { ConnectDB } from "src/shared/config/ConnectDB";
+import { ConnectDB } from "src/common/config/ConnectDB";
 import { UnitProcess } from "src/unitProcess/model/unit-process.model";
 
 
