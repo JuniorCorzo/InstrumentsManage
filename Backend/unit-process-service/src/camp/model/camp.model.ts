@@ -1,8 +1,8 @@
 import { ObjectId } from "mongodb";
 import { Collection } from "src/common/decorator/collection.decorator";
 
-interface ICamp {
-    id: ObjectId
+type ICamp = {
+    id?: ObjectId
     name: string
 }
 

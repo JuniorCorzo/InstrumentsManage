@@ -7,6 +7,7 @@ import { Collection } from "src/common/decorator/collection.decorator";
 
 
 @Injectable()
+@Collection('unitProcessCollection')
 export class UnitProcessRepository extends MongoRepository<UnitProcess, string>{
        
 }
