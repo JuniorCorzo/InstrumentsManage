@@ -26,7 +26,6 @@ export class MongoRepository<T, ID> {
     public async findById(id: ID) {
         try {
             const data = await this.collection.findOne({ _id: new ObjectId(id as string) as Filter<T> }).then(data => data)
-            console.log(data)
             return data
         } catch (error) {
             console.error(error)
@@ -48,13 +47,20 @@ export class MongoRepository<T, ID> {
                 { _id: new ObjectId(_id) as Filter<T> },
                 { $set: documentWithoutId as Partial<T> }).then(data => console.log(data))
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
     public async delete(id: ID) {
         await this.collection
             .deleteOne({ _id: new ObjectId(id as string) } as WithId<T>)
+    }
 
+    public existById(id: ID): boolean {
+        this.findById(id).then(data => {
+            if (data)
+                return true
+        })
+        return false
     }
 }
