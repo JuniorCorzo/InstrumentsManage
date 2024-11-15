@@ -2,28 +2,38 @@ import { Injectable } from '@nestjs/common';
 import { UnitProcessRepository } from 'src/unitProcess/repositories/unit-process.repository';
 import { UnitProcess } from '../model/unit-process.model';
 import { WithId } from 'mongodb';
+import { UnitProcessValidations } from '../validations/unit-process.validation';
 
 @Injectable()
 export class UnitProcessService {
-  constructor (private readonly unitProccesRepository: UnitProcessRepository){}
+  constructor(
+    private readonly unitProcessRepository: UnitProcessRepository,
+    private readonly unitProcessValidation: UnitProcessValidations
+  ) { }
 
   public getAllUnitProcess(): Promise<WithId<UnitProcess>[]> {
-    return this.unitProccesRepository.findAll();
+    return this.unitProcessRepository.findAll();
   }
 
   public getUnitProcessById(id: string): Promise<WithId<UnitProcess>> {
-    return this.unitProccesRepository.findById(id);
+    this.unitProcessValidation.validIdByExist(id)
+    
+    return this.unitProcessRepository.findById(id);
   }
 
   public insertUnitProcess(unitProcess: UnitProcess): void {
-    this.unitProccesRepository.insert(unitProcess)
+    this.unitProcessRepository.insert(unitProcess)
   }
 
-  public updateUnitProcess(unitProcess: WithId<UnitProcess>) : void {
-    this.unitProccesRepository.update(unitProcess)
+  public updateUnitProcess(unitProcess: WithId<UnitProcess>): void {
+    this.unitProcessValidation.validIdByExist(unitProcess._id.toString())
+    
+    this.unitProcessRepository.update(unitProcess)
   }
 
   public deleteUnitProcess(id: string): void {
-    this.unitProccesRepository.delete(id)
+    this.unitProcessValidation.validIdByExist(id)
+
+    this.unitProcessRepository.delete(id)
   }
 }
