@@ -4,7 +4,7 @@ import { UnitProcess } from '../model/unit-process.model';
 import { WithId } from 'mongodb';
 import { UnitProcessValidations } from '../validations/unit-process.validation';
 import { ResponseMessages } from 'src/common/enums/response-messages';
-import { ResponseDTO } from 'src/common/dto/response-with-data.dto';
+import { ResponseDTO } from 'src/common/dto/response.dto';
 
 
 @Injectable()
@@ -16,7 +16,7 @@ export class UnitProcessService {
 
   public async getAllUnitProcess(): Promise<ResponseDTO<WithId<UnitProcess>>> {
     const data = await this.unitProcessRepository.findAll()
-    
+
     return new ResponseDTO(
       HttpStatus.OK,
       ResponseMessages.OK,

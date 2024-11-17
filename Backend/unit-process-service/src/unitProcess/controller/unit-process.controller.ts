@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
 import { UnitProcessService } from '../service/unit-process.service';
 import { UnitProcess } from '../model/unit-process.model';
 import { WithId } from 'mongodb';
-import { ResponseDTO } from 'src/common/dto/response-with-data.dto';
+import { ResponseDTO } from 'src/common/dto/response.dto';
 
 @Controller("/unit-process")
 export class UnitProcessController {
@@ -13,7 +13,7 @@ export class UnitProcessController {
   @Get("/all")
   public getAllUnitProcess(): Promise<ResponseDTO<WithId<UnitProcess>>> {
     return this.unitProcessService.getAllUnitProcess();
-}_
+  } _
 
   @Get(':id')
   public getUnitProcessById(@Param('id') id: string): Promise<ResponseDTO<WithId<UnitProcess>>> {
