@@ -37,22 +37,23 @@ export class UnitProcessService {
 
   //TODO:: Devolver la unidad creada
   public async insertUnitProcess(unitProcess: UnitProcess): Promise<ResponseDTO<UnitProcess>> {
-    this.unitProcessRepository.insert(unitProcess)
-
+    const saveInsert = await this.unitProcessRepository.insert(unitProcess)
+    console.log(saveInsert)
     return new ResponseDTO<UnitProcess>(
       HttpStatus.CREATED,
-      ResponseMessages.OK
+      ResponseMessages.OK,
+      saveInsert
     )
   }
-
-  //TODO:: Devolver la unidad actualizada
+ 
   public async updateUnitProcess(unitProcess: WithId<UnitProcess>): Promise<ResponseDTO<UnitProcess>> {
     await this.unitProcessValidation.validIdExist(unitProcess._id.toString())
-    await this.unitProcessRepository.update(unitProcess)
+    const saveInsert = await this.unitProcessRepository.update(unitProcess)
 
     return new ResponseDTO<UnitProcess>(
       HttpStatus.OK,
-      ResponseMessages.OK
+      ResponseMessages.OK,
+      saveInsert
     )
   }
 
