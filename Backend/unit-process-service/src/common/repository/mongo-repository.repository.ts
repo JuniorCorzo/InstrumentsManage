@@ -14,8 +14,7 @@ export class MongoRepository<T, ID> {
 
     public async findAll(): Promise<WithId<T>[]> {
         try {
-            const data = await this.collection.find().toArray()
-            return data;
+            return await this.collection.find().toArray()
         } catch (error) {
             console.error(error)
         }
@@ -23,8 +22,7 @@ export class MongoRepository<T, ID> {
 
     public async findById(id: ID): Promise<WithId<T>> {
         try {
-            const data: WithId<T> = await this.collection.findOne({ _id: new ObjectId(id as string) as Filter<T> })
-            return data
+            return await this.collection.findOne({ _id: new ObjectId(id as string) as Filter<T> })
         } catch (error) {
             console.error(error)
         }
@@ -32,7 +30,7 @@ export class MongoRepository<T, ID> {
 
     public async insert(document: OptionalUnlessRequiredId<T>) {
         try {
-            await this.collection.insertOne(document);
+            return await this.collection.insertOne(document)
         } catch (error) {
             console.error(error)
         }
@@ -41,7 +39,7 @@ export class MongoRepository<T, ID> {
     public async update(document: WithId<T>) {
         try {
             const { _id, ...documentWithoutId } = document
-            await this.collection.updateOne(
+            return await this.collection.updateOne(
                 { _id: new ObjectId(_id) as Filter<T> },
                 { $set: documentWithoutId as Partial<T> })
                     .then(data => console.log(data))
