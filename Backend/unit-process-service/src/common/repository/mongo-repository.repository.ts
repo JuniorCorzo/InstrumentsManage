@@ -56,7 +56,6 @@ export class MongoRepository<T, ID> {
     public async existById(id: ID): Promise<boolean | undefined | void> {
         try {
             const data = await this.findById(id)
-
             return data === null
         } catch (err) { console.error(err) }
     }
