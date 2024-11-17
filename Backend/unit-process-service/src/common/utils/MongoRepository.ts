@@ -23,9 +23,9 @@ export class MongoRepository<T, ID> {
         }
     }
 
-    public async findById(id: ID) {
+    public async findById(id: ID): Promise<WithId<T>> {
         try {
-            const data = await this.collection.findOne({ _id: new ObjectId(id as string) as Filter<T> }).then(data => data)
+            const data: WithId<T> = await this.collection.findOne({ _id: new ObjectId(id as string) as Filter<T> })
             return data
         } catch (error) {
             console.error(error)
@@ -56,11 +56,11 @@ export class MongoRepository<T, ID> {
             .deleteOne({ _id: new ObjectId(id as string) } as WithId<T>)
     }
 
-    public existById(id: ID): boolean {
-        this.findById(id).then(data => {
-            if (data)
-                return true
-        })
-        return false
+    public async existById(id: ID): Promise<boolean | undefined | void> {
+        try {
+            const data = await this.findById(id)
+            console.log(data)
+            return data === null
+        } catch (errror) { }
     }
 }
