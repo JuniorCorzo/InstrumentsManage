@@ -1,8 +1,6 @@
-import { Inject, Injectable, Scope } from "@nestjs/common";
-import { Collection, Document, Filter, ObjectId, OptionalUnlessRequiredId, UpdateFilter, WithId } from "mongodb"
-import { Camp } from "src/camp/model/camp.model";
+import { Inject } from "@nestjs/common";
+import { Collection, Filter, ObjectId, OptionalUnlessRequiredId, WithId } from "mongodb"
 import { ConnectDB } from "src/common/config/ConnectDB";
-import { UnitProcess } from "src/unitProcess/model/unit-process.model";
 
 export class MongoRepository<T, ID> {
     private readonly collection: Collection<T>
@@ -45,7 +43,8 @@ export class MongoRepository<T, ID> {
             const { _id, ...documentWithoutId } = document
             await this.collection.updateOne(
                 { _id: new ObjectId(_id) as Filter<T> },
-                { $set: documentWithoutId as Partial<T> }).then(data => console.log(data))
+                { $set: documentWithoutId as Partial<T> })
+                    .then(data => console.log(data))
         } catch (error) {
             console.error(error)
         }
@@ -59,8 +58,8 @@ export class MongoRepository<T, ID> {
     public async existById(id: ID): Promise<boolean | undefined | void> {
         try {
             const data = await this.findById(id)
-            console.log(data)
+
             return data === null
-        } catch (errror) { }
+        } catch (err) { console.error(err) }
     }
 }

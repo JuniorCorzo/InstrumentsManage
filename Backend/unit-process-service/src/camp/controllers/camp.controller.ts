@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Post, Put, UseFilters } from "@nestjs/common";
 import { CampService } from "../services/camp.service";
 import { WithId } from "mongodb";
 import { Camp } from "../model/camp.model";
