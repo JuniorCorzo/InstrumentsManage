@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus } from "@nestjs/common";
+import { HttpException, HttpStatus, NotFoundException } from "@nestjs/common";
 import { ResponseMessages } from "src/common/enums/response-messages";
 
 export class UnitProcessNotFound extends HttpException {
