@@ -1,13 +1,13 @@
-import { ObjectId } from "mongodb";
-import { Collection } from "src/common/decorator/collection.decorator";
+import { ObjectId } from 'mongodb'
+import { Collection } from 'src/common/decorator/collection.decorator'
 
 type ICamp = {
     id?: ObjectId
     name: string
 }
 
-@Collection("campCollection")
+@Collection('campCollection')
 export class Camp implements ICamp {
-    id: ObjectId;
-    name: string;
+  id: ObjectId
+  name: string
 }

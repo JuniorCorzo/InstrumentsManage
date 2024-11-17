@@ -1,30 +1,29 @@
-import { HttpStatus, Injectable } from '@nestjs/common';
-import { UnitProcessRepository } from 'src/unitProcess/repositories/unit-process.repository';
-import { UnitProcess } from '../model/unit-process.model';
-import { WithId } from 'mongodb';
-import { UnitProcessValidations } from '../validations/unit-process.validation';
-import { ResponseMessages } from 'src/common/enums/response-messages';
-import { ResponseDTO } from 'src/common/dto/response.dto';
-
+import { HttpStatus, Injectable } from '@nestjs/common'
+import { UnitProcessRepository } from 'src/unitProcess/repositories/unit-process.repository'
+import { UnitProcess } from '../model/unit-process.model'
+import { WithId } from 'mongodb'
+import { UnitProcessValidations } from '../validations/unit-process.validation'
+import { ResponseMessages } from 'src/common/enums/response-messages'
+import { ResponseDTO } from 'src/common/dto/response.dto'
 
 @Injectable()
 export class UnitProcessService {
-  constructor(
+  constructor (
     private readonly unitProcessRepository: UnitProcessRepository,
     private readonly unitProcessValidation: UnitProcessValidations
-  ) { }
+  ) {}
 
-  public async getAllUnitProcess(): Promise<ResponseDTO<WithId<UnitProcess>>> {
+  public async getAllUnitProcess (): Promise<ResponseDTO<WithId<UnitProcess>>> {
     const data = await this.unitProcessRepository.findAll()
 
     return new ResponseDTO(
       HttpStatus.OK,
       ResponseMessages.OK,
       data
-    );
+    )
   }
 
-  public async getUnitProcessById(id: string): Promise<ResponseDTO<UnitProcess>> {
+  public async getUnitProcessById (id: string): Promise<ResponseDTO<UnitProcess>> {
     await this.unitProcessValidation.validIdExist(id)
     const data = await this.unitProcessRepository.findById(id)
 
@@ -35,8 +34,8 @@ export class UnitProcessService {
     )
   }
 
-  //TODO:: Devolver la unidad creada
-  public async insertUnitProcess(unitProcess: UnitProcess): Promise<ResponseDTO<UnitProcess>> {
+  // TODO:: Devolver la unidad creada
+  public async insertUnitProcess (unitProcess: UnitProcess): Promise<ResponseDTO<UnitProcess>> {
     const saveInsert = await this.unitProcessRepository.insert(unitProcess)
     console.log(saveInsert)
     return new ResponseDTO<UnitProcess>(
@@ -45,8 +44,8 @@ export class UnitProcessService {
       saveInsert
     )
   }
- 
-  public async updateUnitProcess(unitProcess: WithId<UnitProcess>): Promise<ResponseDTO<UnitProcess>> {
+
+  public async updateUnitProcess (unitProcess: WithId<UnitProcess>): Promise<ResponseDTO<UnitProcess>> {
     await this.unitProcessValidation.validIdExist(unitProcess._id.toString())
     const saveInsert = await this.unitProcessRepository.update(unitProcess)
 
@@ -57,7 +56,7 @@ export class UnitProcessService {
     )
   }
 
-  public async deleteUnitProcess(id: string): Promise<ResponseDTO<UnitProcess>> {
+  public async deleteUnitProcess (id: string): Promise<ResponseDTO<UnitProcess>> {
     await this.unitProcessValidation.validIdExist(id)
     await this.unitProcessRepository.delete(id)
 

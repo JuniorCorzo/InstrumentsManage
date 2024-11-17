@@ -1,22 +1,14 @@
 {
   "parser": "@typescript-eslint/parser",
-  "extends": [
-    "standard",
-    "standard-jsx",
-    "standard-react",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:react/recommended"
-  ],
-  "plugins": ["react"],
-  "parserOptions": {
-    "ecmaVersion": 2020,
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
-  },
+  "parserOptions": {},
+  "extends": ["plugin:@typescript-eslint/recommended", "standard"],
+  "plugins": ["@typescript-eslint"],
   "rules": {
-    "react/react-in-jsx-scope": "off",
-    "no-console": ["warn", { "allow": ["warn", "error"] }]
-  }
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/indent": "off",
+    "no-unused-vars": "off",
+    "node/no-unsupported-features/es-syntax": "off",
+    "no-useless-constructor": "off",
+  },
 }

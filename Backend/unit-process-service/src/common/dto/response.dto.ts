@@ -1,25 +1,24 @@
-import { HttpStatus } from "@nestjs/common";
-import { WithId } from "mongodb";
+import { HttpStatus } from '@nestjs/common'
+import { WithId } from 'mongodb'
 
 export class ResponseDTO<T> {
-
-    constructor(
+  constructor (
         private readonly status: HttpStatus,
         private readonly messages: string,
-        private readonly data?: WithId<T>[] | WithId<T>
-        ) {
+        private readonly data?: WithId<T>[] | WithId<T> | void
+  ) {
 
-    }
+  }
 
-    getStatus(): HttpStatus {
-        return this.status;
-    }
+  getStatus (): HttpStatus {
+    return this.status
+  }
 
-    getData(): WithId<T>[] | WithId<T> {
-        return this.data;
-    }
+  getData (): WithId<T>[] | WithId<T> | void {
+    return this.data
+  }
 
-    getMessages(): string {
-        return this.messages;
-    }
+  getMessages (): string {
+    return this.messages
+  }
 }

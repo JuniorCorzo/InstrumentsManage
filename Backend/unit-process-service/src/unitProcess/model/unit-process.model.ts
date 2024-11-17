@@ -1,6 +1,6 @@
-import { ObjectId } from "mongodb"
-import { Camp } from "../../camp/model/camp.model" 
-import { Collection } from "src/common/decorator/collection.decorator"
+import { ObjectId } from 'mongodb'
+import { Camp } from '../../camp/model/camp.model'
+import { Collection } from 'src/common/decorator/collection.decorator'
 
 type IUnitProcess = {
     _id?: ObjectId
@@ -8,9 +8,9 @@ type IUnitProcess = {
     camp: Camp
 }
 
-@Collection("unitProcessCollection")
+@Collection('unitProcessCollection')
 export class UnitProcess implements IUnitProcess {
-    _id: ObjectId
-    name: string
-    camp: Camp
+  _id: ObjectId
+  name: string
+  camp: Camp
 }
