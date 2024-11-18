@@ -34,7 +34,6 @@ export class UnitProcessService {
     )
   }
 
-  // TODO:: Devolver la unidad creada
   public async insertUnitProcess (unitProcess: UnitProcess): Promise<ResponseDTO<UnitProcess>> {
     const saveInsert = await this.unitProcessRepository.insert(unitProcess)
     console.log(saveInsert)
@@ -61,8 +60,8 @@ export class UnitProcessService {
     await this.unitProcessRepository.delete(id)
 
     return new ResponseDTO<UnitProcess>(
-      HttpStatus.OK,
-      ResponseMessages.OK
+      HttpStatus.NO_CONTENT,
+      ResponseMessages.DELETE
     )
   }
 }
