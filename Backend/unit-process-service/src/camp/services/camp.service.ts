@@ -34,7 +34,6 @@ export class CampService {
     )
   }
 
-  // TODO:: Devolver el campo creado
   public async insertCamp (camp: WithId<Camp>) {
     const dataInsert = await this.campRepository.insert(camp)
 
@@ -45,7 +44,6 @@ export class CampService {
     )
   }
 
-  // TODO:: Devolver el campo actualizado
   public async updateCamp (camp: WithId<Camp>) {
     await this.campValidation.validIdExist(camp._id.toString())
     const dataUpdated = await this.campRepository.update(camp)
