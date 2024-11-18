@@ -36,22 +36,24 @@ export class CampService {
 
   // TODO:: Devolver el campo creado
   public async insertCamp (camp: WithId<Camp>) {
-    await this.campRepository.insert(camp)
+    const dataInsert = await this.campRepository.insert(camp)
 
     return new ResponseDTO(
       HttpStatus.CREATED,
-      ResponseMessages.OK
+      ResponseMessages.OK,
+      dataInsert
     )
   }
 
   // TODO:: Devolver el campo actualizado
   public async updateCamp (camp: WithId<Camp>) {
     await this.campValidation.validIdExist(camp._id.toString())
-    await this.campRepository.update(camp)
+    const dataUpdated = await this.campRepository.update(camp)
 
     return new ResponseDTO(
       HttpStatus.OK,
-      ResponseMessages.OK
+      ResponseMessages.OK,
+      dataUpdated
     )
   }
 
@@ -60,8 +62,8 @@ export class CampService {
     await this.campRepository.delete(id)
 
     return new ResponseDTO(
-      HttpStatus.OK,
-      ResponseMessages.OK
+      HttpStatus.NO_CONTENT,
+      ResponseMessages.DELETE
     )
   }
 }
