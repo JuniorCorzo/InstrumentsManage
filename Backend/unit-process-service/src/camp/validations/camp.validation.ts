@@ -1,36 +1,35 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, PipeTransform } from '@nestjs/common'
 import { CampRepository } from '../repositories/camp.repository'
 import { ObjectId } from 'mongodb'
 import { ResponseMessages } from 'src/common/enums/response-messages'
 import { IdNotValid } from 'src/common/exceptions/id-not-valid.exception'
 import { CampNotFound } from '../exceptions/camp-not-fount.exception'
+import { Camp } from '../model/camp.model'
 
 @Injectable()
-export class CampValidations {
+export class CampValidations implements PipeTransform {
   constructor (private readonly campRepository: CampRepository) { }
+  async transform (value: string | Camp) {
+    await this.validIdExist(this.retriveId(value))
+
+    return value
+  }
 
   private validId (id: string): void {
-    try {
-      if (!ObjectId.isValid(id)) {
-        console.error(ResponseMessages.ID_NOT_VALID)
-        throw new IdNotValid()
-      }
-    } catch (err) {
-      console.error(err.message)
+    if (!ObjectId.isValid(id)) {
+      console.error(ResponseMessages.ID_NOT_VALID)
       throw new IdNotValid()
     }
   }
 
-  public async validIdExist (id: string) {
+  private async validIdExist (id: string): Promise<void> {
     this.validId(id)
-    try {
-      const isValid = await this.campRepository.existById(id)
-      if (isValid) {
-        throw new CampNotFound()
-      }
-    } catch (err) {
-      console.error(err)
-      throw new CampNotFound()
-    }
+    await this.campRepository.existById(id)
+      .then(isValid => { if (isValid) throw new CampNotFound() })
+  }
+
+  private retriveId (idRaw: string | Camp): string {
+    if (idRaw instanceof Object) return idRaw.id.toString()
+    return idRaw
   }
 }

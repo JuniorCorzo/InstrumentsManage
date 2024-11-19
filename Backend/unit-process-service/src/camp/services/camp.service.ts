@@ -2,19 +2,17 @@ import { HttpStatus, Injectable } from '@nestjs/common'
 import { CampRepository } from '../repositories/camp.repository'
 import { Camp } from '../model/camp.model'
 import { WithId } from 'mongodb'
-import { CampValidations } from '../validations/camp.validation'
 import { ResponseDTO } from 'src/common/dto/response.dto'
 import { ResponseMessages } from 'src/common/enums/response-messages'
 
 @Injectable()
 export class CampService {
   constructor (
-        private readonly campRepository: CampRepository,
-        private readonly campValidation: CampValidations
+        private readonly campRepository: CampRepository
 
   ) {}
 
-  public async getAllCamps () {
+  public async getAllCamps (): Promise<ResponseDTO<Camp>> {
     const campData = await this.campRepository.findAll()
     return new ResponseDTO(
       HttpStatus.OK,
@@ -23,8 +21,7 @@ export class CampService {
     )
   }
 
-  public async getCampById (id: string) {
-    await this.campValidation.validIdExist(id)
+  public async getCampById (id: string): Promise<ResponseDTO<Camp>> {
     const campData = await this.campRepository.findById(id)
 
     return new ResponseDTO<Camp>(
@@ -34,7 +31,7 @@ export class CampService {
     )
   }
 
-  public async insertCamp (camp: WithId<Camp>) {
+  public async insertCamp (camp: WithId<Camp>): Promise<ResponseDTO<Camp>> {
     const dataInsert = await this.campRepository.insert(camp)
 
     return new ResponseDTO(
@@ -44,8 +41,7 @@ export class CampService {
     )
   }
 
-  public async updateCamp (camp: WithId<Camp>) {
-    await this.campValidation.validIdExist(camp._id.toString())
+  public async updateCamp (camp: WithId<Camp>): Promise<ResponseDTO<Camp>> {
     const dataUpdated = await this.campRepository.update(camp)
 
     return new ResponseDTO(
@@ -55,8 +51,7 @@ export class CampService {
     )
   }
 
-  public async deleteCamp (id: string) {
-    await this.campValidation.validIdExist(id)
+  public async deleteCamp (id: string): Promise<ResponseDTO<Camp>> {
     await this.campRepository.delete(id)
 
     return new ResponseDTO(
