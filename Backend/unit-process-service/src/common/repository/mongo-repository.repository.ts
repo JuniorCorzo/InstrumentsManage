@@ -63,7 +63,7 @@ export class MongoRepository<T, ID> {
       .deleteOne({ _id: new ObjectId(id as string) } as WithId<T>)
   }
 
-  public async existById (id: ID): Promise<boolean | undefined | void> {
+  public async existById (id: ID): Promise<boolean> {
     try {
       const data = await this.findById(id)
       return data === null
