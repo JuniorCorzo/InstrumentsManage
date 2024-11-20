@@ -7,6 +7,7 @@ import io.github.juniorcorzo.tagsinstrumentsservice.tags.services.TagsService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+// TODO:: Añadir endpoint que devuelva tags por el nombre
 @RestController
 @RequestMapping("/tags")
 @AllArgsConstructor
