@@ -6,7 +6,7 @@ export class ConnectDB implements OnModuleInit {
   // eslint-disable-next-line no-use-before-define
   private static instance: ConnectDB
   private clientMongo: MongoClient
-  private readonly MAX_ATTEMPTS = 1
+  private readonly MAX_ATTEMPTS = 10
   private readonly LOGS = new Logger(ConnectDB.name, { timestamp: true })
 
   // TODO:: fix error gramatical
