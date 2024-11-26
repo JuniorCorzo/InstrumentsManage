@@ -50,17 +50,15 @@ export class EurekaConfig {
           'Content-Type': 'application/json',
           Accept: 'application/json'
         }
+      }).catch(async () => {
+        throw new Error('Failed to register in EurekaService')
       })
 
       if (response.status === 204) {
-        this.LOGS.log('Registrado exitosamente en Eureka')
-        return
+        this.LOGS.log('Successfully registered in Eureka')
       }
-
-      const errorBody = await response.text()
-      throw new Error(`Registro en Eureka FALLÓ: estado: ${response.status} cuerpo: ${errorBody}`)
     } catch (error) {
-      this.LOGS.error(error.message)
+      this.LOGS.warn(error.message)
       await this.delay(2000)
       return await this.registerEureka()
     }
