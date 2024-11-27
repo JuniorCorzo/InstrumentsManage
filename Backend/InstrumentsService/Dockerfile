@@ -15,9 +15,6 @@ RUN gradle clean build
 FROM eclipse-temurin:21
 ENV ARTIFACT_NAME=InstrumentsService-0.0.1-SNAPSHOT.jar
 ENV APP_HOME=/usr/app
-ENV DB_HOST=172.18.0.2
-ENV DB_PORT=27017
-ENV DB_NAME=instruments
 
 WORKDIR $APP_HOME
 COPY --from=build $APP_HOME/build/libs/$ARTIFACT_NAME .

@@ -1,0 +1,61 @@
+services:
+  instruments-db:
+    image: mongo
+    env_file:
+      - ./Backend/InstrumentsService/.env.production
+    ports:
+      -  '27017:27017'
+
+  instruments-service:
+    build: ./Backend/InstrumentsService/
+    env_file:
+      - ./Backend/InstrumentsService/.env.production
+    ports:
+      - '8081:8080'
+    depends_on:
+      - instruments-db
+      - eureka-service
+    networks:
+      global-network:
+          ipv4_address: '192.168.0.3'
+
+  tags-instruments-db:
+    image: mongo
+    env_file:
+      - ./Backend/TagsInstrumentsService/.env.production
+    ports:
+      - '27018:27017'
+
+  tags-instruments-service:
+    build: ./Backend/TagsInstrumentsService/
+    env_file:
+      - ./Backend/TagsInstrumentsService/.env.production
+    ports:
+      - '8083:8080'
+    depends_on:
+      - tags-instruments-db
+      - eureka-service
+    links:
+      - tags-instruments-db
+      - eureka-service
+
+  eureka-service:
+    build: ./Backend/EurekaService/.
+    ports:
+      - '8761:8761'
+    networks:
+      global-network:
+          ipv4_address: '192.168.0.10'
+
+networks:
+  global-network:
+    driver: macvlan
+    driver_opts:
+      parent: ethernet_32769
+    ipam:
+      config:
+       - subnet: "192.168.0.0/24"
+         gateway: '192.168.0.1'
+
+    
+
