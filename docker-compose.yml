@@ -10,7 +10,32 @@ services:
     networks:
       global_network:
         ipv4_address: '192.168.101.20'
+    volumes:
+      - instruments-volume:/data/db
+
+  tags-instruments-db:
+    image: mongo
+    env_file:
+      - ./Backend/TagsInstrumentsService/.env.production
+    ports:
+      - '27018:27017'
+    networks:
+      global_network:
+        ipv4_address: '192.168.101.21'
+    volumes:
+      - tags-instruments-volume:/data/db
     
+  unit-process-db:
+    image: mongo
+    env_file:
+      - ./Backend/unit-process-service/.env.production
+    ports:
+      - '27019:27017'
+    networks:
+      global_network:
+        ipv4_address: '192.168.101.22'
+    volumes:
+      - unit-process-volume:/data/db
 
   instruments-service:
     build: ./Backend/InstrumentsService/
@@ -25,16 +50,6 @@ services:
       global_network:
         ipv4_address: '192.168.101.2'
 
-  tags-instruments-db:
-    image: mongo
-    env_file:
-      - ./Backend/TagsInstrumentsService/.env.production
-    ports:
-      - '27018:27017'
-    networks:
-      global_network:
-        ipv4_address: '192.168.101.21'
- 
   tags-instruments-service:
     build: ./Backend/TagsInstrumentsService/
     env_file:
@@ -48,15 +63,6 @@ services:
       global_network:
         ipv4_address: '192.168.101.3'
 
-  unit-process-db:
-    image: mongo
-    env_file:
-      - ./Backend/unit-process-service/.env.production
-    ports:
-      - '27019:27017'
-    networks:
-      global_network:
-        ipv4_address: '192.168.101.22'
   unit-process-service:
     build: ./Backend/unit-process-service/.
     env_file:
@@ -90,6 +96,6 @@ networks:
           gateway: '192.168.101.1'
 
 volumes:
-  instruments-db-volume:
+  instruments-volume:
   tags-instruments-volume:
   unit-process-volume:
