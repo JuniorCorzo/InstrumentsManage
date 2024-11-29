@@ -1,10 +1,16 @@
+version: '3.7'
+
 services:
   instruments-db:
     image: mongo
     env_file:
       - ./Backend/InstrumentsService/.env.production
     ports:
-      -  '27017:27017'
+      - '27017:27017'
+    networks:
+      global_network:
+        ipv4_address: '192.168.101.20'
+    
 
   instruments-service:
     build: ./Backend/InstrumentsService/
@@ -16,8 +22,8 @@ services:
       - instruments-db
       - eureka-service
     networks:
-      global-network:
-          ipv4_address: '192.168.0.3'
+      global_network:
+        ipv4_address: '192.168.101.2'
 
   tags-instruments-db:
     image: mongo
@@ -25,37 +31,65 @@ services:
       - ./Backend/TagsInstrumentsService/.env.production
     ports:
       - '27018:27017'
-
+    networks:
+      global_network:
+        ipv4_address: '192.168.101.21'
+ 
   tags-instruments-service:
     build: ./Backend/TagsInstrumentsService/
     env_file:
       - ./Backend/TagsInstrumentsService/.env.production
     ports:
-      - '8083:8080'
+      - '8082:8080'
     depends_on:
       - tags-instruments-db
       - eureka-service
-    links:
-      - tags-instruments-db
+    networks:
+      global_network:
+        ipv4_address: '192.168.101.3'
+
+  unit-process-db:
+    image: mongo
+    env_file:
+      - ./Backend/unit-process-service/.env.production
+    ports:
+      - '27019:27017'
+    networks:
+      global_network:
+        ipv4_address: '192.168.101.22'
+  unit-process-service:
+    build: ./Backend/unit-process-service/.
+    env_file:
+      - ./Backend/unit-process-service/.env.production
+    ports:
+      - '3000:3000'
+    depends_on:
+      - unit-process-db
       - eureka-service
+    networks:
+      global_network:
+        ipv4_address: '192.168.101.4'
 
   eureka-service:
     build: ./Backend/EurekaService/.
     ports:
       - '8761:8761'
     networks:
-      global-network:
-          ipv4_address: '192.168.0.10'
+      global_network:
+        ipv4_address: '192.168.101.10'
 
 networks:
-  global-network:
+  global_network:
     driver: macvlan
     driver_opts:
-      parent: ethernet_32769
+      parent: 'wlp0s20f3'
+      macvlan_mode: 'bridge'
     ipam:
       config:
-       - subnet: "192.168.0.0/24"
-         gateway: '192.168.0.1'
+        - subnet: '192.168.101.0/24'
+          gateway: '192.168.101.1'
 
-    
-
+volumes:
+  instruments-db-volume:
+  tags-instruments-volume:
+  unit-process-volume:

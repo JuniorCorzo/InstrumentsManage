@@ -11,7 +11,7 @@ export class ConnectDB implements OnModuleInit {
 
   // TODO:: fix error gramatical
   private constructor () {
-    this.clientMongo = new MongoClient('mongodb://localhost:27019/unitProcces')
+    this.clientMongo = new MongoClient('mongodb://localhost:27019/unitProcess')
   }
 
   /**
