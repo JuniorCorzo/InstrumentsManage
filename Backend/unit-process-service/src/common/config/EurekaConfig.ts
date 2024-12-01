@@ -4,7 +4,7 @@ export class EurekaConfig {
   // eslint-disable-next-line no-use-before-define
   private static instance: EurekaConfig
   private readonly LOGS = new Logger(EurekaConfig.name, { timestamp: true })
-  private readonly EUREKA_URL: string = 'http://localhost:8761/eureka/apps'
+  private readonly EUREKA_URL: string = `http://${process.env.EUREKA_HOST}:8761/eureka/apps`
   private readonly EUREKA_INSTANCE = {
     instance: {
       app: 'UnitProcessService',

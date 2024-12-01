@@ -9,9 +9,11 @@ export class ConnectDB implements OnModuleInit {
   private readonly MAX_ATTEMPTS = 10
   private readonly LOGS = new Logger(ConnectDB.name, { timestamp: true })
 
-  // TODO:: fix error gramatical
+  // TODO:: fix error grammatical
   private constructor () {
-    this.clientMongo = new MongoClient('mongodb://localhost:27019/unitProcess')
+    const { DB_HOST, DB_NAME, DB_PORT } = process.env
+    console.log(process.env.DB_HOST)
+    this.clientMongo = new MongoClient(`mongodb://${DB_HOST}:${DB_PORT}/${DB_NAME}`)
   }
 
   /**
