@@ -9,7 +9,8 @@ services:
       - '27017:27017'
     networks:
       global_network:
-        ipv4_address: '192.168.101.20'
+        ipv4_address: 192.168.101.20
+
     volumes:
       - instruments-volume:/data/db
 
@@ -21,7 +22,7 @@ services:
       - '27018:27017'
     networks:
       global_network:
-        ipv4_address: '192.168.101.21'
+        ipv4_address: 192.168.101.21
     volumes:
       - tags-instruments-volume:/data/db
     
@@ -33,7 +34,7 @@ services:
       - '27019:27017'
     networks:
       global_network:
-        ipv4_address: '192.168.101.22'
+        ipv4_address: 192.168.101.22
     volumes:
       - unit-process-volume:/data/db
 
@@ -48,7 +49,7 @@ services:
       - eureka-service
     networks:
       global_network:
-        ipv4_address: '192.168.101.2'
+        ipv4_address: 192.168.101.2
 
   tags-instruments-service:
     build: ./Backend/TagsInstrumentsService/
@@ -61,7 +62,7 @@ services:
       - eureka-service
     networks:
       global_network:
-        ipv4_address: '192.168.101.3'
+        ipv4_address: 192.168.101.3
 
   unit-process-service:
     build: ./Backend/unit-process-service/.
@@ -74,7 +75,7 @@ services:
       - eureka-service
     networks:
       global_network:
-        ipv4_address: '192.168.101.4'
+        ipv4_address: 192.168.101.4
 
   eureka-service:
     build: ./Backend/EurekaService/.
@@ -82,7 +83,7 @@ services:
       - '8761:8761'
     networks:
       global_network:
-        ipv4_address: '192.168.101.10'
+        ipv4_address: 192.168.101.10
 
 networks:
   global_network:
