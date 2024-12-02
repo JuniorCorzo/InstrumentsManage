@@ -1,4 +1,5 @@
 import { Logger } from '@nestjs/common'
+import { networkInterfaces } from 'os'
 
 export class EurekaConfig {
   // eslint-disable-next-line no-use-before-define
@@ -7,11 +8,11 @@ export class EurekaConfig {
   private readonly EUREKA_URL: string = `http://${process.env.EUREKA_HOST}:8761/eureka/apps`
   private readonly EUREKA_INSTANCE = {
     instance: {
-      app: 'UnitProcessService',
-      hostName: 'localhost',
-      ipAddr: '127.0.0.1',
+      app: '  UNIT-PROCESS-SERVICE',
+      hostName: process.env.EUREKA_HOST,
+      ipAddr: process.env.SERVICE_HOST,
       vipAddress: 'unit-process',
-      instanceId: 'localhost:3000',
+      instanceId: `${process.env.SERVICE_HOST}:3000`,
       status: 'UP',
       port: {
         $: 3000,
@@ -25,6 +26,7 @@ export class EurekaConfig {
   }
 
   private constructor () {
+    this.getIpAddress()
     this.registerEureka()
   }
 
@@ -62,6 +64,11 @@ export class EurekaConfig {
       await this.delay(2000)
       return await this.registerEureka()
     }
+  }
+
+  private getIpAddress () {
+    const net = networkInterfaces()
+    console.log(net)
   }
 
   /**
