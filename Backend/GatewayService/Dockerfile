@@ -13,7 +13,7 @@ COPY . .
 RUN gradle clean build
 
 FROM eclipse-temurin:21
-ENV ARTIFACT_NAME=GatewayService-0.0.1-SNAPSHOT.jar
+ENV ARTIFACT_NAME=gateway-service-0.0.1-SNAPSHOT.jar
 ENV APP_HOME=/usr/app
 
 

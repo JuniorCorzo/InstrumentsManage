@@ -85,6 +85,21 @@ services:
       global_network:
         ipv4_address: 192.168.101.10
 
+  gateway-service:
+    build: ./Backend/GatewayService/.
+    env_file:
+      - ./Backend/GatewayService/.env.production
+    ports:
+      - '8080:8080'
+    depends_on:
+      - eureka-service
+      - instruments-service
+      - tags-instruments-service
+      - unit-process-service
+    networks:
+      global_network:
+        ipv4_address: 192.168.101.50
+
 networks:
   global_network:
     driver: macvlan

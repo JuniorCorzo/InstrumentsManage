@@ -49,6 +49,7 @@ export class EurekaConfig {
         method: 'POST',
         body: JSON.stringify(this.EUREKA_INSTANCE),
         headers: {
+          
           'Content-Type': 'application/json',
           Accept: 'application/json'
         }
