@@ -2,9 +2,9 @@ import { NestFactory } from '@nestjs/core'
 import { AppModule } from './app.module'
 
 function loadEnvFile () {
-  const envFile = process.env.NODE_ENV === 'development'
-    ? '.env'
-    : '.env.production'
+  const envFile = process.env.NODE_ENV === 'production'
+    ? '.env.production'
+    : '.env'
 
   process.loadEnvFile(envFile)
 }
