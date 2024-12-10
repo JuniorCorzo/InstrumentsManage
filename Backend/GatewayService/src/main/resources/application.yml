@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: GATEWAY-SERVICE
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: INSTRUMENTS-SERVICE
+            uri: ${INSTRUMENTS_HOST}
+            predicates:
+              - Path=/instruments/**
+          - id: TAGS-SERVICE
+            uri: ${TAGS_HOST}
+            predicates:
+              - Path=/tags/**
+          - id: UNIT-PROCESS-SERVICE
+            uri: ${UNIT_PROCESS_HOST}
+            predicates:
+              - Path=/unit-process/**
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-register: true
+    service-url:
+      url-defaultZone: http://${EUREKA_HOST}:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

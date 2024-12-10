@@ -1,5 +1,3 @@
-version: '3.7'
-
 services:
   instruments-db:
     image: mongo
@@ -9,7 +7,7 @@ services:
       - '27017:27017'
     networks:
       global_network:
-        ipv4_address: 192.168.101.20
+        ipv4_address: 172.29.48.20
 
     volumes:
       - instruments-volume:/data/db
@@ -22,7 +20,7 @@ services:
       - '27018:27017'
     networks:
       global_network:
-        ipv4_address: 192.168.101.21
+        ipv4_address: 172.29.48.21
     volumes:
       - tags-instruments-volume:/data/db
     
@@ -34,10 +32,10 @@ services:
       - '27019:27017'
     networks:
       global_network:
-        ipv4_address: 192.168.101.22
+        ipv4_address: 172.29.48.22
     volumes:
       - unit-process-volume:/data/db
-
+      
   instruments-service:
     build: ./Backend/InstrumentsService/
     env_file:
@@ -49,7 +47,7 @@ services:
       - eureka-service
     networks:
       global_network:
-        ipv4_address: 192.168.101.2
+        ipv4_address: 172.29.48.2
 
   tags-instruments-service:
     build: ./Backend/TagsInstrumentsService/
@@ -62,7 +60,7 @@ services:
       - eureka-service
     networks:
       global_network:
-        ipv4_address: 192.168.101.3
+        ipv4_address: 172.29.48.3
 
   unit-process-service:
     build: ./Backend/unit-process-service/.
@@ -75,7 +73,7 @@ services:
       - eureka-service
     networks:
       global_network:
-        ipv4_address: 192.168.101.4
+        ipv4_address: 172.29.48.4
 
   eureka-service:
     build: ./Backend/EurekaService/.
@@ -83,7 +81,7 @@ services:
       - '8761:8761'
     networks:
       global_network:
-        ipv4_address: 192.168.101.10
+        ipv4_address: 172.29.48.10
 
   gateway-service:
     build: ./Backend/GatewayService/.
@@ -98,18 +96,15 @@ services:
       - unit-process-service
     networks:
       global_network:
-        ipv4_address: 192.168.101.50
+        ipv4_address: 172.29.48.50
 
 networks:
   global_network:
-    driver: macvlan
-    driver_opts:
-      parent: 'wlp0s20f3'
-      macvlan_mode: 'bridge'
+    driver: bridge
     ipam:
+      driver: default
       config:
-        - subnet: '192.168.101.0/24'
-          gateway: '192.168.101.1'
+        - subnet: 172.29.48.0/24
 
 volumes:
   instruments-volume:
