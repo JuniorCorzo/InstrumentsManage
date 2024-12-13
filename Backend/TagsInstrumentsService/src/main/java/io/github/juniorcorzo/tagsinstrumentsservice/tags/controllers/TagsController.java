@@ -1,7 +1,9 @@
 package io.github.juniorcorzo.tagsinstrumentsservice.tags.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.ResponseWithData;
 import io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.ResponseWithoutData;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.TagsResponse;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.models.Tags;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.services.TagsService;
 import lombok.AllArgsConstructor;
@@ -20,7 +22,7 @@ public class TagsController {
     }
 
     @GetMapping
-    public ResponseWithData<Tags> getTagById(@RequestParam String id) {
+    public ResponseWithData<TagsResponse> getTagById(@RequestParam String id) {
         return this.tagsService.getTagById(id);
     }
 

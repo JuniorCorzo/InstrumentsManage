@@ -1,6 +1,7 @@
 package io.github.juniorcorzo.tagsinstrumentsservice.tags.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class Tags {
     private String id;
     private String tag;
     private String description;
+    @JsonIgnore
     private String instruments;
     private String unitProcess;
     private String typeUnit;
