@@ -2,9 +2,9 @@ package io.github.juniorcorzo.tagsinstrumentsservice.tags.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.ResponseWithData;
-import io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.ResponseWithoutData;
-import io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.enums.ResponseMessages;
+import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithData;
+import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithoutData;
+import io.github.juniorcorzo.tagsinstrumentsservice.common.enums.ResponseMessages;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.InstrumentsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.TagsResponse;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.exceptions.TagIdNotFound;

@@ -2,31 +2,27 @@ package io.github.juniorcorzo.tagsinstrumentsservice.tags.services;
 
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.InstrumentsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.RetrieveDTO;
-import org.apache.http.entity.ContentType;
-import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Objects;
 
 @Service
 public class InstrumentService {
-    @LoadBalanced
-    private final RestClient restClient;
+    private final RestTemplate restTemplate;
 
-    public InstrumentService(RestClient.Builder restClientBuilder) {
-        this.restClient = restClientBuilder
-                .baseUrl("http://localhost:8081/")
-                .defaultHeader("Content-Type", ContentType.APPLICATION_JSON.toString())
-                .build();
+    @Autowired
+    public InstrumentService(@Qualifier("FOR_INSTRUMENTS_SERVICE") RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
 
     }
-    //FIX:: Recuerda crear un dto que tenga encuenta lo que se resive de la api PENDEJO
-    public InstrumentsDTO getInstrumentById(String id){
-        return Objects.requireNonNull(this.restClient.get()
-                        .uri("instruments?id={id}", id)
-                        .retrieve()
-                        .body(RetrieveDTO.class))
+
+    public InstrumentsDTO getInstrumentById(String id) {
+        return Objects.requireNonNull(
+                this.restTemplate
+                        .getForObject("lb://INSTRUMENTS-SERVICE/instruments?id={id}", RetrieveDTO.class, id))
                 .data()
                 .getFirst();
     }
