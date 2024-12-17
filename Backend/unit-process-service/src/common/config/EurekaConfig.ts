@@ -1,6 +1,12 @@
 import { Logger } from '@nestjs/common'
 import { setInterval } from 'timers'
 
+/**
+ * Clase que se encarga de realizar el registro al servicio de Eureka
+ * y enviar un heartbeat cada cierto tiempo para mantener la conexión activa.
+ *
+ * Para su implementación se utiliza el patrón Singleton.
+ */
 export class EurekaConfig {
   // eslint-disable-next-line no-use-before-define
   private static instance: EurekaConfig
@@ -56,6 +62,10 @@ export class EurekaConfig {
    *
    * TODO:: Añadir endpoints de status y health
    * @returns
+   * @memberof EurekaConfig
+   * @private
+   * @async
+   * @throws Error
    */
   private async registerEureka () {
     const { app } = this.EUREKA_INSTANCE.instance
@@ -82,6 +92,16 @@ export class EurekaConfig {
     }
   }
 
+  /**
+   * Función que envía un heartbeat al servidor de Eureka cada cierto tiempo
+   * para mantener la conexión activa.
+   *
+   * @returns
+   * @memberof EurekaConfig
+   * @private
+   * @async
+   * @throws Error
+   */
   private startHearthBeat () {
     const { app, instanceId, leaseInfo } = this.EUREKA_INSTANCE.instance
     setInterval(async () => {
@@ -105,6 +125,10 @@ export class EurekaConfig {
    * Función auxiliar para crear un retraso.
    *
    * @param ms Tiempo en mili segundos para el retraso
+   * @returns
+   * @memberof EurekaConfig
+   * @private
+   * @async
    */
   private async delay (ms: number): Promise<void> {
     return new Promise((resolve) => setTimeout(resolve, ms))
