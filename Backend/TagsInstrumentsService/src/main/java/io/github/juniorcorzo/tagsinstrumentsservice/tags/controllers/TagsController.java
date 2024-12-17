@@ -16,7 +16,7 @@ public class TagsController {
     private final TagsService tagsService;
 
     @GetMapping("/all")
-    public ResponseWithData<Tags> getAllTags() {
+    public ResponseWithData<TagsResponse> getAllTags() {
         return this.tagsService.getAllTags();
     }
 

@@ -18,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @AllArgsConstructor
@@ -28,13 +31,20 @@ public class TagsService {
     private final Logger LOGS = LoggerFactory.getLogger(TagsService.class);
 
 
-    public ResponseWithData<Tags> getAllTags() {
+    public ResponseWithData<TagsResponse> getAllTags() {
         this.LOGS.info("Fetching all tags");
 
+        List<Tags> allTags = this.tagsRepository.findAll();
+        Map<String, InstrumentsDTO> allInstruments = new HashMap<>();
+        this.instrumentService.getAllInstruments().forEach(instruments -> {
+            allInstruments.put(instruments.id(), instruments);
+        });
 
         return new ResponseWithData<>(
                 HttpStatus.OK,
-                this.tagsRepository.findAll(),
+                allTags.stream()
+                        .map(tag -> createResponse(tag, allInstruments.get(tag.getInstruments())))
+                        .toList(),
                 ResponseMessages.OK.getMessage()
         );
     }
@@ -49,9 +59,9 @@ public class TagsService {
                 HttpStatus.OK,
                 Collections
                         .singletonList(createResponse(
-                                tagById,
-                                this.instrumentService
-                                        .getInstrumentById(tagById.getInstruments())
+                                        tagById,
+                                        this.instrumentService
+                                                .getInstrumentById(tagById.getInstruments())
                                 )
                         ),
                 ResponseMessages.OK.getMessage()
