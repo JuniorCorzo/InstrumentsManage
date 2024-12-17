@@ -1,4 +1,4 @@
-package io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.enums;
+package io.github.juniorcorzo.tagsinstrumentsservice.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

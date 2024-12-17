@@ -1,4 +1,4 @@
-package io.github.juniorcorzo.tagsinstrumentsservice.shared.dto;
+package io.github.juniorcorzo.tagsinstrumentsservice.common.dto;
 
 import org.springframework.http.HttpStatus;
 

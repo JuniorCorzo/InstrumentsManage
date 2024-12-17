@@ -1,6 +1,6 @@
 package io.github.juniorcorzo.tagsinstrumentsservice.tags.validations;
 
-import io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.enums.ResponseMessages;
+import io.github.juniorcorzo.tagsinstrumentsservice.common.enums.ResponseMessages;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.exceptions.FormatIdNotValid;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.exceptions.TagIdNotFound;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.repositories.TagsRepository;

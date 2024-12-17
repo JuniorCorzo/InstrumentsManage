@@ -1,8 +1,7 @@
 package io.github.juniorcorzo.tagsinstrumentsservice.tags.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.ResponseWithData;
-import io.github.juniorcorzo.tagsinstrumentsservice.shared.dto.ResponseWithoutData;
+import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithData;
+import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithoutData;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.TagsResponse;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.models.Tags;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.services.TagsService;
