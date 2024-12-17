@@ -1,7 +1,7 @@
-import { Camp } from "@/models"
+import { CampDTO } from "@/models"
 
-export interface UnitProcess{
+export interface UnitProcessDTO{
     _id: string
     name: string
-    camp: Camp
+    camp: CampDTO
 }

@@ -1,4 +1,4 @@
-export interface Tags {
+export interface TagsDTO {
     _id: string
     description: string
     instruments: string
