@@ -41,3 +41,4 @@ out/
 ### VS Code ###
 .vscode/
 
+Frontend/instruments-manage/src/pages/home/home.page.tsx
