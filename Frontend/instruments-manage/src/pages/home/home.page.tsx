@@ -1,8 +1,11 @@
+import Layout from "../../layouts/Layout"
+
+
 const Home = () => {
     return (
-        <div>
-            <h1>Home</h1>
-        </div>
+        <Layout>
+            <h2>BIENAVENTURADOS</h2>
+        </Layout>
     )
 }
 
