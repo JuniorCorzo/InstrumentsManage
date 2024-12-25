@@ -1,4 +1,4 @@
-import { UnitProcessDomain } from "@/interfaces/unit-process-domain.inteface";
+import { UnitProcessDomain } from "@/interfaces/unit-process-domain.interface";
 import { UnitProcessDTO } from "@/models";
 import { CampAdapter } from "./camp.adapter";
 

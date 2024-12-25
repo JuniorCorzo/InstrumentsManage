@@ -17,7 +17,7 @@ export const getAllInstruments = async (): Promise<InstrumentDomain[]> => {
 }
 
 export const getInstrumentById = async (id: string): Promise<InstrumentDomain> => {
-    const response = await axios.get(`${GATEWAY_HOST}/instruments/${id}`).then(response => {
+    const response = await axios.get(`${GATEWAY_HOST}/instruments?id=${id}`).then(response => {
         if (response.status !== 200) throw Error(response.statusText)
         return response.data as RetrieveDataDTO
     })
@@ -40,7 +40,7 @@ export const updateInstruments = async (instrument: InstrumentDomain) => {
 }
 
 export const deleteInstruments = async (id: string) => {
-    axios.delete(`${GATEWAY_HOST}/instruments/delete/${id}`)
+    axios.delete(`${GATEWAY_HOST}/instruments/delete?id=${id}`)
     .then( response => {
         if (response.status !== 200) throw Error(response.statusText)
     })
