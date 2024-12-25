@@ -1,8 +1,8 @@
-import { CampDTO } from "@/models"
+import { BrandDomain } from "./brand-domain.interface"
 
 export interface InstrumentDomain {
     model: string
-    brand: CampDTO
+    brand: BrandDomain
     type: string
     id?: string
 }

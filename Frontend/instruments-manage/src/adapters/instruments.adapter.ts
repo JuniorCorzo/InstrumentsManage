@@ -1,5 +1,6 @@
 import { InstrumentDomain } from "@/interfaces/instrument-domain.interface";
 import { InstrumentDTO } from "@/models";
+import { BrandAdapter } from "./brand.adapter";
 
 export const instrumentAdapter = (instruments: InstrumentDTO): InstrumentDomain => {
     const {_id, model, brand, type} = instruments
@@ -7,7 +8,7 @@ export const instrumentAdapter = (instruments: InstrumentDTO): InstrumentDomain 
     return {
         id: _id,
         model,
-        brand,
+        brand: BrandAdapter(brand),
         type
     }
 }

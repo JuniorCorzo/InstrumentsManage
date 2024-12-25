@@ -1,0 +1,1 @@
+export const {VITE_GATEWAY_HOST:GATEWAY_HOST} = import.meta.env

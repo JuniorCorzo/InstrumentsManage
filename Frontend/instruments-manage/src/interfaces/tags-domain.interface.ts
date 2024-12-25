@@ -1,9 +1,9 @@
-import { InstrumentDTO } from "./instruments.model"
+import { InstrumentDomain } from "./instrument-domain.interface"
 
-export interface TagsDTO {
-    _id: string
+export interface TagsDomain {
+    id: string
     description: string
-    instruments: InstrumentDTO,
+    instruments: InstrumentDomain
     unitProcess: string
     typeUnit: string
     alarms: {
