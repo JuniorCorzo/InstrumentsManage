@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/instruments")
 @AllArgsConstructor
-@CrossOrigin("*")
 public class InstrumentsController {
     private InstrumentsService instrumentsService;
 

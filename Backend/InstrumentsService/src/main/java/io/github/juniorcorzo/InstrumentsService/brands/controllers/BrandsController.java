@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/brands")
 @AllArgsConstructor
-@CrossOrigin("*")
 public class BrandsController {
     private BrandsService brandsService;
     private WriteBatchBrand writeBatchBrand;
