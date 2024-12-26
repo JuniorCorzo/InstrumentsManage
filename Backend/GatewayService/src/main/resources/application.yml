@@ -8,7 +8,7 @@ spring:
           - id: INSTRUMENTS-SERVICE
             uri: ${INSTRUMENTS_HOST}
             predicates:
-              - Path=/instruments/**
+              - Path=/instruments/**,/brands/**
           - id: TAGS-SERVICE
             uri: ${TAGS_HOST}
             predicates:
@@ -16,7 +16,7 @@ spring:
           - id: UNIT-PROCESS-SERVICE
             uri: ${UNIT_PROCESS_HOST}
             predicates:
-              - Path=/unit-process/**
+              - Path=/unit-process/**,/camps/**
 
 eureka:
   client:
