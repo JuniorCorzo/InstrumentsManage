@@ -27,7 +27,7 @@ const tagsSlice = createSlice({
                 state.data[index] = action.payload
             }
         },
-        deleteTag: (state, action: PayloadAction<string>) => {
+        removeTag: (state, action: PayloadAction<string>) => {
             // TODO:: Add ID format validation
             state.data = state.data.filter(({id}) => id !== action.payload)
         }
@@ -39,5 +39,5 @@ const tagsSlice = createSlice({
     }
 })
 
-export const { setTag, updateTag, deleteTag } = tagsSlice.actions
+export const { setTag, updateTag, removeTag } = tagsSlice.actions
 export const TagsReducer = tagsSlice.reducer

@@ -5,6 +5,7 @@ import { InstrumentDomain } from "../interfaces/instrument-domain.interface"
 import { RetrieveDataDTO } from "../interfaces/retrieve-data.interface"
 import { InstrumentDTO } from "../models"
 import { GATEWAY_HOST } from "../config/env.config"
+import { retry } from "@reduxjs/toolkit/query"
 
 export const getAllInstruments = async (): Promise<InstrumentDomain[]> => {
     const response: RetrieveDataDTO = await axios.get(`${GATEWAY_HOST}/instruments/all`)
@@ -17,9 +18,10 @@ export const getAllInstruments = async (): Promise<InstrumentDomain[]> => {
 }
 
 export const getInstrumentById = async (id: string): Promise<InstrumentDomain> => {
-    const response = await axios.get(`${GATEWAY_HOST}/instruments?id=${id}`).then(response => {
-        if (response.status !== 200) throw Error(response.statusText)
-        return response.data as RetrieveDataDTO
+    const response = await axios.get(`${GATEWAY_HOST}/instruments?id=${id}`)
+        .then(response => {
+            if (response.status !== 200) throw Error(response.statusText)
+            return response.data as RetrieveDataDTO
     })
 
     return instrumentAdapter(response.data[0] as InstrumentDTO)
@@ -29,6 +31,7 @@ export const createInstruments = async (instrument: InstrumentDomain) => {
     axios.post(`${GATEWAY_HOST}/instruments/create`, instrument)
     .then( response => {
         if (response.status !== 201) throw Error(response.statusText)
+        return response.data
     })
 }
 
@@ -36,6 +39,7 @@ export const updateInstruments = async (instrument: InstrumentDomain) => {
     axios.put(`${GATEWAY_HOST}/instruments/update`, instrument)
     .then( response => {
         if (response.status !== 200) throw Error(response.statusText)
+        return response.data
     })
 }
 
@@ -43,5 +47,6 @@ export const deleteInstruments = async (id: string) => {
     axios.delete(`${GATEWAY_HOST}/instruments/delete?id=${id}`)
     .then( response => {
         if (response.status !== 200) throw Error(response.statusText)
+        return response.data
     })
 }

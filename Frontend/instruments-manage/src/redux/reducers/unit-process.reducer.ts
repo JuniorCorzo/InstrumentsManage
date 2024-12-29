@@ -21,14 +21,14 @@ const UnitProcessSlice = createSlice({
         setUnitProcess: (state, action: PayloadAction<UnitProcessDomain>) => {
             state.data.push(action.payload)
         },
-        updateUnitProcess: (state, action: PayloadAction<UnitProcessDomain>) => {
+        setUpdateUnitProcess: (state, action: PayloadAction<UnitProcessDomain>) => {
             const index = state.data.findIndex(({id}) => id === action.payload.id)
             
             if (index !== -1) {
                 state.data[index] = action.payload
             }
         },
-        deleteUnitProcess: (state, action: PayloadAction<string>) => {
+        removeUnitProcess: (state, action: PayloadAction<string>) => {
             state.data = state.data.filter(({id}) => id !== action.payload)
         }
     }, 
@@ -41,7 +41,7 @@ const UnitProcessSlice = createSlice({
 
 export const {
     setUnitProcess, 
-    updateUnitProcess, 
-    deleteUnitProcess
+    setUpdateUnitProcess, 
+    removeUnitProcess
 } = UnitProcessSlice.actions
 export const UnitProcessReducer = UnitProcessSlice.reducer

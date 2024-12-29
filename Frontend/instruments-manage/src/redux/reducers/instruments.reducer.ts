@@ -42,5 +42,5 @@ const instrumentsSlice = createSlice({
 
 
 
-export const { setInstrument } = instrumentsSlice.actions
+export const { setInstrument, updateInstrument, removeInstrument } = instrumentsSlice.actions
 export default instrumentsSlice.reducer
