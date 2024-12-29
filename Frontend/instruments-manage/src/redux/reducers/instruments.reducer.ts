@@ -18,11 +18,18 @@ const instrumentsSlice = createSlice({
     name: 'instruments',
     initialState,
     reducers: {
-        setInstruments: (state, action: PayloadAction<InstrumentDomain[]>) => {
-            state.data = action.payload
-        },
-        setOneInstrument: (state, action: PayloadAction<InstrumentDomain>) => {
+        setInstrument: (state, action: PayloadAction<InstrumentDomain>) => {
             state.data.push(action.payload)
+        },
+        updateInstrument: (state, action: PayloadAction<InstrumentDomain>) => {
+            const index = state.data.findIndex(({id}) => id === action.payload.id)
+            
+            if (index !== -1) {
+                state.data[index] = action.payload
+            }
+        },
+        removeInstrument: (state, action: PayloadAction<string>) => {
+            state.data = state.data.filter(({id}) => id !== action.payload)
         }
     },
     extraReducers: (builder) => {
@@ -35,5 +42,5 @@ const instrumentsSlice = createSlice({
 
 
 
-export const { setInstruments, setOneInstrument } = instrumentsSlice.actions
+export const { setInstrument } = instrumentsSlice.actions
 export default instrumentsSlice.reducer

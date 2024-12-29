@@ -18,11 +18,18 @@ const brandsSlice = createSlice({
     name: 'brands',
     initialState,
     reducers: {
-        setBrands: (state, action: PayloadAction<BrandDomain[]>) => {
-            state.data = action.payload
-        },
-        setOneBrand: (state, action: PayloadAction<BrandDomain>) => {
+        setBrand: (state, action: PayloadAction<BrandDomain>) => {
             state.data.push(action.payload)
+        },
+        updateBrand: (state, action: PayloadAction<BrandDomain>) => {
+            const index = state.data.findIndex(({id}) => id === action.payload.id)
+            
+            if (index !== -1) {
+                state.data[index] = action.payload
+            }
+        },
+        deleteBrand: (state, action: PayloadAction<string>) => {
+            state.data = state.data.filter(({id}) => id !== action.payload)
         }
     },
     extraReducers: (builder) => {
@@ -32,5 +39,9 @@ const brandsSlice = createSlice({
     }
 })
 
-export const { setBrands, setOneBrand } = brandsSlice.actions
+export const { 
+    setBrand, 
+    updateBrand, 
+    deleteBrand 
+} = brandsSlice.actions
 export const BrandsReducer = brandsSlice.reducer
