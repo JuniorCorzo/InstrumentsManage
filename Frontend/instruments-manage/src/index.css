@@ -28,3 +28,26 @@ body {
 #root {
   width: 100%;
 }
+
+.cells {
+  @apply table-cell h-14 border-b border-r border-gray-200/25 text-center;
+
+  &:first-child {
+    @apply border-l;
+  }
+  &:where(th) {
+    @apply first-of-type:rounded-ss-lg last-of-type:rounded-se-lg border-t;
+  }
+}
+
+
+thead tr, 
+tr:nth-of-type(even) {
+  @apply bg-gray-700/20;
+}
+
+table tbody tr:last-child {
+  & td {
+    @apply first:rounded-bl-lg last:rounded-br-lg;
+  }
+}
