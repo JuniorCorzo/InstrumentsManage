@@ -4,18 +4,13 @@ import Pagination from "@/pages/home/components/table/common/Pagination";
 import { useContext, useEffect } from "react";
 
 const Table = () => {
-  const {
-    data,
-    searchValue,
-    maxRows,
-    page,
-    setRowLength,
-  } = useContext(TableDataContext);
+  const { data, searchValue, maxRows, page, setRowLength } =
+    useContext(TableDataContext);
   const { headers, rows } = data;
 
   const filterAndRenderRows = () => {
     const startIndex = (page - 1) * maxRows;
-    console.log(startIndex, startIndex + maxRows);
+
     const rowsFiltred = {
       headers,
       rows: rows.filter((row) =>
