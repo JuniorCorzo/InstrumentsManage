@@ -1,16 +1,18 @@
-import { InstrumentDTO } from "./instruments.model"
+import { InstrumentDTO } from "./instruments.model";
+import { UnitProcessDTO } from "./unit-process.model";
 
 export interface TagsDTO {
-    _id: string
-    description: string
-    instruments: InstrumentDTO,
-    unitProcess: string
-    typeUnit: string
-    alarms: {
-        ll: number
-        l: number
-        h: number
-        hh: number
-    }
-    shutDown: boolean
+  _id: string;
+  tag: string;
+  description: string;
+  instruments: InstrumentDTO;
+  unitProcess: UnitProcessDTO;
+  typeUnit: string;
+  alarms: {
+    ll: number;
+    l: number;
+    h: number;
+    hh: number;
+  };
+  shutDown: boolean;
 }
