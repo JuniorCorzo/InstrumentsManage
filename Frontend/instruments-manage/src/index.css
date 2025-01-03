@@ -40,8 +40,7 @@ body {
   }
 }
 
-
-thead tr, 
+thead tr,
 tr:nth-of-type(even) {
   @apply bg-gray-700/20;
 }
@@ -49,5 +48,12 @@ tr:nth-of-type(even) {
 table tbody tr:last-child {
   & td {
     @apply first:rounded-bl-lg last:rounded-br-lg;
+  }
+}
+
+.pagination-item {
+  @apply px-3 py-1 border rounded-md border-gray-200/25 cursor-pointer;
+  &:where(.active) {
+    @apply border-slate-50;
   }
 }

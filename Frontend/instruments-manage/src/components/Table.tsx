@@ -1,13 +1,22 @@
 import { TableData, TableDataContext } from "@/context/TableContext";
 import CardCaption from "@/pages/home/components/table/CardCaption";
-import { useContext } from "react";
+import Pagination from "@/pages/home/components/table/Pagination";
+import { useContext, useEffect } from "react";
 
 const Table = () => {
-  const { data, searchValue } = useContext(TableDataContext);
+  const {
+    data,
+    searchValue,
+    maxRows,
+    page,
+    setRowLength,
+  } = useContext(TableDataContext);
   const { headers, rows } = data;
 
   const filterAndRenderRows = () => {
-    return renderTableRows({
+    const startIndex = (page - 1) * maxRows;
+    console.log(startIndex, startIndex + maxRows);
+    const rowsFiltred = {
       headers,
       rows: rows.filter((row) =>
         headers.some(({ key }) =>
@@ -16,7 +25,13 @@ const Table = () => {
             .some((word) => word.toLowerCase().startsWith(searchValue))
         )
       ),
-    });
+    };
+
+    useEffect(() => {
+      setRowLength(rowsFiltred.rows.length);
+    }, [rowsFiltred.rows]);
+
+    return renderTableRows(rowsFiltred).slice(startIndex, startIndex + maxRows);
   };
 
   const renderTableRows = ({ headers, rows }: TableData) => {
@@ -51,8 +66,16 @@ const Table = () => {
           })}
         </tr>
       </thead>
-      <tbody>{filterAndRenderRows()}</tbody>
-      <tfoot>{}</tfoot>
+      <tbody>
+        {filterAndRenderRows()}
+        <tr>
+          <td className="cells" colSpan={headers.length}>
+            <ul className="flex mr-4 justify-end gap-2">
+              <Pagination />
+            </ul>
+          </td>
+        </tr>
+      </tbody>
     </table>
   );
 };
