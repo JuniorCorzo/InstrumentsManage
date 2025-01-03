@@ -6,6 +6,7 @@ import { useContext, useEffect } from "react";
 const InstrumentsTable = () => {
   const { instruments } = useInstruments();
   const { setData } = useContext(TableDataContext);
+  
   // TODO: Refactorizar en un custom hook 
   useEffect(() => {
     setData({

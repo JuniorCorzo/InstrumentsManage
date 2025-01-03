@@ -1,6 +1,6 @@
 import { TableData, TableDataContext } from "@/context/TableContext";
-import CardCaption from "@/pages/home/components/table/CardCaption";
-import Pagination from "@/pages/home/components/table/Pagination";
+import CardCaption from "@/pages/home/components/table/common/CardCaption";
+import Pagination from "@/pages/home/components/table/common/Pagination";
 import { useContext, useEffect } from "react";
 
 const Table = () => {
