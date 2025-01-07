@@ -1,4 +1,4 @@
-package io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.auxiliar;
+package io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.auxiliar;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

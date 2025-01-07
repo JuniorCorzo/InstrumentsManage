@@ -1,13 +1,16 @@
-package io.github.juniorcorzo.tagsinstrumentsservice.tags.dto;
+package io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos;
 
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.auxiliar.AlarmsDTO;
+import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.InstrumentsDTO;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.auxiliar.AlarmsDTO;
 import lombok.Data;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class TagsResponse {
         private String id;
