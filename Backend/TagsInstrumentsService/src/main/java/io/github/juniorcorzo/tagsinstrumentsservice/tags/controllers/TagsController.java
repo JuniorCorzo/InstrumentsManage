@@ -2,7 +2,7 @@ package io.github.juniorcorzo.tagsinstrumentsservice.tags.controllers;
 
 import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithData;
 import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithoutData;
-import io.github.juniorcorzo.tagsinstrumentsservice.tags.dto.TagsResponse;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsResponse;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.models.Tags;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.services.TagsService;
 import lombok.AllArgsConstructor;
