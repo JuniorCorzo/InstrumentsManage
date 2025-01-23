@@ -18,17 +18,11 @@ const campSlice = createSlice({
     name: 'camps',
     initialState,
     reducers: {
-        setCamp: (state, action: PayloadAction<CampDomain>) => {
+        setCamps: (state, action: PayloadAction<CampDomain[]>) => {
+            state.data = action.payload
+        },
+        setOneCamp: (state, action: PayloadAction<CampDomain>) => {
             state.data.push(action.payload)
-        },
-        setUpdateCamp: (state, action: PayloadAction<CampDomain>) => {
-            const index = state.data.findIndex(({id}) => id === action.payload.id)
-            if (index !== -1 ) {
-                state.data[index] = action.payload
-            }
-        },
-        removeCamp: (state, action: PayloadAction<string>) => {
-            state.data = state.data.filter(({id}) => id !== action.payload)
         }
     },
     extraReducers: (builder) => {
@@ -38,5 +32,5 @@ const campSlice = createSlice({
     }
 })
 
-export const { setCamp, setUpdateCamp, removeCamp } = campSlice.actions
+export const { setCamps, setOneCamp } = campSlice.actions
 export const CampReducer = campSlice.reducer
