@@ -6,9 +6,6 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 public record InstrumentsDTO(
                 String id,
                 String model,
-                BrandsDTO brand,
+                String brand,
                 String type) {
-}
-
-record BrandsDTO(String name) {
 }

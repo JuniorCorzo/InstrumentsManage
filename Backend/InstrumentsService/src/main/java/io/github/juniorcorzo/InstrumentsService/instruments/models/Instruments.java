@@ -13,6 +13,6 @@ public class Instruments {
     @MongoId(FieldType.OBJECT_ID)
     private String id;
     private String model;
-    private Brands brand;
+    private String brand;
     private String type;
 }
