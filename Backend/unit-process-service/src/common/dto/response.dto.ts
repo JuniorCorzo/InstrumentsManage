@@ -3,14 +3,14 @@ import { WithId } from 'mongodb'
 
 export class ResponseDTO<T> {
   constructor (
-        private readonly status: HttpStatus,
+        private readonly status: HttpStatus | string,
         private readonly messages: string,
-        private readonly data?: WithId<T>[] | WithId<T> | void
+        private readonly data?: WithId<T>[] | void
   ) {
 
   }
 
-  getStatus (): HttpStatus {
+  getStatus (): HttpStatus | string {
     return this.status
   }
 
