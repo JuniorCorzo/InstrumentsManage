@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.Value;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Getter
+@Data
 public class TagsResponse {
     private String id;
     private String tag;
