@@ -34,15 +34,15 @@ public class OrchestrationService {
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Future<InstrumentsDTO> instruments = this.submitTask(this.instrumentsContext, tags.getIdInstruments());
+            Future<InstrumentsDTO> instrument = this.submitTask(this.instrumentsContext, tags.getIdInstruments());
             Future<UnitProcessDTO> unitProcess = this.submitTask(this.unitProcessContext, tags.getUnitProcess());
 
             tagsResponse = mapper.readerForUpdating(
                     mapper.readValue(mapper.writeValueAsString(tags), TagsResponse.class)
             ).readValue(
                     String.format(
-                            "{\"instruments\": %s, \"unitProcess\": %s}",
-                            mapper.writeValueAsString(instruments.get()),
+                            "{\"instrument\": %s, \"unitProcess\": %s}",
+                            mapper.writeValueAsString(instrument.get()),
                             mapper.writeValueAsString(unitProcess.get())
                     )
             );
