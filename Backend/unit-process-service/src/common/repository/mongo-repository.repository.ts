@@ -142,11 +142,11 @@ export class MongoRepository<T, ID> {
     try {
       const { id, ...withoutIdDocument } = document
 
-      const { modifiedCount } = await this.collection.updateOne(
+      const { upsertedCount } = await this.collection.updateOne(
         { _id: new ObjectId(id) as ID },
         { $set: withoutIdDocument as Partial<T> }
       )
-      if (modifiedCount === 0) { throw new Error(`Failed to update data with id ${id} in ${this.collection.collectionName}`) }
+      if (upsertedCount === 0) { this.Logger.warn(`Failed to update data with id ${id} in ${this.collection.collectionName}`) }
 
       return await this.findById(id.toString())
     } catch (error) {
