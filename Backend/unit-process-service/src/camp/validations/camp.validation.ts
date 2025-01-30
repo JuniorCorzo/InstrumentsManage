@@ -10,7 +10,7 @@ import { Camp } from '../model/camp.model'
 export class CampValidations implements PipeTransform {
   constructor (private readonly campRepository: CampRepository) { }
   async transform (value: string | Camp) {
-    await this.validIdExist(this.retriveId(value))
+    await this.validIdExist(this.retrieveId(value))
 
     return value
   }
@@ -25,10 +25,10 @@ export class CampValidations implements PipeTransform {
   private async validIdExist (id: string): Promise<void> {
     this.validId(id)
     await this.campRepository.existById(id)
-      .then(isValid => { if (isValid) throw new CampNotFound() })
+      .then(isValid => { if (!isValid) throw new CampNotFound() })
   }
 
-  private retriveId (idRaw: string | Camp): string {
+  private retrieveId (idRaw: string | Camp): string {
     if (idRaw instanceof Object) return idRaw.id.toString()
     return idRaw
   }

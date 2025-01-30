@@ -164,10 +164,17 @@ export class MongoRepository<T, ID> {
    * @remarks
    * This method logs an error message if the deletion operation fails.
    */
-  public async delete (id: ID): Promise<void> {
+  public async delete (id: string): Promise<boolean> {
     try {
-      const { deletedCount } = await this.collection.deleteOne({ _id: id })
-      if (deletedCount === 0) throw new MongoException(`Failed to delete document with id: ${id}`)
+      if (!(this.existById(id as string))) throw new MongoException(`Document with id ${id} not exists in the ${this.collection.collectionName}`)
+
+      const { deletedCount } = await this.collection.deleteOne({ _id: new ObjectId(id) as ID })
+      if (deletedCount === 0) {
+        this.Logger.warn(`Failed to delete document with id ${id} in ${this.collection.collectionName}`)
+        return false
+      }
+
+      return true
     } catch (error) {
       this.Logger.error(error.message)
     }

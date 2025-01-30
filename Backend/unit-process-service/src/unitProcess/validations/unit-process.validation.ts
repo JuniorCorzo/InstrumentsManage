@@ -28,7 +28,7 @@ export class UnitProcessValidations implements PipeTransform {
   private async validIdExist (id: string): Promise<void> {
     this.validId(id)
     await this.unitProcessRepository.existById(id)
-      .then(isValid => { if (isValid) throw new UnitProcessNotFound() })
+      .then(isValid => { if (!isValid) throw new UnitProcessNotFound() })
   }
 
   private retrieveId (idRaw: string | UnitProcess): string {

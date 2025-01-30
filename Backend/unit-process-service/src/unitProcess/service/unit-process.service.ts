@@ -35,7 +35,7 @@ export class UnitProcessService {
   }
 
   public async insertUnitProcess (unitProcess: UnitProcess): Promise<ResponseDTO<UnitProcess>> {
-    const saveInsert = await this.unitProcessRepository.insert(unitProcess)
+    const saveInsert = await this.unitProcessRepository.save(unitProcess)
 
     return new ResponseDTO<UnitProcess>(
       HttpStatus.CREATED,
@@ -45,7 +45,7 @@ export class UnitProcessService {
   }
 
   public async updateUnitProcess (unitProcess: WithId<UnitProcess>): Promise<ResponseDTO<UnitProcess>> {
-    const saveInsert = await this.unitProcessRepository.update(unitProcess)
+    const saveInsert = await this.unitProcessRepository.save(unitProcess)
 
     return new ResponseDTO<UnitProcess>(
       HttpStatus.OK,

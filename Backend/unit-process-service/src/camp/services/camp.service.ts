@@ -32,7 +32,7 @@ export class CampService {
   }
 
   public async insertCamp (camp: WithId<Camp>): Promise<ResponseDTO<Camp>> {
-    const dataInsert = await this.campRepository.insert(camp)
+    const dataInsert = await this.campRepository.save(camp)
 
     return new ResponseDTO(
       HttpStatus.CREATED,
@@ -42,7 +42,7 @@ export class CampService {
   }
 
   public async updateCamp (camp: WithId<Camp>): Promise<ResponseDTO<Camp>> {
-    const dataUpdated = await this.campRepository.update(camp)
+    const dataUpdated = await this.campRepository.save(camp)
 
     return new ResponseDTO(
       HttpStatus.OK,
