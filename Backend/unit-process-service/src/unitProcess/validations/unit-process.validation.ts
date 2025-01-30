@@ -32,7 +32,10 @@ export class UnitProcessValidations implements PipeTransform {
   }
 
   private retrieveId (idRaw: string | UnitProcess): string {
-    if (idRaw instanceof Object) { return idRaw._id.toString() }
+    if (idRaw instanceof Object) {
+      const { id } = idRaw
+      return id.toString()
+    }
     return idRaw
   }
 }

@@ -7,8 +7,10 @@ import org.springframework.context.annotation.Configuration;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.InMemoryInstrumentsContext;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.InMemoryUnitProcessContext;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.InstrumentService;
+import org.springframework.context.annotation.DependsOn;
 
 @Configuration
+@DependsOn({"discoveryClient"})
 public class OrchestrationBeans {
 
     @Bean

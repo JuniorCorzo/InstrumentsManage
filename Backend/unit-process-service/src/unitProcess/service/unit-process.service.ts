@@ -13,9 +13,8 @@ export class UnitProcessService {
 
   public async getAllUnitProcess (): Promise<ResponseDTO<WithId<UnitProcess>>> {
     const data = await this.unitProcessRepository.findAll()
-
     return new ResponseDTO(
-      HttpStatus.OK,
+      'OK',
       ResponseMessages.OK,
       data
     )
@@ -25,9 +24,9 @@ export class UnitProcessService {
     const data = await this.unitProcessRepository.findById(id)
 
     return new ResponseDTO(
-      HttpStatus.OK,
+      'OK',
       ResponseMessages.OK,
-      data
+      [data]
     )
   }
 
@@ -37,11 +36,11 @@ export class UnitProcessService {
 
   public async insertUnitProcess (unitProcess: UnitProcess): Promise<ResponseDTO<UnitProcess>> {
     const saveInsert = await this.unitProcessRepository.insert(unitProcess)
-    console.log(saveInsert)
+
     return new ResponseDTO<UnitProcess>(
       HttpStatus.CREATED,
       ResponseMessages.OK,
-      saveInsert
+      [saveInsert]
     )
   }
 
@@ -51,7 +50,7 @@ export class UnitProcessService {
     return new ResponseDTO<UnitProcess>(
       HttpStatus.OK,
       ResponseMessages.OK,
-      saveInsert
+      [saveInsert]
     )
   }
 

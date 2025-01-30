@@ -10,22 +10,24 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class InMemoryUnitProcessContext implements IDataContext<UnitProcessDTO> {
-    private static final Object LOCK = new Object();
     private static final Logger LOGS = LoggerFactory.getLogger(InMemoryUnitProcessContext.class);
     private static volatile InMemoryUnitProcessContext instance;
     private final UnitProcessService unitProcessService;
     private final Map<String, UnitProcessDTO> unitProcessContext;
-    private ReentrantReadWriteLock lock;
+    private final ReentrantReadWriteLock lock;
 
     private InMemoryUnitProcessContext(UnitProcessService unitProcessService) {
         this.unitProcessService = unitProcessService;
         this.unitProcessContext = new ConcurrentHashMap<>();
+        this.lock = new ReentrantReadWriteLock();
+
+        this.refreshContext();
     }
 
     public synchronized static InMemoryUnitProcessContext getInstance(UnitProcessService unitProcessService) {
         InMemoryUnitProcessContext result = null;
         if (instance == null) {
-            synchronized (LOCK) {
+            synchronized (InMemoryUnitProcessContext.class) {
                 result = instance;
                 if (result == null) {
                     instance = result = new InMemoryUnitProcessContext(unitProcessService);

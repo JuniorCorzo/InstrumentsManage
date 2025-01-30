@@ -27,7 +27,7 @@ export class CampService {
     return new ResponseDTO<Camp>(
       HttpStatus.OK,
       ResponseMessages.OK,
-      campData
+      [campData]
     )
   }
 
@@ -37,7 +37,7 @@ export class CampService {
     return new ResponseDTO(
       HttpStatus.CREATED,
       ResponseMessages.OK,
-      dataInsert
+      [dataInsert]
     )
   }
 
@@ -47,7 +47,7 @@ export class CampService {
     return new ResponseDTO(
       HttpStatus.OK,
       ResponseMessages.OK,
-      dataUpdated
+      [dataUpdated]
     )
   }
 
