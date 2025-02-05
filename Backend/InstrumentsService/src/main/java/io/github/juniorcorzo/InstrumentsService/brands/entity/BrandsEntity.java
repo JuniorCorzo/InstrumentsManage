@@ -1,6 +1,7 @@
-package io.github.juniorcorzo.InstrumentsService.brands.models;
+package io.github.juniorcorzo.InstrumentsService.brands.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
@@ -8,9 +9,11 @@ import org.springframework.data.mongodb.core.mapping.MongoId;
 
 @AllArgsConstructor
 @Data
-@Document(collection = "brandsCollection")
-public class Brands {
+@Builder
+@Document(collection = "Brands")
+public class BrandsEntity {
     @MongoId(FieldType.OBJECT_ID)
-    private String id;
+    private String _id;
     private String name;
+    private String website;
 }

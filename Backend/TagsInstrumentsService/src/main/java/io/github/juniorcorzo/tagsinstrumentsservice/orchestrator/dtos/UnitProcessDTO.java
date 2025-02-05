@@ -5,10 +5,11 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @JsonTypeName("unitProcess")
 public record UnitProcessDTO(
-        @JsonProperty("_id")
+        @JsonProperty("id")
         String id,
         String name,
-        CampDTO camp) {
+        CampDTO camp
+) {
 
 }
 
