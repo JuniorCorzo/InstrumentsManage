@@ -9,7 +9,6 @@ import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.Instrument
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.UnitProcessDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.aux.AlarmsDTO;
 import lombok.Data;
-import lombok.Value;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data

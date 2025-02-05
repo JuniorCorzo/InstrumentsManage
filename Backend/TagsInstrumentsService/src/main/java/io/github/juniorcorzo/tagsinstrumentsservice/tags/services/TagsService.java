@@ -7,6 +7,7 @@ import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.Orches
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.TagsAdapter;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsResponse;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.entity.TagsEntity;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.exceptions.TagIdNotFound;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.repositories.TagsRepository;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.validations.TagsValidations;
