@@ -1,20 +1,17 @@
-import { HttpStatus } from '@nestjs/common'
-import { WithId } from 'mongodb'
-
 export class ResponseDTO<T> {
   constructor (
-        private readonly status: HttpStatus | string,
+        private readonly status: string,
         private readonly messages: string,
-        private readonly data?: WithId<T>[] | void
+        private readonly data?: T[] | void
   ) {
 
   }
 
-  getStatus (): HttpStatus | string {
+  getStatus (): string {
     return this.status
   }
 
-  getData (): WithId<T>[] | WithId<T> | void {
+  getData (): T[] | void {
     return this.data
   }
 
