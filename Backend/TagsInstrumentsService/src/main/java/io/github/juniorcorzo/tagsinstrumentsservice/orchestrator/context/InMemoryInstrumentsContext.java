@@ -28,8 +28,6 @@ public class InMemoryInstrumentsContext implements IDataContext<InstrumentsDTO> 
         this.instrumentService = instrumentService;
         this.instrumentsContext = new ConcurrentHashMap<>();
         this.lock = new ReentrantReadWriteLock();
-
-        refreshContext();
     }
 
     /**

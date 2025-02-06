@@ -20,8 +20,6 @@ public class InMemoryUnitProcessContext implements IDataContext<UnitProcessDTO> 
         this.unitProcessService = unitProcessService;
         this.unitProcessContext = new ConcurrentHashMap<>();
         this.lock = new ReentrantReadWriteLock();
-
-        this.refreshContext();
     }
 
     public synchronized static InMemoryUnitProcessContext getInstance(UnitProcessService unitProcessService) {

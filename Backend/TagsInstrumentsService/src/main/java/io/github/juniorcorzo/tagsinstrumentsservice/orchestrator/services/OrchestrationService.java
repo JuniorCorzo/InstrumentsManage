@@ -8,10 +8,11 @@ import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.InMemor
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.TaskExecutorContext;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.InstrumentsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.UnitProcessDTO;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsResponse;
-import io.github.juniorcorzo.tagsinstrumentsservice.tags.models.Tags;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -29,13 +30,13 @@ public class OrchestrationService {
         executorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
     }
 
-    public TagsResponse createResponse(Tags tags) {
+    public TagsResponse createResponse(TagsDTO tags) {
         TagsResponse tagsResponse;
 
         ObjectMapper mapper = new ObjectMapper();
         try {
-            Future<InstrumentsDTO> instrument = this.submitTask(this.instrumentsContext, tags.getIdInstruments());
-            Future<UnitProcessDTO> unitProcess = this.submitTask(this.unitProcessContext, tags.getUnitProcess());
+            Future<InstrumentsDTO> instrument = this.submitTask(this.instrumentsContext, tags.idInstrument());
+            Future<UnitProcessDTO> unitProcess = this.submitTask(this.unitProcessContext, tags.idUnitProcess());
 
             tagsResponse = mapper.readerForUpdating(
                     mapper.readValue(mapper.writeValueAsString(tags), TagsResponse.class)
@@ -46,7 +47,6 @@ public class OrchestrationService {
                             mapper.writeValueAsString(unitProcess.get())
                     )
             );
-
         } catch (JsonProcessingException | ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -54,10 +54,16 @@ public class OrchestrationService {
         return tagsResponse;
     }
 
-    private <T> Future<T> submitTask(IDataContext<T> context, String key) {
-        return this.executorService.submit(new TaskExecutorContext<>(context, key));
+    public List<TagsResponse> createResponse(List<TagsDTO> tags) {
+        return tags
+                .stream()
+                .map(this::createResponse)
+                .toList();
     }
 
 
+    private <T> Future<T> submitTask(IDataContext<T> context, String key) {
+        return this.executorService.submit(new TaskExecutorContext<>(context, key));
+    }
 }
 
