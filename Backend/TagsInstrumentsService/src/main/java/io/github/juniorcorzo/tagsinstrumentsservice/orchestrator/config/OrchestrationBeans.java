@@ -8,6 +8,7 @@ import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.InMemor
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.InMemoryUnitProcessContext;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.InstrumentService;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.annotation.Lazy;
 
 @Configuration
 @DependsOn({"discoveryClient", "restTemplate"})
