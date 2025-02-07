@@ -1,5 +1,5 @@
 import { Inject, Logger } from '@nestjs/common'
-import { Collection, ObjectId, OptionalUnlessRequiredId, WithId } from 'mongodb'
+import { Collection, MatchKeysAndValues, ObjectId, OptionalUnlessRequiredId, WithId } from 'mongodb'
 import { ConnectDB } from 'src/common/config/ConnectDB'
 import { MongoException } from '../exceptions/mongo-repository.exception'
 
@@ -43,7 +43,7 @@ import { MongoException } from '../exceptions/mongo-repository.exception'
  * await userRepo.delete('someId');
  *
  * // Check existence
- * const exists = await userRepo.existById('someId');
+ * const exists = await userRepo.existById('someId');m
  * ```
  *
  * @remarks
@@ -60,7 +60,7 @@ export class MongoRepository<T, ID> {
 
   constructor (@Inject() clientMongo: ConnectDB) {
     this.collection = clientMongo.getConnection()
-      .db('unitProcess')
+      .db('UnitProcess')
       .collection(Reflect.getMetadata('collection_name', this.constructor))
   }
 
@@ -141,13 +141,12 @@ export class MongoRepository<T, ID> {
   public async update (document: WithId<T>): Promise<WithId<T>> {
     try {
       const { _id, ...withoutIdDocument } = document
-
-      const { upsertedCount } = await this.collection.updateOne(
-        { _id: _id as ID },
-        { $set: withoutIdDocument as Partial<T> }
+      const { modifiedCount } = await this.collection.updateOne(
+        { _id: new ObjectId(_id) as ID },
+        { $set: withoutIdDocument as MatchKeysAndValues<T> }
       )
-      if (upsertedCount === 0) { this.Logger.warn(`Failed to update data with id ${_id} in ${this.collection.collectionName}`) }
 
+      if (modifiedCount === 0) { this.Logger.warn(`Failed to update data with id ${_id} in ${this.collection.collectionName}`) }
       return await this.findById(_id.toString())
     } catch (error) {
       this.Logger.error(error.message)
