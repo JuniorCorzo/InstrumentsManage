@@ -12,5 +12,6 @@ interface IUnitProcessEntity {
 export class UnitProcessEntity implements IUnitProcessEntity {
   _id: ObjectId
   name: string
+  description: string
   camp: CampEntity
 }
