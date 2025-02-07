@@ -7,7 +7,6 @@ import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.Orches
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.TagsAdapter;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsResponse;
-import io.github.juniorcorzo.tagsinstrumentsservice.tags.entity.TagsEntity;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.exceptions.TagIdNotFound;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.repositories.TagsRepository;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.validations.TagsValidations;
@@ -63,15 +62,15 @@ public class TagsService {
                 ResponseMessages.OK.getMessage());
     }
 
-    public ResponseWithData<TagsDTO> insertTag(TagsDTO tag) {
+    public ResponseWithData<TagsResponse> insertTag(TagsDTO tag) {
         this.LOGS.info("Inserting a new Tag");
-        TagsDTO tagData = TagsAdapter.toDTO(
+        TagsDTO tagCreated = TagsAdapter.toDTO(
                 this.tagsRepository.save(TagsAdapter.toEntity(tag))
         );
-
+        TagsResponse responseTag = this.orchestrationService.createResponse(tagCreated);
         return new ResponseWithData<>(
                 HttpStatus.OK,
-                Collections.singletonList(tagData),
+                Collections.singletonList(responseTag),
                 ResponseMessages.OK.getMessage());
     }
 

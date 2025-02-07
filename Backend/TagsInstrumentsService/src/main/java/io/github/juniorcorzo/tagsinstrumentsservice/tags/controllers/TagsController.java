@@ -26,7 +26,7 @@ public class TagsController {
     }
 
     @PostMapping("/create")
-    public ResponseWithData<TagsDTO> insertTag(@RequestBody TagsDTO tag) {
+    public ResponseWithData<TagsResponse> insertTag(@RequestBody TagsDTO tag) {
         return this.tagsService.insertTag(tag);
     }
 

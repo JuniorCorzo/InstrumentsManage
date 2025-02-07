@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 
-@JsonIgnoreProperties({"idInstruments", "unitProcess"})
+@JsonIgnoreProperties({"idInstrument", "unitProcess"})
 @Document("Tags")
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,7 +21,7 @@ public class TagsEntity {
     private String _id;
     private String tag;
     private String description;
-    private String idInstruments;
+    private String idInstrument;
     private String idUnitProcess;
     private String typeUnit;
     private Alarms alarms;
