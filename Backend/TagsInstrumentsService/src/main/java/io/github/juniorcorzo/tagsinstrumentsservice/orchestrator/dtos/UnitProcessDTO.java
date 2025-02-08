@@ -8,11 +8,19 @@ public record UnitProcessDTO(
         @JsonProperty("id")
         String id,
         String name,
+        String description,
         CampDTO camp
 ) {
 
 }
 
-record CampDTO(String name) {
+record CampDTO(String name, Location location) {
 
 }
+
+record Location(
+        String municipality,
+        String department,
+        String country,
+        String[] coordinates
+){}
