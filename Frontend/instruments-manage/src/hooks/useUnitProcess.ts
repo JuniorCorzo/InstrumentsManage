@@ -16,6 +16,8 @@ import {
   createUnitProcess,
   updateUnitProcess,
 } from "@/services/unit-process.service";
+import { UnitProcessState } from "@/interfaces/states.interface";
+import { useEffect } from "react";
 
 /**
  * Custom hook for managing unit processes in the application.
@@ -44,19 +46,17 @@ import {
  */
 export const useUnitProcess = () => {
   const dispatch = useDispatch<Dispatch>();
-  const unitProcess = useSelector<RootState, UnitProcessDomain[]>(
-    (state) => state.unitProcess.data
+  const unitProcessState = useSelector<RootState, UnitProcessState>(
+    (state) => state.unitProcess
   );
+  const { unitProcess } = unitProcessState;
 
-  /**
-   * Fetches all unit processes from the server and stores them in the state.
-   * @private
-   */
-  const fetchAllUnitProcess = () => {
-    dispatch(fetchUnitProcess());
+  const refreshUnitProcessState = () => {
+    useEffect(() => {
+      dispatch(fetchUnitProcess);
+    }, []);
   };
-
-  if (unitProcess.length === 0) fetchAllUnitProcess();
+  refreshUnitProcessState();
 
   /**
    * Generates the table format for displaying unit process data.
@@ -157,7 +157,8 @@ export const useUnitProcess = () => {
   };
 
   return {
-    unitProcess,
+    unitProcessState,
+    refreshUnitProcessState,
     getFormatTable,
     addUnitProcess,
     updateUnitProcess: update,

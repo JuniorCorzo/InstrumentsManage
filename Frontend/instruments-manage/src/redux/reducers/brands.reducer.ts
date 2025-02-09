@@ -4,7 +4,8 @@ import { getAllBrands } from "../../services/brands.service";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: BrandsState = {
-  data: [],
+  brands: [],
+  loading: false,
 };
 
 export const fetchBrands = createAsyncThunk("brands/fetch", async () => {
@@ -16,27 +17,31 @@ const brandsSlice = createSlice({
   initialState,
   reducers: {
     setBrand: (state, action: PayloadAction<BrandDomain>) => {
-      state.data.push(action.payload);
+      state.brands.push(action.payload);
     },
     setUpdateBrand: (state, action: PayloadAction<BrandDomain>) => {
-      const indexBrand = state.data.findIndex(
+      const indexBrand = state.brands.findIndex(
         ({ id }) => id === action.payload.id
       );
       if (indexBrand > -1) {
-        state.data[indexBrand] = action.payload;
+        state.brands[indexBrand] = action.payload;
       }
     },
     removeBrand: (state, action: PayloadAction<string>) => {
-      state.data = state.data.filter(({ id }) => id === action.payload);
+      state.brands = state.brands.filter(({ id }) => id === action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchBrands.fulfilled,
       (state, action: PayloadAction<BrandDomain[]>) => {
-        state.data = action.payload;
+        state.brands = action.payload;
+        state.loading = false;
       }
     );
+    builder.addCase(fetchBrands.pending, (state) => {
+      state.loading = true;
+    });
   },
 });
 

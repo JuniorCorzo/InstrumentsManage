@@ -4,7 +4,8 @@ import { getAllCamps } from "../../services/camp.service";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: CampState = {
-  data: [],
+  camps: [],
+  loading: false,
 };
 
 export const fetchCamps = createAsyncThunk("camps/fetch", async () => {
@@ -16,28 +17,32 @@ const campSlice = createSlice({
   initialState,
   reducers: {
     setCamp: (state, action: PayloadAction<CampDomain>) => {
-      state.data.push(action.payload);
+      state.camps.push(action.payload);
     },
     setUpdateCamp: (state, action: PayloadAction<CampDomain>) => {
-      const indexCamp = state.data.findIndex(
+      const indexCamp = state.camps.findIndex(
         ({ id }) => id === action.payload.id
       );
 
       if (indexCamp > -1) {
-        state.data[indexCamp] = action.payload;
+        state.camps[indexCamp] = action.payload;
       }
     },
     removeCamp: (state, action: PayloadAction<string>) => {
-      state.data = state.data.filter(({ id }) => id !== action.payload);
+      state.camps = state.camps.filter(({ id }) => id !== action.payload);
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchCamps.fulfilled,
       (state, action: PayloadAction<CampDomain[]>) => {
-        state.data = action.payload;
+        state.camps = action.payload;
+        state.loading = false;
       }
     );
+    builder.addCase(fetchCamps.pending, (state) => {
+      state.loading = true;
+    });
   },
 });
 

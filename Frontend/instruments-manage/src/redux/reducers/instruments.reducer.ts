@@ -4,7 +4,8 @@ import { getAllInstruments } from "../../services/instruments.service";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: InstrumentsState = {
-  data: [],
+  instruments: [],
+  loading: false,
 };
 
 export const fetchInstruments = createAsyncThunk(
@@ -19,26 +20,34 @@ const instrumentsSlice = createSlice({
   initialState,
   reducers: {
     setInstrument: (state, action: PayloadAction<InstrumentDomain>) => {
-      state.data.push(action.payload);
+      state.instruments.push(action.payload);
     },
     setUpdateInstrument: (state, action: PayloadAction<InstrumentDomain>) => {
-      const index = state.data.findIndex(({ id }) => id === action.payload.id);
+      const index = state.instruments.findIndex(
+        ({ id }) => id === action.payload.id
+      );
 
       if (index !== -1) {
-        state.data[index] = action.payload;
+        state.instruments[index] = action.payload;
       }
     },
     removeInstrument: (state, action: PayloadAction<string>) => {
-      state.data = state.data.filter(({ id }) => id !== action.payload);
+      state.instruments = state.instruments.filter(
+        ({ id }) => id !== action.payload
+      );
     },
   },
   extraReducers: (builder) => {
     builder.addCase(
       fetchInstruments.fulfilled,
       (state, action: PayloadAction<InstrumentDomain[]>) => {
-        state.data = action.payload;
+        state.instruments = action.payload;
+        state.loading = false;
       }
     );
+    builder.addCase(fetchInstruments.pending, (state) => {
+      state.loading = true;
+    });
   },
 });
 

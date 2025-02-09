@@ -4,40 +4,45 @@ import { getAllTags } from "../../services/tags.service";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: TagsState = {
-    data: []
-}
+  tags: [],
+  loading: false,
+};
 
-export const fetchTags = createAsyncThunk(
-    'tags/fetch',
-    async () => {
-        return await getAllTags()
-    }
-)
+export const fetchTags = createAsyncThunk("tags/fetch", async () => {
+  return await getAllTags();
+});
 
 const tagsSlice = createSlice({
-    name: 'tags',
-    initialState,
-    reducers: {
-        setTag: (state, action: PayloadAction<TagsDomain>) => {
-            state.data.push(action.payload)
-        },
-        updateTag: (state, action: PayloadAction<TagsDomain>) => {
-            const index = state.data.findIndex(({id}) => id === action.payload.id)
-            if (index !== -1) {
-                state.data[index] = action.payload
-            }
-        },
-        removeTag: (state, action: PayloadAction<string>) => {
-            // TODO:: Add ID format validation
-            state.data = state.data.filter(({id}) => id !== action.payload)
-        }
+  name: "tags",
+  initialState,
+  reducers: {
+    setTag: (state, action: PayloadAction<TagsDomain>) => {
+      state.tags.push(action.payload);
     },
-    extraReducers: (builder) => {
-        builder.addCase(fetchTags.fulfilled, (state, action: PayloadAction<TagsDomain[]>) => {
-            state.data = action.payload
-        })
-    }
-})
+    updateTag: (state, action: PayloadAction<TagsDomain>) => {
+      const index = state.tags.findIndex(({ id }) => id === action.payload.id);
+      if (index !== -1) {
+        state.tags[index] = action.payload;
+      }
+    },
+    removeTag: (state, action: PayloadAction<string>) => {
+      // TODO:: Add ID format validation
+      state.tags = state.tags.filter(({ id }) => id !== action.payload);
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(
+      fetchTags.fulfilled,
+      (state, action: PayloadAction<TagsDomain[]>) => {
+        state.tags = action.payload;
+        state.loading = false;
+      }
+    );
+    builder.addCase(fetchTags.pending, (state) => {
+      state.loading = false;
+    });
+  },
+});
 
-export const { setTag, updateTag, removeTag } = tagsSlice.actions
-export const TagsReducer = tagsSlice.reducer
+export const { setTag, updateTag, removeTag } = tagsSlice.actions;
+export const TagsReducer = tagsSlice.reducer;
