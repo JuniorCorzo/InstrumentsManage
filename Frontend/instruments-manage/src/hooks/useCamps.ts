@@ -10,7 +10,7 @@ import {
 import { createCamp, deleteCamp, updateCamp } from "@/services/camp.service";
 import { TableData } from "@/context/TableContext";
 
-export const useCamp = () => {
+export const useCamps = () => {
   const dispatch = useDispatch<Dispatch>();
   const camp = useSelector<RootState, CampDomain[]>((state) => state.camp.data);
 
