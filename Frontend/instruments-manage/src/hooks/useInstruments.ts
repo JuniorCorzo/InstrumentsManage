@@ -31,7 +31,7 @@ import { InstrumentsState } from "@/interfaces/states.interface";
  *   - updateInstrument: (instrument: InstrumentDomain) => Promise<void> - Function to update an instrument
  *   - removeInstrument: (id: string) => Promise<void> - Function to delete an instrument
  */
-export const useInstruments = (): {} => {
+export const useInstruments = () => {
   const dispatch = useDispatch<Dispatch>();
   const { instruments, loading } = useSelector<RootState, InstrumentsState>(
     (state) => state.instruments
