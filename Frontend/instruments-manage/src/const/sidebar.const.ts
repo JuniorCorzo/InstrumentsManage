@@ -1,18 +1,22 @@
 export const SidebarOptions = Object.freeze([
-    {
-        label: 'Campos',
-        uri: '/'
-    },
-    {
-        label: 'Instrumentos',
-        uri: '/'
-    },
-    {
-        label: 'Marcas',
-        uri: '/'
-    },
-    {
-        label: 'Tags',
-        uri: '/'
-    }
+  {
+    label: "Campos",
+    uri: "/home?useData=brands",
+  },
+  {
+    label: "Instrumentos",
+    uri: "/home?useData=instruments",
+  },
+  {
+    label: "Unidades de Procesos",
+    uri: "/home?useData=process-units",
+  },
+  {
+    label: "Marcas",
+    uri: "/home?useData=brands",
+  },
+  {
+    label: "Tags",
+    uri: "/home?useData=tags",
+  },
 ]);
