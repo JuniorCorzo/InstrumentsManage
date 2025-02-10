@@ -1,17 +1,19 @@
 import { TableData, TableDataContext } from "@/context/TableContext";
 import CardCaption from "@/pages/home/components/table/common/CardCaption";
 import Pagination from "@/pages/home/components/table/common/Pagination";
+import { useParamRoute } from "@/pages/home/components/table/hook/useParamRoute";
 import { useContext, useEffect } from "react";
 
 const Table = () => {
   const { data, searchValue, maxRows, page, setRowLength } =
     useContext(TableDataContext);
   const { headers, rows } = data;
+  useParamRoute();
 
   const filterAndRenderRows = () => {
     const startIndex = (page - 1) * maxRows;
 
-    const rowsFiltred = {
+    const rowsFiltered = {
       headers,
       rows: rows.filter((row) =>
         headers.some(({ key }) =>
@@ -23,10 +25,13 @@ const Table = () => {
     };
 
     useEffect(() => {
-      setRowLength(rowsFiltred.rows.length);
-    }, [rowsFiltred.rows]);
+      setRowLength(rowsFiltered.rows.length);
+    }, [rowsFiltered.rows]);
 
-    return renderTableRows(rowsFiltred).slice(startIndex, startIndex + maxRows);
+    return renderTableRows(rowsFiltered).slice(
+      startIndex,
+      startIndex + maxRows
+    );
   };
 
   const renderTableRows = ({ headers, rows }: TableData) => {
