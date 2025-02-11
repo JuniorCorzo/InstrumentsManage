@@ -13,6 +13,8 @@ import { useDispatch } from "react-redux";
 import { createBrand, updateBrand } from "@/services/brands.service";
 import { BrandsState } from "@/interfaces/states.interface";
 import { useEffect } from "react";
+import { TableData } from "@/context/TableContext";
+
 
 /**
  * @fileoverview Custom hook for managing CRUD operations for brands using Redux.
@@ -82,7 +84,7 @@ export const useBrands = () => {
    * // }
    * ```
    */
-  const getFormatTable = () => {
+  const getFormatTable = (): TableData => {
     return {
       headers: [
         {
