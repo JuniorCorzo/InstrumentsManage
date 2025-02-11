@@ -2,6 +2,7 @@ package io.github.juniorcorzo.tagsinstrumentsservice.tags.entity;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,5 +29,7 @@ public class TagsEntity {
     private boolean shutdown;
 
 }
+
+
 
 

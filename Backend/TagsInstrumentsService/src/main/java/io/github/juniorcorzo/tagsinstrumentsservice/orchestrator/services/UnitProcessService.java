@@ -14,6 +14,8 @@ import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.RetrieveDTO;
 
 @Service
 public class UnitProcessService {
+	@Value("${GATEWAY_HOST}")
+	private String gatewayHost;
 	private final RestTemplate restTemplate;
 	private final ParameterizedTypeReference<RetrieveDTO<UnitProcessDTO>> responseType;
 
@@ -26,7 +28,7 @@ public class UnitProcessService {
 	public List<UnitProcessDTO> getAllUnitProcess() {
 		return Optional.ofNullable(
 				this.restTemplate
-						.exchange("lb://UNIT-PROCESS-SERVICE/unit-process/all", HttpMethod.GET, null, this.responseType)
+						.exchange(this.gatewayHost + "/unit-process/all", HttpMethod.GET, null, this.responseType)
 						.getBody())
 				.map(RetrieveDTO::data)
 				.orElse(List.of());

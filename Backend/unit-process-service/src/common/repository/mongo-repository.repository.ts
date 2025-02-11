@@ -1,7 +1,13 @@
-import { Inject, Logger } from '@nestjs/common'
-import { Collection, MatchKeysAndValues, ObjectId, OptionalUnlessRequiredId, WithId } from 'mongodb'
-import { ConnectDB } from 'src/common/config/ConnectDB'
-import { MongoException } from '../exceptions/mongo-repository.exception'
+import { Inject, Logger } from "@nestjs/common";
+import {
+  Collection,
+  MatchKeysAndValues,
+  ObjectId,
+  OptionalUnlessRequiredId,
+  WithId,
+} from "mongodb";
+import { ConnectDB } from "src/common/config/ConnectDB";
+import { MongoException } from "../exceptions/mongo-repository.exception";
 
 /**
  * A generic MongoDB repository class that provides basic CRUD operations.
@@ -55,13 +61,16 @@ import { MongoException } from '../exceptions/mongo-repository.exception'
  * @throws {MongoException} When database operations fail
  */
 export class MongoRepository<T, ID> {
-  private readonly collection: Collection<T>
-  private readonly Logger = new Logger(MongoRepository.name, { timestamp: true })
+  private readonly collection: Collection<T>;
+  private readonly Logger = new Logger(MongoRepository.name, {
+    timestamp: true,
+  });
 
-  constructor (@Inject() clientMongo: ConnectDB) {
-    this.collection = clientMongo.getConnection()
-      .db('UnitProcess')
-      .collection(Reflect.getMetadata('collection_name', this.constructor))
+  constructor(@Inject() clientMongo: ConnectDB) {
+    this.collection = clientMongo
+      .getConnection()
+      .db("UnitProcess")
+      .collection(Reflect.getMetadata("collection_name", this.constructor));
   }
 
   /**
@@ -73,11 +82,11 @@ export class MongoRepository<T, ID> {
    * @throws {Error} If there's an error while accessing the database.
    * The error will be logged through the Logger service.
    */
-  public async findAll (): Promise<WithId<T>[]> {
+  public async findAll(): Promise<WithId<T>[]> {
     try {
-      return await this.collection.find().toArray()
+      return await this.collection.find().toArray();
     } catch (error) {
-      this.Logger.error(error.message)
+      this.Logger.error(error.message);
     }
   }
 
@@ -88,11 +97,11 @@ export class MongoRepository<T, ID> {
    * @returns A Promise that resolves to the document with the specified ID including its MongoDB metadata
    * @throws {Error} If the provided ID is invalid or if there's a database error
    */
-  public async findById (_id: string): Promise<WithId<T>> {
+  public async findById(_id: string): Promise<WithId<T>> {
     try {
-      return await this.collection.findOne({ _id: new ObjectId(_id) as ID })
+      return await this.collection.findOne({ _id: new ObjectId(_id) as ID });
     } catch (error) {
-      this.Logger.error(error.message)
+      this.Logger.error(error.message);
     }
   }
 
@@ -104,12 +113,12 @@ export class MongoRepository<T, ID> {
    * @returns A Promise that resolves to the saved document with its ID
    * @throws {Error} If the update or insert operations fail
    */
-  public async save (document: OptionalUnlessRequiredId<T>): Promise<WithId<T>> {
-    const { _id } = document
+  public async save(document: OptionalUnlessRequiredId<T>): Promise<WithId<T>> {
+    const { _id } = document;
     if (_id != null && this.existById(_id)) {
-      return this.update(document as WithId<T>)
+      return this.update(document as WithId<T>);
     }
-    return await this.insert(document)
+    return await this.insert(document);
   }
 
   /**
@@ -119,15 +128,20 @@ export class MongoRepository<T, ID> {
    * @returns Promise containing the inserted document with its ID. Returns undefined if insertion fails.
    * @throws {MongoException} If the document cannot be found after insertion.
    */
-  public async insert (document: OptionalUnlessRequiredId<T>): Promise<WithId<T>> {
+  public async insert(
+    document: OptionalUnlessRequiredId<T>
+  ): Promise<WithId<T>> {
     try {
-      const responseInsert = await this.collection.insertOne(document)
-      const insertedId: string = responseInsert.insertedId.toString()
+      const responseInsert = await this.collection.insertOne(document);
+      const insertedId: string = responseInsert.insertedId.toString();
 
-      if (!(await this.existById(insertedId))) throw new MongoException(`Failed to the insert data in ${this.collection.collectionName}`)
-      return await this.findById(insertedId)
+      if (!(await this.existById(insertedId)))
+        throw new MongoException(
+          `Failed to the insert data in ${this.collection.collectionName}`
+        );
+      return await this.findById(insertedId);
     } catch (error) {
-      this.Logger.error(error.message)
+      this.Logger.error(error.message);
     }
   }
 
@@ -138,18 +152,22 @@ export class MongoRepository<T, ID> {
    * @returns Promise containing the updated document
    * @throws Error if the update operation fails or no document is modified
    */
-  public async update (document: WithId<T>): Promise<WithId<T>> {
+  public async update(document: WithId<T>): Promise<WithId<T>> {
     try {
-      const { _id, ...withoutIdDocument } = document
+      const { _id, ...withoutIdDocument } = document;
       const { modifiedCount } = await this.collection.updateOne(
         { _id: new ObjectId(_id) as ID },
         { $set: withoutIdDocument as MatchKeysAndValues<T> }
-      )
+      );
 
-      if (modifiedCount === 0) { this.Logger.warn(`Failed to update data with id ${_id} in ${this.collection.collectionName}`) }
-      return await this.findById(_id.toString())
+      if (modifiedCount === 0) {
+        this.Logger.warn(
+          `Failed to update data with id ${_id} in ${this.collection.collectionName}`
+        );
+      }
+      return await this.findById(_id.toString());
     } catch (error) {
-      this.Logger.error(error.message)
+      this.Logger.error(error.message);
     }
   }
 
@@ -163,19 +181,26 @@ export class MongoRepository<T, ID> {
    * @remarks
    * This method logs an error message if the deletion operation fails.
    */
-  public async delete (_id: string): Promise<boolean> {
+  public async delete(_id: string): Promise<boolean> {
     try {
-      if (!(this.existById(_id as string))) throw new MongoException(`Document with id ${_id} not exists in the ${this.collection.collectionName}`)
+      if (!this.existById(_id as string))
+        throw new MongoException(
+          `Document with id ${_id} not exists in the ${this.collection.collectionName}`
+        );
 
-      const { deletedCount } = await this.collection.deleteOne({ _id: new ObjectId(_id) as ID })
+      const { deletedCount } = await this.collection.deleteOne({
+        _id: new ObjectId(_id) as ID,
+      });
       if (deletedCount === 0) {
-        this.Logger.warn(`Failed to delete document with id ${_id} in ${this.collection.collectionName}`)
-        return false
+        this.Logger.warn(
+          `Failed to delete document with id ${_id} in ${this.collection.collectionName}`
+        );
+        return false;
       }
 
-      return true
+      return true;
     } catch (error) {
-      this.Logger.error(error.message)
+      this.Logger.error(error.message);
     }
   }
 
@@ -186,9 +211,11 @@ export class MongoRepository<T, ID> {
    * @returns A promise that resolves to `true` if the document exists, `false` otherwise.
    * @throws {Error} If there's an error during the database operation.
    */
-  public async existById (_id: string): Promise<boolean> {
+  public async existById(_id: string): Promise<boolean> {
     try {
-      return await this.findById(_id) !== null
-    } catch (err) { console.error(err) }
+      return (await this.findById(_id)) !== null;
+    } catch (err) {
+      console.error(err);
+    }
   }
 }

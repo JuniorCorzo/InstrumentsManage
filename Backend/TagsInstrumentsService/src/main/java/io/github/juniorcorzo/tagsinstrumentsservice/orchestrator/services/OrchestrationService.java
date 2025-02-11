@@ -3,6 +3,7 @@ package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.IDataContext;
+import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.IDataContext;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.InMemoryInstrumentsContext;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.InMemoryUnitProcessContext;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context.TaskExecutorContext;
@@ -17,13 +18,17 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.Future;
 
 @Service
 public class OrchestrationService {
     private final InMemoryInstrumentsContext instrumentsContext;
     private final InMemoryUnitProcessContext unitProcessContext;
     private final ExecutorService executorService;
+    private final InMemoryUnitProcessContext unitProcessContext;
+    private final ExecutorService executorService;
 
+    public OrchestrationService(InMemoryInstrumentsContext instrumentsContext, InMemoryUnitProcessContext unitProcessContext) {
     public OrchestrationService(InMemoryInstrumentsContext instrumentsContext, InMemoryUnitProcessContext unitProcessContext) {
         this.instrumentsContext = instrumentsContext;
         this.unitProcessContext = unitProcessContext;
