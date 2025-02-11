@@ -89,6 +89,7 @@ export const useInstruments = () => {
           brand: brand.name,
         };
       }),
+      messageEmpty: "No se encontraron instrumentos registrados",
     };
   };
 

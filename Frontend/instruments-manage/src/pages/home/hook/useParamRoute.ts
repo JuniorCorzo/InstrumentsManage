@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router";
-import useTableStrategy from "../useTableStrategy";
+import useTableStrategy from "../components/table/useTableStrategy";
 import useBrandStrategy from "./strategies/useBrandStrategy";
 import useInstrumentsStrategy from "./strategies/useInstrumentStrategy";
 import { useEffect } from "react";

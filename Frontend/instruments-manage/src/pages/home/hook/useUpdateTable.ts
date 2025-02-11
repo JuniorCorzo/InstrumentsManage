@@ -1,6 +1,6 @@
 import { TableData, TableDataContext } from "@/context/TableContext";
 import { useContext } from "react";
-import { TableStrategy } from "../table-strategy.interface";
+import { TableStrategy } from "../components/table/table-strategy.interface";
 
 const useUpdateTable = (formattedData: TableData): TableStrategy => {
   const { setData } = useContext(TableDataContext);

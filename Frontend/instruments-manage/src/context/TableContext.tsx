@@ -9,6 +9,7 @@ import {
 export interface TableData {
   headers: { key: string; value: string }[];
   rows: Record<string, string>[];
+  messageEmpty?: string;
 }
 
 export interface TableContext {
@@ -28,6 +29,7 @@ const initialTableContext: TableContext = {
   data: {
     headers: [],
     rows: [],
+    messageEmpty: "",
   },
   setData: () => {},
   searchValue: "",

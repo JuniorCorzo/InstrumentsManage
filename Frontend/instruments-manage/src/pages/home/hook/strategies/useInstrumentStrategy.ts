@@ -1,5 +1,5 @@
 import useUpdateTable from "../useUpdateTable";
-import { TableStrategy } from "../../table-strategy.interface";
+import { TableStrategy } from "../../components/table/table-strategy.interface";
 import { useInstruments } from "@/hooks/useInstruments";
 
 const useInstrumentsStrategy = (): TableStrategy => {
