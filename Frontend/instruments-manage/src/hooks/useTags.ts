@@ -8,6 +8,7 @@ import {
 } from "@/redux/reducers/tags.reducer";
 import { Dispatch, RootState } from "@/redux/stores/general.store";
 import { createTags, deleteTags, updateTags } from "@/services/tags.service";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -28,17 +29,16 @@ import { useSelector } from "react-redux";
  */
 export const useTags = () => {
   const dispatch = useDispatch<Dispatch>();
-  const tags = useSelector((state: RootState) => state.tags.data);
+  const tags = useSelector((state: RootState) => state.tags.tags);
 
   /**
    * Fetches all tags from the store
    * If there are no tags, makes a request to get them
    */
-  const fetchAllTags = () => {
+  const refreshTagsContext = () => {
     dispatch(fetchTags());
   };
-  if (tags.length === 0) fetchAllTags();
-
+  useEffect(() => refreshTagsContext(), []);
   /**
    * Generates the table format for displaying tag data.
    *

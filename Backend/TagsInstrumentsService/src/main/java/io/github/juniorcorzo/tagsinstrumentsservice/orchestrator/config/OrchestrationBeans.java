@@ -10,7 +10,7 @@ import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.Instru
 import org.springframework.context.annotation.DependsOn;
 
 @Configuration
-@DependsOn({"discoveryClient"})
+@DependsOn({"discoveryClient", "restTemplate"})
 public class OrchestrationBeans {
 
     @Bean

@@ -2,13 +2,13 @@ package io.github.juniorcorzo.tagsinstrumentsservice.tags.controllers;
 
 import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithData;
 import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithoutData;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsResponse;
-import io.github.juniorcorzo.tagsinstrumentsservice.tags.models.Tags;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.services.TagsService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-// TODO:: Añadir endpoint que devuelva tags por el nombre
+// TODO:: Add endpoint for return to by name
 @RestController
 @RequestMapping("/tags")
 @AllArgsConstructor
@@ -26,12 +26,12 @@ public class TagsController {
     }
 
     @PostMapping("/create")
-    public ResponseWithoutData insertTag(@RequestBody Tags tag) {
+    public ResponseWithData<TagsResponse> insertTag(@RequestBody TagsDTO tag) {
         return this.tagsService.insertTag(tag);
     }
 
     @PutMapping("/update")
-    public ResponseWithoutData updateTag(@RequestBody Tags tag) {
+    public ResponseWithData<TagsResponse> updateTag(@RequestBody TagsDTO tag) {
         return this.tagsService.updateTag(tag);
     }
 

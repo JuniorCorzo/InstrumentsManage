@@ -9,15 +9,20 @@ import {
 } from "@/redux/reducers/camp.reducer";
 import { createCamp, deleteCamp, updateCamp } from "@/services/camp.service";
 import { TableData } from "@/context/TableContext";
+import { useEffect } from "react";
+import { CampState } from "@/interfaces/states.interface";
 
-export const useCamp = () => {
+export const useCamps = () => {
   const dispatch = useDispatch<Dispatch>();
-  const camp = useSelector<RootState, CampDomain[]>((state) => state.camp.data);
+  const campState = useSelector<RootState, CampState>((state) => state.camp);
+  const { camps } = campState;
 
-  const fetchAllCamp = () => {
-    dispatch(fetchCamps());
+  const refreshCampsState = () => {
+    useEffect(() => {
+      dispatch(fetchCamps);
+    }, []);
   };
-  if (camp.length === 0) fetchAllCamp();
+  refreshCampsState;
 
   /**
    * Formats camp data into a table structure
@@ -47,7 +52,7 @@ export const useCamp = () => {
           value: "Campo",
         },
       ],
-      rows: camp.map(({ name }) => {
+      rows: camps.map(({ name }) => {
         return {
           name,
         };
@@ -83,7 +88,8 @@ export const useCamp = () => {
   };
 
   return {
-    camp,
+    campState,
+    refreshCampsState,
     getFormatTable,
     addCamp,
     updateCamp: update,

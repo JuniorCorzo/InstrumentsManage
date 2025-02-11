@@ -4,7 +4,7 @@ import {
   fetchInstruments,
   removeInstrument,
   setInstrument,
-  updateInstrument,
+  setUpdateInstrument,
 } from "../redux/reducers/instruments.reducer";
 import {
   createInstruments,
@@ -13,6 +13,8 @@ import {
 } from "../services/instruments.service";
 import { useDispatch, useSelector } from "react-redux";
 import { TableData } from "@/context/TableContext";
+import { useEffect } from "react";
+import { InstrumentsState } from "@/interfaces/states.interface";
 
 /**
  * Custom hook for managing instruments in the application
@@ -31,18 +33,16 @@ import { TableData } from "@/context/TableContext";
  */
 export const useInstruments = () => {
   const dispatch = useDispatch<Dispatch>();
-  const instruments = useSelector<RootState, InstrumentDomain[]>(
-    (state) => state.instruments.data
+  const { instruments, loading } = useSelector<RootState, InstrumentsState>(
+    (state) => state.instruments
   );
 
-  /**
-   * Fetches all instruments from the store
-   * If there are no instruments, makes a request to get them
-   */
-  const fetchAllInstruments = () => {
-    dispatch(fetchInstruments());
+  const refreshInstrumentsState = () => {
+    useEffect(() => {
+      dispatch(fetchInstruments());
+    }, []);
   };
-  if (instruments.length === 0) fetchAllInstruments();
+  refreshInstrumentsState();
 
   /**
    ** Formats instrument data into a table structure
@@ -112,7 +112,7 @@ export const useInstruments = () => {
   const update = async (instrument: InstrumentDomain) => {
     try {
       await updateInstruments(instrument);
-      dispatch(updateInstrument(instrument));
+      dispatch(setUpdateInstrument(instrument));
     } catch (err) {
       console.error(err);
     }
@@ -132,7 +132,8 @@ export const useInstruments = () => {
   };
 
   return {
-		instruments,
+    instrumentingState: { instruments, loading },
+    refreshInstrumentsState,
     getFormatTable,
     addInstrument,
     updateInstrument: update,

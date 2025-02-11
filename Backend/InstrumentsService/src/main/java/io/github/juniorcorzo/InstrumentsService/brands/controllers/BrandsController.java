@@ -1,11 +1,12 @@
 package io.github.juniorcorzo.InstrumentsService.brands.controllers;
 
-import io.github.juniorcorzo.InstrumentsService.brands.models.Brands;
+import io.github.juniorcorzo.InstrumentsService.brands.dtos.BrandsDTO;
 import io.github.juniorcorzo.InstrumentsService.brands.services.BrandsService;
 import io.github.juniorcorzo.InstrumentsService.brands.services.WriteBatchBrand;
 import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithData;
 import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithoutData;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,22 +17,23 @@ public class BrandsController {
     private WriteBatchBrand writeBatchBrand;
 
     @GetMapping("/all")
-    public ResponseWithData<Brands> getAllBrands(){
+    public ResponseWithData<BrandsDTO> getAllBrands(){
         return this.brandsService.getAllBrands();
     }
 
     @GetMapping
-    public ResponseWithData<Brands> getBrandById(@RequestParam String id){
+    public ResponseWithData<BrandsDTO> getBrandById(@RequestParam String id){
         return this.brandsService.getBrandById(id);
     }
 
     @PostMapping("/create")
-    public ResponseWithoutData createBrand(@RequestBody Brands brand){
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseWithData<BrandsDTO> createBrand(@RequestBody BrandsDTO brand){
        return this.brandsService.createBrand(brand);
     }
 
     @PutMapping("/update")
-    public ResponseWithoutData updateBrand(@RequestParam String id, @RequestParam String newName){
+    public ResponseWithData<BrandsDTO> updateBrand(@RequestParam String id, @RequestParam String newName){
         return this.writeBatchBrand.updateBrands(id, newName);
     }
     @DeleteMapping("/delete")

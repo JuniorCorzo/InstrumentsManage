@@ -1,7 +1,8 @@
 package io.github.juniorcorzo.InstrumentsService.brands.services;
 
+import io.github.juniorcorzo.InstrumentsService.brands.adapter.BrandAdapter;
+import io.github.juniorcorzo.InstrumentsService.brands.dtos.BrandsDTO;
 import io.github.juniorcorzo.InstrumentsService.brands.exceptions.BrandIdNotFound;
-import io.github.juniorcorzo.InstrumentsService.brands.models.Brands;
 import io.github.juniorcorzo.InstrumentsService.brands.repositories.BrandsRepository;
 import io.github.juniorcorzo.InstrumentsService.brands.validations.BrandsValidations;
 import io.github.juniorcorzo.InstrumentsService.shared.dto.ResponseWithData;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -23,34 +25,45 @@ public class BrandsService {
 
     private final Logger LOGS = LoggerFactory.getLogger(BrandsService.class);
 
-    public ResponseWithData<Brands> getAllBrands() {
+    public ResponseWithData<BrandsDTO> getAllBrands() {
         LOGS.info("Fetching all brands");
+        List<BrandsDTO> brandsData =
+                this.brandsRepository.findAll()
+                        .stream()
+                        .map(BrandAdapter::toDTO)
+                        .toList();
 
         return new ResponseWithData<>(
                 HttpStatus.OK,
-                this.brandsRepository.findAll(),
+                brandsData,
                 ResponseMessages.OK.getMessage()
         );
     }
 
-    public ResponseWithData<Brands> getBrandById(String id) {
+    public ResponseWithData<BrandsDTO> getBrandById(String id) {
         LOGS.info("Fetching brand with id {}", id);
         this.brandsValidations.validIdWithBrandExists(id);
+        BrandsDTO brandData = BrandAdapter.toDTO(
+                this.brandsRepository.findById(id)
+                        .orElseThrow(BrandIdNotFound::new)
+        );
 
         return new ResponseWithData<>(
                 HttpStatus.OK,
-                Collections.singletonList(this.brandsRepository.findById(id)
-                        .orElseThrow(BrandIdNotFound::new)),
+                Collections.singletonList(brandData),
                 ResponseMessages.OK.getMessage()
         );
     }
 
-    public ResponseWithoutData createBrand(Brands brands) {
-       LOGS.info("Inserting a new brand");
-        this.brandsRepository.save(brands);
+    public ResponseWithData<BrandsDTO> createBrand(BrandsDTO brands) {
+        LOGS.info("Inserting a new brand");
+        BrandsDTO brandData = BrandAdapter.toDTO(
+                this.brandsRepository.save(BrandAdapter.toEntity(brands))
+        );
 
-        return new ResponseWithoutData(
-                HttpStatus.OK,
+        return new ResponseWithData<>(
+                HttpStatus.CREATED,
+                Collections.singletonList(brandData),
                 ResponseMessages.OK.getMessage()
         );
     }

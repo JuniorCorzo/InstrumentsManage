@@ -11,6 +11,8 @@ import {
 } from "@/redux/reducers/brands.reducer";
 import { useDispatch } from "react-redux";
 import { createBrand, updateBrand } from "@/services/brands.service";
+import { BrandsState } from "@/interfaces/states.interface";
+import { useEffect } from "react";
 
 /**
  * @fileoverview Custom hook for managing CRUD operations for brands using Redux.
@@ -44,19 +46,20 @@ import { createBrand, updateBrand } from "@/services/brands.service";
  */
 export const useBrands = () => {
   const dispatch = useDispatch<Dispatch>();
-  const brands = useSelector<RootState, BrandDomain[]>(
-    (state) => state.brands.data
+  const brandsState = useSelector<RootState, BrandsState>(
+    (state) => state.brands
   );
-
+  const { brands } = brandsState;
   /**
    * Fetches all brands from the server and stores them in the state.
    * @private
    */
-  const fetchAllBrands = () => {
-    dispatch(fetchBrands());
+  const refreshBrandsState = () => {
+    useEffect(() => {
+      dispatch(fetchBrands());
+    }, []);
   };
-  if (brands.length === 0) fetchAllBrands();
-
+  refreshBrandsState();
   /**
    * Generates the table format for displaying brand data.
    *
@@ -170,7 +173,8 @@ export const useBrands = () => {
   };
 
   return {
-    brands,
+    brandsState,
+    refreshBrandsState,
     getFormatTable,
     addBrand,
     updateBrand: update,

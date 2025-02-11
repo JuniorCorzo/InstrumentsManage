@@ -4,9 +4,10 @@ import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithData;
 import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.ResponseWithoutData;
 import io.github.juniorcorzo.tagsinstrumentsservice.common.enums.ResponseMessages;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.OrchestrationService;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.TagsAdapter;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.TagsResponse;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.exceptions.TagIdNotFound;
-import io.github.juniorcorzo.tagsinstrumentsservice.tags.models.Tags;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.repositories.TagsRepository;
 import io.github.juniorcorzo.tagsinstrumentsservice.tags.validations.TagsValidations;
 import lombok.AllArgsConstructor;
@@ -21,63 +22,80 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class TagsService {
-        private final TagsRepository tagsRepository;
-        private final OrchestrationService createResponseService;
-        private final TagsValidations tagsValidations;
-        private final Logger LOGS = LoggerFactory.getLogger(TagsService.class);
+    private final TagsRepository tagsRepository;
+    private final OrchestrationService orchestrationService;
+    private final TagsValidations tagsValidations;
+    private final Logger LOGS = LoggerFactory.getLogger(TagsService.class);
 
-        public ResponseWithData<TagsResponse> getAllTags() {
-                this.LOGS.info("Fetching all tags");
+    public ResponseWithData<TagsResponse> getAllTags() {
+        this.LOGS.info("Fetching all tags");
 
-                List<Tags> allTags = this.tagsRepository.findAll();
-                return new ResponseWithData<>(
-                                HttpStatus.OK,
-                                allTags.stream()
-                                                .map(this.createResponseService::createResponse)
-                                                .toList(),
-                                ResponseMessages.OK.getMessage());
-        }
+        List<TagsDTO> allTags =
+                this.tagsRepository
+                        .findAll()
+                        .stream()
+                        .map(TagsAdapter::toDTO)
+                        .toList();
 
-        public ResponseWithData<TagsResponse> getTagById(String id) {
-                this.LOGS.info("Fetching tag with id {}", id);
-                this.tagsValidations.validIdWithTagExist(id);
+        List<TagsResponse> responseData = this.orchestrationService.createResponse(allTags);
+        return new ResponseWithData<>(
+                HttpStatus.OK,
+                responseData,
+                ResponseMessages.OK.getMessage());
+    }
 
-                Tags tagById = this.tagsRepository.findById(id)
-                                .orElseThrow(TagIdNotFound::new);
-                return new ResponseWithData<>(
-                                HttpStatus.OK,
-                                Collections
-                                                .singletonList(this.createResponseService.createResponse(tagById)),
-                                ResponseMessages.OK.getMessage());
-        }
+    public ResponseWithData<TagsResponse> getTagById(String id) {
+        this.LOGS.info("Fetching tag with id {}", id);
+        this.tagsValidations.validIdWithTagExist(id);
 
-        public ResponseWithoutData insertTag(Tags tag) {
-                this.LOGS.info("Inserting a new Tag");
-                this.tagsRepository.save(tag);
+        TagsDTO tagData = TagsAdapter.toDTO(
+                this.tagsRepository
+                        .findById(id)
+                        .orElseThrow(TagIdNotFound::new)
+        );
+        return new ResponseWithData<>(
+                HttpStatus.OK,
+                Collections.singletonList(
+                        this.orchestrationService
+                                .createResponse(tagData)
+                ),
+                ResponseMessages.OK.getMessage());
+    }
 
-                return new ResponseWithoutData(
-                                HttpStatus.OK,
-                                ResponseMessages.OK.getMessage());
-        }
+    public ResponseWithData<TagsResponse> insertTag(TagsDTO tag) {
+        this.LOGS.info("Inserting a new Tag");
+        TagsDTO tagCreated = TagsAdapter.toDTO(
+                this.tagsRepository.save(TagsAdapter.toEntity(tag))
+        );
+        TagsResponse responseTag = this.orchestrationService.createResponse(tagCreated);
+        return new ResponseWithData<>(
+                HttpStatus.OK,
+                Collections.singletonList(responseTag),
+                ResponseMessages.OK.getMessage());
+    }
 
-        public ResponseWithoutData updateTag(Tags tag) {
-                this.LOGS.info("Updating the tag with id {}", tag.getTag());
-                this.tagsValidations.validIdWithTagExist(tag.getId());
+    public ResponseWithData<TagsResponse> updateTag(TagsDTO tag) {
+        this.LOGS.info("Updating the tag with id {}", tag.id());
+        this.tagsValidations.validIdWithTagExist(tag.id());
 
-                this.tagsRepository.save(tag);
-                return new ResponseWithoutData(
-                                HttpStatus.OK,
-                                ResponseMessages.OK.getMessage());
-        }
+        TagsDTO updateTag = TagsAdapter.toDTO(
+                this.tagsRepository.save(TagsAdapter.toEntity(tag))
+        );
+        TagsResponse responseTag = this.orchestrationService.createResponse(updateTag);
+        return new ResponseWithData<>(
+                HttpStatus.OK,
+                Collections.singletonList(responseTag),
+                ResponseMessages.OK.getMessage());
+    }
 
-        public ResponseWithoutData deleteTag(String id) {
-                this.LOGS.info("Deleting the tag with id {}", id);
-                this.tagsValidations.validIdWithTagExist(id);
+    public ResponseWithoutData deleteTag(String id) {
+        this.LOGS.info("Deleting the tag with id {}", id);
+        this.tagsValidations.validIdWithTagExist(id);
 
-                this.tagsRepository.deleteById(id);
-                return new ResponseWithoutData(
-                                HttpStatus.OK,
-                                ResponseMessages.OK.getMessage());
-        }
+        this.tagsRepository.deleteById(id);
+        return new ResponseWithoutData(
+                HttpStatus.OK,
+                ResponseMessages.OK.getMessage());
+    }
 
 }

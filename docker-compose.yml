@@ -23,7 +23,7 @@ services:
         ipv4_address: 172.29.48.21
     volumes:
       - tags-instruments-volume:/data/db
-    
+
   unit-process-db:
     image: mongo
     env_file:
@@ -35,68 +35,70 @@ services:
         ipv4_address: 172.29.48.22
     volumes:
       - unit-process-volume:/data/db
-      
-  # instruments-service:
-  #   build: ./Backend/InstrumentsService/
-  #   env_file:
-  #     - ./Backend/InstrumentsService/.env.production
-  #   ports:
-  #     - '8081:8080'
-  #   depends_on:
-  #     - instruments-db
-  #     - eureka-service
-  #   networks:
-  #     global_network:
-  #       ipv4_address: 172.29.48.2
 
-  # tags-instruments-service:
-  #   build: ./Backend/TagsInstrumentsService/
-  #   env_file:
-  #     - ./Backend/TagsInstrumentsService/.env.production
-  #   ports:
-  #     - '8082:8080'
-  #   depends_on:
-  #     - tags-instruments-db
-  #     - eureka-service
-  #   networks:
-  #     global_network:
-  #       ipv4_address: 172.29.48.3
+  instruments-service:
+    build: ./Backend/InstrumentsService/
+    env_file:
+      - ./Backend/InstrumentsService/.env.production
+    ports:
+      - '8081:8080'
+    depends_on:
+      - instruments-db
+      - eureka-service
+    networks:
+      global_network:
+        ipv4_address: 172.29.48.2
 
-  # unit-process-service:
-  #   build: ./Backend/unit-process-service/.
-  #   env_file:
-  #     - ./Backend/unit-process-service/.env.production
-  #   ports:
-  #     - '3000:3000'
-  #   depends_on:
-  #     - unit-process-db
-  #     - eureka-service
-  #   networks:
-  #     global_network:
-  #       ipv4_address: 172.29.48.4
+  tags-instruments-service:
+    build: ./Backend/TagsInstrumentsService/
+    env_file:
+      - ./Backend/TagsInstrumentsService/.env.production
+    ports:
+      - '8082:8080'
+    depends_on:
+      - tags-instruments-db
+      - eureka-service
+      - unit-process-service
+      - instruments-service
+    networks:
+      global_network:
+        ipv4_address: 172.29.48.3
 
-  # eureka-service:
-  #   build: ./Backend/EurekaService/.
-  #   ports:
-  #     - '8761:8761'
-  #   networks:
-  #     global_network:
-  #       ipv4_address: 172.29.48.10
+  unit-process-service:
+    build: ./Backend/unit-process-service/.
+    env_file:
+      - ./Backend/unit-process-service/.env.production
+    ports:
+      - '3000:3000'
+    depends_on:
+      - unit-process-db
+      - eureka-service
+    networks:
+      global_network:
+        ipv4_address: 172.29.48.4
 
-  # gateway-service:
-  #   build: ./Backend/GatewayService/.
-  #   env_file:
-  #     - ./Backend/GatewayService/.env.production
-  #   ports:
-  #     - '8080:8080'
-  #   depends_on:
-  #     - eureka-service
-  #     - instruments-service
-  #     - tags-instruments-service
-  #     - unit-process-service
-  #   networks:
-  #     global_network:
-  #       ipv4_address: 172.29.48.50
+  eureka-service:
+    build: ./Backend/EurekaService/.
+    ports:
+      - '8761:8761'
+    networks:
+      global_network:
+        ipv4_address: 172.29.48.10
+
+  gateway-service:
+    build: ./Backend/GatewayService/.
+    env_file:
+      - ./Backend/GatewayService/.env.production
+    ports:
+      - '8080:8080'
+    depends_on:
+      - eureka-service
+      - instruments-service
+      - tags-instruments-service
+      - unit-process-service
+    networks:
+      global_network:
+        ipv4_address: 172.29.48.50
 
 networks:
   global_network:

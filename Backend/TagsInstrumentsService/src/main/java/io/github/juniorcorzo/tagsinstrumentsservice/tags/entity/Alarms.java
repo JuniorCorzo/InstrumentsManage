@@ -1,4 +1,4 @@
-package io.github.juniorcorzo.tagsinstrumentsservice.tags.models;
+package io.github.juniorcorzo.tagsinstrumentsservice.tags.entity;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;

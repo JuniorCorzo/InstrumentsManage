@@ -7,13 +7,23 @@ import com.fasterxml.jackson.annotation.JsonMerge;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.InstrumentsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.UnitProcessDTO;
-import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.auxiliar.AlarmsDTO;
+import io.github.juniorcorzo.tagsinstrumentsservice.tags.dtos.aux.AlarmsDTO;
 import lombok.Data;
 import lombok.Value;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 public class TagsResponse {
+    private String id;
+    private String tag;
+    private String description;
+    @JsonMerge
+    private InstrumentsDTO instrument;
+    @JsonMerge
+    private UnitProcessDTO unitProcess;
+    private String typeUnit;
+    private AlarmsDTO alarms;
+    private boolean shutdown;
     private String id;
     private String tag;
     private String description;
@@ -34,7 +44,7 @@ public class TagsResponse {
             @JsonProperty("unitProcess") UnitProcessDTO unitProcess,
             @JsonProperty("alarms") AlarmsDTO alarms,
             @JsonProperty("typeUnit") String typeUnit,
-            @JsonProperty("shutdown") boolean shutdown
+            @JsonProperty("isShutdown") boolean shutdown
     ) {
         this.id = id;
         this.tag = tag;
