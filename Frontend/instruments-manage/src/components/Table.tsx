@@ -8,6 +8,7 @@ const Table = () => {
   const { headers } = data;
   const renderRows = useCallback(RenderRows, [data]);
 
+
   return (
     <table className="table-auto w-full border-separate border-spacing-0 rounded-lg shadow shadow-gray-800">
       <caption className="mb-4">
