@@ -8,6 +8,7 @@ public class BrandAdapter {
         return BrandsEntity.builder()
                 ._id(dto.id())
                 .name(dto.name())
+                .country(dto.country())
                 .website(dto.website())
                 .build();
     }
@@ -16,6 +17,7 @@ public class BrandAdapter {
         return BrandsDTO.builder()
                 .id(entity.get_id())
                 .name(entity.getName())
+                .country(entity.getCountry())
                 .website(entity.getWebsite())
                 .build();
     }

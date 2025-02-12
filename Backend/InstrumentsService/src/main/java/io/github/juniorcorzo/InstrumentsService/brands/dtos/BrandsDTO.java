@@ -6,6 +6,7 @@ import lombok.Builder;
 public record BrandsDTO(
         String id,
         String name,
+        String country,
         String website
 ) {
 }
