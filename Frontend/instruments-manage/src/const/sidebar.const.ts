@@ -1,7 +1,7 @@
 export const SidebarOptions = Object.freeze([
   {
     label: "Campos",
-    uri: "/home?useData=brands",
+    uri: "/home?useData=camps",
   },
   {
     label: "Instrumentos",
