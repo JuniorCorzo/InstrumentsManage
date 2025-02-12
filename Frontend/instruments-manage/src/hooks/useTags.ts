@@ -130,6 +130,7 @@ export const useTags = () => {
           };
         }
       ),
+      messageEmpty: "No se encontraron tags registradas",
     };
   };
 
