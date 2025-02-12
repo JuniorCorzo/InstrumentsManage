@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TableData } from "@/context/TableContext";
 import { useEffect } from "react";
 import { InstrumentsState } from "@/interfaces/states.interface";
+import { transformToString } from "@/utils/transform-string.utils";
 
 /**
  * Custom hook for managing instruments in the application
@@ -79,14 +80,44 @@ export const useInstruments = () => {
         },
         {
           key: "type",
-          value: "Tipo de Instrumento",
+          value: "Tipo",
+        },
+        {
+          key: "measurementRange",
+          value: "Rango"
+        },
+        {
+          key: "accuracy",
+          value: "Precisión",
+        },
+        {
+          key: "connectionType",
+          value: "Conexión",
+        },
+        {
+          key: "processConnection",
+          value: "Proceso de Conexión",
+        },
+        {
+          key: "protectionClass",
+          value: "Protección",
+        },
+        {
+          key: "certifications",
+          value: "Certificaciones",
         },
       ],
-      rows: instruments.map(({ brand, model, type }) => {
+      rows: instruments.map(({ brand, model, type, measurementRange, accuracy, connectionType, processConnection, protectionClass, certifications }) => {
         return {
           model,
+          brand,
           type,
-          brand: brand.name,
+          measurementRange,
+          accuracy,
+          connectionType: transformToString(connectionType),
+          processConnection,
+          protectionClass,
+          certifications: transformToString(certifications)
         };
       }),
       messageEmpty: "No se encontraron instrumentos registrados",

@@ -11,6 +11,7 @@ import { createCamp, deleteCamp, updateCamp } from "@/services/camp.service";
 import { TableData } from "@/context/TableContext";
 import { useEffect } from "react";
 import { CampState } from "@/interfaces/states.interface";
+import { transformToString } from "@/utils/transform-string.utils";
 
 export const useCamps = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -51,12 +52,24 @@ export const useCamps = () => {
           key: "name",
           value: "Campo",
         },
+        {
+          key: "location",
+          value: "Ubicación",
+        },
+        {
+          key: "coordinates",
+          value: "Coordenadas",
+        },
       ],
-      rows: camps.map(({ name }) => {
+      rows: camps.map(({ name, location }) => {
+        const { municipality, department, country, coordinate } = location;
         return {
           name,
+          location: transformToString([municipality, department, country]),
+          coordinates: transformToString(coordinate),
         };
       }),
+      messageEmpty: "No se encontraron campos registrados",
     };
   };
 

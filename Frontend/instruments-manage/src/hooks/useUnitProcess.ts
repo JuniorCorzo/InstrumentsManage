@@ -18,6 +18,7 @@ import {
 } from "@/services/unit-process.service";
 import { UnitProcessState } from "@/interfaces/states.interface";
 import { useEffect } from "react";
+import { TableData } from "@/context/TableContext";
 
 /**
  * Custom hook for managing unit processes in the application.
@@ -63,22 +64,28 @@ export const useUnitProcess = () => {
    *
    * @returns {TableData} Table structure containing unit process information
    */
-  const getFormatTable = () => {
+  const getFormatTable = (): TableData => {
     return {
       headers: [
         {
           key: "name",
-          value: "Unidad de proceso",
+          value: "Unidad de Proceso",
+        },
+        {
+          key: "description",
+          value: "Descripción"
         },
         {
           key: "camp",
           value: "Campo",
         },
       ],
-      rows: unitProcess.map(({ name, camp }) => ({
+      rows: unitProcess.map(({ name, description, camp }) => ({
         name,
+        description,
         camp: camp.name,
       })),
+      messageEmpty: "No se encontraron unidades de procesos registradas"
     };
   };
 

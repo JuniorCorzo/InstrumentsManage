@@ -90,12 +90,23 @@ export const useBrands = () => {
           key: "name",
           value: "Marca",
         },
+        {
+          key: "country",
+          value: "País de Origen"
+        },
+        {
+          key: "website",
+          value: "Website"
+        }
       ],
-      rows: brands.map(({ name }) => {
+      rows: brands.map(({ name, country, website }) => {
         return {
           name,
+          country,
+          website
         };
       }),
+      messageEmpty: "No se encontraron marcas registradas"
     };
   };
 

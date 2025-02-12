@@ -1,4 +1,6 @@
 export interface BrandDTO {
-    _id: string
-    name: string
+  id: string;
+  name: string;
+  country: string;
+  website: string;
 }

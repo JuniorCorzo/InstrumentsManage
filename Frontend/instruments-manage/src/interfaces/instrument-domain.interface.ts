@@ -1,8 +1,12 @@
-import { BrandDomain } from "./brand-domain.interface"
-
 export interface InstrumentDomain {
-    model: string
-    brand: BrandDomain
-    type: string
-    id?: string
+  model: string;
+  brand: string;
+  type: string;
+  measurementRange: string;
+  accuracy: string;
+  connectionType: string[];
+  processConnection: string;
+  protectionClass: string;
+  certifications: string[];
+  id?: string;
 }
