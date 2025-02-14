@@ -54,7 +54,7 @@ export const useUnitProcess = () => {
 
   const refreshUnitProcessState = () => {
     useEffect(() => {
-      dispatch(fetchUnitProcess);
+      dispatch(fetchUnitProcess());
     }, []);
   };
   refreshUnitProcessState();
@@ -73,7 +73,7 @@ export const useUnitProcess = () => {
         },
         {
           key: "description",
-          value: "Descripción"
+          value: "Descripción",
         },
         {
           key: "camp",
@@ -85,7 +85,7 @@ export const useUnitProcess = () => {
         description,
         camp: camp.name,
       })),
-      messageEmpty: "No se encontraron unidades de procesos registradas"
+      messageEmpty: "No se encontraron unidades de procesos registradas",
     };
   };
 

@@ -20,10 +20,10 @@ export const useCamps = () => {
 
   const refreshCampsState = () => {
     useEffect(() => {
-      dispatch(fetchCamps);
+      dispatch(fetchCamps());
     }, []);
   };
-  refreshCampsState;
+  refreshCampsState();
 
   /**
    * Formats camp data into a table structure

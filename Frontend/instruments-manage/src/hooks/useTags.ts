@@ -113,7 +113,7 @@ export const useTags = () => {
         ({
           tag,
           description,
-          instruments,
+          instrument,
           alarms,
           typeUnit,
           unitProcess,
@@ -122,7 +122,7 @@ export const useTags = () => {
           return {
             tag,
             description,
-            instruments: instruments.model,
+            instruments: instrument.model,
             alarms: `${alarms.hh}\n${alarms.h}\n${alarms.l}\n${alarms.l}`,
             typeUnit,
             unitProcess: unitProcess.name,
