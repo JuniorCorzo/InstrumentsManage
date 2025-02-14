@@ -5,7 +5,7 @@ import Table from "@/components/Table";
 const Home = () => {
   return (
     <Layout>
-      <section className="flex flex-col px-20 items-center gap-3">
+      <section className="flex flex-col px-14 pt-14 gap-3">
         <article className="flex w-full justify-center">
           <TableContextProvider>
             <Table />
