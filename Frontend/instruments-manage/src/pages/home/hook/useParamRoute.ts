@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useTagsStrategy } from "./strategies/useTagsStrategy";
 import { useUnitProcessStrategy } from "./strategies/useUnitProcessStrategy";
 import { useCampStrategy } from "./strategies/useCampStrategy";
+import { TABLE_METADATA } from "@/const/table-metadata.const";
 
 export const useParamRoute = () => {
   const instrumentsStrategy = useInstrumentsStrategy();
@@ -16,24 +17,25 @@ export const useParamRoute = () => {
   const { executeStrategy, setStrategy } = useTableStrategy();
 
   const [searchParams] = useSearchParams();
-  const param = searchParams.get("useData");
+  const param = searchParams.get("table");
+  const { instruments, brands, tags, unitProcess, camps } = TABLE_METADATA;
 
   useEffect(() => {
     try {
       switch (param) {
-        case "instruments":
+        case instruments.urlParam:
           setStrategy(instrumentsStrategy);
           break;
-        case "brands":
+        case brands.urlParam:
           setStrategy(brandsStrategy);
           break;
-        case "tags":
+        case tags.urlParam:
           setStrategy(tagsStrategy);
           break;
-        case "process-units":
+        case unitProcess.urlParam:
           setStrategy(unitProcessStrategy);
           break;
-        case "camps":
+        case camps.urlParam:
           setStrategy(campStrategy);
           break;
         default:

@@ -1,9 +1,14 @@
 import { useCamps } from "@/hooks/useCamps";
 import useUpdateTable from "../useUpdateTable";
+import { useEffect } from "react";
 
 export const useCampStrategy = () => {
-  const { getFormatTable } = useCamps();
-  const { setTableContext } = useUpdateTable(getFormatTable());
+  const { campState, getFormatTable } = useCamps();
+  const { setTableContext } = useUpdateTable(getFormatTable, campState.loading);
+
+  useEffect(() => {
+    setTableContext();
+  }, [campState.camps]);
 
   return { setTableContext };
 };

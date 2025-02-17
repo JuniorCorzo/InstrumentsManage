@@ -17,8 +17,9 @@ import {
   updateUnitProcess,
 } from "@/services/unit-process.service";
 import { UnitProcessState } from "@/interfaces/states.interface";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { TableData } from "@/context/TableContext";
+import { TABLE_METADATA } from "@/const/table-metadata.const";
 
 /**
  * Custom hook for managing unit processes in the application.
@@ -64,8 +65,9 @@ export const useUnitProcess = () => {
    *
    * @returns {TableData} Table structure containing unit process information
    */
-  const getFormatTable = (): TableData => {
+  const getFormatTable = useMemo((): TableData => {
     return {
+      tableMetadata: TABLE_METADATA.unitProcess,
       headers: [
         {
           key: "name",
@@ -87,8 +89,7 @@ export const useUnitProcess = () => {
       })),
       messageEmpty: "No se encontraron unidades de procesos registradas",
     };
-  };
-
+  }, [unitProcess]);
   /**
    * Adds a new unit process to the system.
    *

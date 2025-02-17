@@ -1,3 +1,4 @@
+import { TableMetadata } from "@/const/table-metadata.const";
 import {
   createContext,
   Dispatch,
@@ -10,11 +11,14 @@ export interface TableData {
   headers: { key: string; value: string }[];
   rows: Record<string, string>[];
   messageEmpty?: string;
+  tableMetadata?: TableMetadata;
 }
 
 export interface TableContext {
   data: TableData;
   setData: Dispatch<SetStateAction<TableData>>;
+  loading: boolean;
+  setLoading: Dispatch<SetStateAction<boolean>>;
   searchValue: string;
   setSearchValue: Dispatch<SetStateAction<string>>;
   maxRows: number;
@@ -27,11 +31,17 @@ export interface TableContext {
 
 const initialTableContext: TableContext = {
   data: {
+    tableMetadata: {
+      titleTable: "",
+      urlParam: "",
+    },
     headers: [],
     rows: [],
     messageEmpty: "",
   },
   setData: () => {},
+  loading: false,
+  setLoading: () => {},
   searchValue: "",
   setSearchValue: () => {},
   maxRows: 5,
@@ -49,6 +59,7 @@ export const TableContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [data, setData] = useState(initialTableContext.data);
+  const [loading, setLoading] = useState(initialTableContext.loading);
   const [maxRows, setMaxRows] = useState(initialTableContext.maxRows);
   const [searchValue, setSearchValue] = useState(
     initialTableContext.searchValue
@@ -61,6 +72,8 @@ export const TableContextProvider: React.FC<{ children: ReactNode }> = ({
       value={{
         data,
         setData,
+        loading,
+        setLoading,
         searchValue,
         setSearchValue,
         maxRows,

@@ -9,9 +9,10 @@ import {
 } from "@/redux/reducers/camp.reducer";
 import { createCamp, deleteCamp, updateCamp } from "@/services/camp.service";
 import { TableData } from "@/context/TableContext";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { CampState } from "@/interfaces/states.interface";
 import { transformToString } from "@/utils/transform-string.utils";
+import { TABLE_METADATA } from "@/const/table-metadata.const";
 
 export const useCamps = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -45,8 +46,9 @@ export const useCamps = () => {
    * //   ]
    * // }
    */
-  const getFormatTable = (): TableData => {
+  const getFormatTable = useMemo((): TableData => {
     return {
+      tableMetadata: TABLE_METADATA.camps,
       headers: [
         {
           key: "name",
@@ -71,7 +73,7 @@ export const useCamps = () => {
       }),
       messageEmpty: "No se encontraron campos registrados",
     };
-  };
+  }, [camps]);
 
   const addCamp = async (camp: CampDomain) => {
     try {

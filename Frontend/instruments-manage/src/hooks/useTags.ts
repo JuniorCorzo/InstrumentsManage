@@ -1,3 +1,4 @@
+import { TABLE_METADATA } from "@/const/table-metadata.const";
 import { TableData } from "@/context/TableContext";
 import { TagsDomain } from "@/interfaces/tags-domain.interface";
 import {
@@ -8,7 +9,7 @@ import {
 } from "@/redux/reducers/tags.reducer";
 import { Dispatch, RootState } from "@/redux/stores/general.store";
 import { createTags, deleteTags, updateTags } from "@/services/tags.service";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
@@ -29,8 +30,8 @@ import { useSelector } from "react-redux";
  */
 export const useTags = () => {
   const dispatch = useDispatch<Dispatch>();
-  const tags = useSelector((state: RootState) => state.tags.tags);
-
+  const tagsState = useSelector((state: RootState) => state.tags);
+  const { tags } = tagsState;
   /**
    * Fetches all tags from the store
    * If there are no tags, makes a request to get them
@@ -77,8 +78,9 @@ export const useTags = () => {
    * // }
    * ```
    */
-  const getFormatTable = (): TableData => {
+  const getFormatTable = useMemo((): TableData => {
     return {
+      tableMetadata: TABLE_METADATA.tags,
       headers: [
         {
           key: "tag",
@@ -132,7 +134,7 @@ export const useTags = () => {
       ),
       messageEmpty: "No se encontraron tags registradas",
     };
-  };
+  }, [tags]);
 
   /**
    * Adds a new tag
@@ -174,7 +176,7 @@ export const useTags = () => {
   };
 
   return {
-    tags,
+    tagsState,
     getFormatTable,
     addTag,
     updateTag: update,

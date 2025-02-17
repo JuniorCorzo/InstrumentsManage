@@ -13,9 +13,10 @@ import {
 } from "../services/instruments.service";
 import { useDispatch, useSelector } from "react-redux";
 import { TableData } from "@/context/TableContext";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { InstrumentsState } from "@/interfaces/states.interface";
 import { transformToString } from "@/utils/transform-string.utils";
+import { TABLE_METADATA } from "@/const/table-metadata.const";
 
 /**
  * Custom hook for managing instruments in the application
@@ -67,8 +68,9 @@ export const useInstruments = () => {
    * //   ]
    * // }
    */
-  const getFormatTable = (): TableData => {
+  const getFormatTable = useMemo((): TableData => {
     return {
+      tableMetadata: TABLE_METADATA.instruments,
       headers: [
         {
           key: "model",
@@ -84,7 +86,7 @@ export const useInstruments = () => {
         },
         {
           key: "measurementRange",
-          value: "Rango"
+          value: "Rango",
         },
         {
           key: "accuracy",
@@ -107,22 +109,34 @@ export const useInstruments = () => {
           value: "Certificaciones",
         },
       ],
-      rows: instruments.map(({ brand, model, type, measurementRange, accuracy, connectionType, processConnection, protectionClass, certifications }) => {
-        return {
-          model,
+      rows: instruments.map(
+        ({
           brand,
+          model,
           type,
           measurementRange,
           accuracy,
-          connectionType: transformToString(connectionType),
+          connectionType,
           processConnection,
           protectionClass,
-          certifications: transformToString(certifications)
-        };
-      }),
+          certifications,
+        }) => {
+          return {
+            model,
+            brand,
+            type,
+            measurementRange,
+            accuracy,
+            connectionType: transformToString(connectionType),
+            processConnection,
+            protectionClass,
+            certifications: transformToString(certifications),
+          };
+        }
+      ),
       messageEmpty: "No se encontraron instrumentos registrados",
     };
-  };
+  }, [instruments]);
 
   /**
    * Adds a new instrument
@@ -165,8 +179,8 @@ export const useInstruments = () => {
 
   return {
     instrumentingState: { instruments, loading },
-    refreshInstrumentsState,
     getFormatTable,
+    refreshInstrumentsState,
     addInstrument,
     updateInstrument: update,
     deleteInstrument: deleteInstrumentById,

@@ -1,10 +1,18 @@
 import { useUnitProcess } from "@/hooks/useUnitProcess";
 import useUpdateTable from "../useUpdateTable";
-import { UnitProcessDomain } from "@/interfaces/unit-process-domain.interface";
+import { useEffect } from "react";
 
 export const useUnitProcessStrategy = () => {
-  const { getFormatTable } = useUnitProcess();
-  const { setTableContext } = useUpdateTable(getFormatTable());
+  const { unitProcessState, getFormatTable } = useUnitProcess();
+
+  const { setTableContext } = useUpdateTable(
+    getFormatTable,
+    unitProcessState.loading
+  );
+
+  useEffect(() => {
+    setTableContext();
+  }, [unitProcessState.unitProcess]);
 
   return { setTableContext };
 };
