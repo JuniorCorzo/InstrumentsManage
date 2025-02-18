@@ -1,11 +1,18 @@
 import { useBrands } from "@/hooks/useBrands";
 import { TableStrategy } from "../../components/table/table-strategy.interface";
 import useUpdateTable from "../useUpdateTable";
-import { BrandDomain } from "@/interfaces/brand-domain.interface";
+import { useEffect } from "react";
 
 const useBrandStrategy = (): TableStrategy => {
-  const { getFormatTable } = useBrands();
-  const { setTableContext } = useUpdateTable(getFormatTable());
+  const { brandsState, getFormatTable } = useBrands();
+  const { setTableContext } = useUpdateTable(
+    getFormatTable,
+    brandsState.loading
+  );
+
+  useEffect(() => {
+    setTableContext();
+  }, [brandsState.brands]);
 
   return {
     setTableContext,

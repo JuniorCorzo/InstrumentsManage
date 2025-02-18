@@ -5,7 +5,7 @@ export interface TagsDTO {
   _id: string;
   tag: string;
   description: string;
-  instruments: InstrumentDTO;
+  instrument: InstrumentDTO;
   unitProcess: UnitProcessDTO;
   typeUnit: string;
   alarms: {

@@ -1,8 +1,12 @@
-import { BrandDTO } from '@/models';
-
 export interface InstrumentDTO {
-    _id: string,
-    model: string,
-    brand: BrandDTO
-    type: string
+  _id: string;
+  model: string;
+  brand: string;
+  type: string;
+  measurementRange: string;
+  accuracy: string;
+  connectionType: string[];
+  processConnection: string;
+  protectionClass: string;
+  certifications: string[];
 }

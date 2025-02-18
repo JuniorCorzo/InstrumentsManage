@@ -1,4 +1,6 @@
 export interface BrandDomain {
-    id: string
     name: string
+    country: string;
+    website: string;
+    id?: string
 }

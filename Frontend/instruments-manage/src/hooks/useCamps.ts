@@ -9,8 +9,10 @@ import {
 } from "@/redux/reducers/camp.reducer";
 import { createCamp, deleteCamp, updateCamp } from "@/services/camp.service";
 import { TableData } from "@/context/TableContext";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { CampState } from "@/interfaces/states.interface";
+import { transformToString } from "@/utils/transform-string.utils";
+import { TABLE_METADATA } from "@/const/table-metadata.const";
 
 export const useCamps = () => {
   const dispatch = useDispatch<Dispatch>();
@@ -19,10 +21,10 @@ export const useCamps = () => {
 
   const refreshCampsState = () => {
     useEffect(() => {
-      dispatch(fetchCamps);
+      dispatch(fetchCamps());
     }, []);
   };
-  refreshCampsState;
+  refreshCampsState();
 
   /**
    * Formats camp data into a table structure
@@ -44,21 +46,34 @@ export const useCamps = () => {
    * //   ]
    * // }
    */
-  const getFormatTable = (): TableData => {
+  const getFormatTable = useMemo((): TableData => {
     return {
+      tableMetadata: TABLE_METADATA.camps,
       headers: [
         {
           key: "name",
           value: "Campo",
         },
+        {
+          key: "location",
+          value: "Ubicación",
+        },
+        {
+          key: "coordinates",
+          value: "Coordenadas",
+        },
       ],
-      rows: camps.map(({ name }) => {
+      rows: camps.map(({ name, location }) => {
+        const { municipality, department, country, coordinate } = location;
         return {
           name,
+          location: transformToString([municipality, department, country]),
+          coordinates: transformToString(coordinate),
         };
       }),
+      messageEmpty: "No se encontraron campos registrados",
     };
-  };
+  }, [camps]);
 
   const addCamp = async (camp: CampDomain) => {
     try {

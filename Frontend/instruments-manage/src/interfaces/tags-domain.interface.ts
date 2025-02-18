@@ -5,7 +5,7 @@ export interface TagsDomain {
   id: string;
   tag: string;
   description: string;
-  instruments: InstrumentDomain;
+  instrument: InstrumentDomain;
   unitProcess: UnitProcessDomain;
   typeUnit: string;
   alarms: {

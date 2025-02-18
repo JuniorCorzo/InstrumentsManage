@@ -1,12 +1,11 @@
-import { TableDataContext } from "@/context/TableContext";
 import CardCaption from "@/pages/home/components/table/common/CardCaption";
-import RenderRows from "@/pages/home/components/table/common/RenderRows";
-import { useCallback, useContext } from "react";
+import LoadingTable from "@/pages/home/components/table/common/LoadingTable";
+import { lazy, Suspense } from "react";
 
 const Table = () => {
-  const { data } = useContext(TableDataContext);
-  const { headers } = data;
-  const renderRows = useCallback(RenderRows, [data]);
+  const LazyTable = lazy(
+    () => import("@/pages/home/components/table/common/RenderRows")
+  );
 
 
   return (
@@ -14,18 +13,9 @@ const Table = () => {
       <caption className="mb-4">
         <CardCaption />
       </caption>
-      <thead className="table-header-group">
-        <tr className="h-14 table-row">
-          {headers.map(({ value }, index) => {
-            return (
-              <th className="cells" key={index}>
-                <span>{value}</span>
-              </th>
-            );
-          })}
-        </tr>
-      </thead>
-      <tbody>{renderRows()}</tbody>
+      <Suspense fallback={<LoadingTable />}>
+        <LazyTable />
+      </Suspense>
     </table>
   );
 };

@@ -15,5 +15,6 @@ public class BrandsEntity {
     @MongoId(FieldType.OBJECT_ID)
     private String _id;
     private String name;
+    private String country;
     private String website;
 }

@@ -12,9 +12,9 @@ import {
 import { useDispatch } from "react-redux";
 import { createBrand, updateBrand } from "@/services/brands.service";
 import { BrandsState } from "@/interfaces/states.interface";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { TableData } from "@/context/TableContext";
-
+import { TABLE_METADATA } from "@/const/table-metadata.const";
 
 /**
  * @fileoverview Custom hook for managing CRUD operations for brands using Redux.
@@ -84,21 +84,33 @@ export const useBrands = () => {
    * // }
    * ```
    */
-  const getFormatTable = (): TableData => {
+  const getFormatTable = useMemo((): TableData => {
     return {
+      tableMetadata: TABLE_METADATA.brands,
       headers: [
         {
           key: "name",
           value: "Marca",
         },
+        {
+          key: "country",
+          value: "País de Origen",
+        },
+        {
+          key: "website",
+          value: "Website",
+        },
       ],
-      rows: brands.map(({ name }) => {
+      rows: brands.map(({ name, country, website }) => {
         return {
           name,
+          country,
+          website,
         };
       }),
+      messageEmpty: "No se encontraron marcas registradas",
     };
-  };
+  }, [brands]);
 
   /**
    * Adds a new brand to the system.

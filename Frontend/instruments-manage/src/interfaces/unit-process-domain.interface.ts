@@ -1,7 +1,8 @@
-import { CampDomain } from "./camp-domain.interface"
+import { CampDomain } from "./camp-domain.interface";
 
 export interface UnitProcessDomain {
-    id: string
-    name: string
-    camp: CampDomain
+  id: string;
+  name: string;
+  description: string;
+  camp: CampDomain;
 }
