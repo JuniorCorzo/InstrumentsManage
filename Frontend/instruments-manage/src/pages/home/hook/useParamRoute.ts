@@ -8,6 +8,7 @@ import { useUnitProcessStrategy } from "./strategies/useUnitProcessStrategy";
 import { useCampStrategy } from "./strategies/useCampStrategy";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
 
+
 export const useParamRoute = () => {
   const instrumentsStrategy = useInstrumentsStrategy();
   const brandsStrategy = useBrandStrategy();

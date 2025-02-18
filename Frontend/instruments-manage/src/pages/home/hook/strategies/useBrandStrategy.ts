@@ -13,6 +13,7 @@ const useBrandStrategy = (): TableStrategy => {
   useEffect(() => {
     setTableContext();
   }, [brandsState.brands]);
+
   return {
     setTableContext,
   };

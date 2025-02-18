@@ -13,6 +13,6 @@ export const useUnitProcessStrategy = () => {
   useEffect(() => {
     setTableContext();
   }, [unitProcessState.unitProcess]);
-
+  
   return { setTableContext };
 };

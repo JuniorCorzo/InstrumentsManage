@@ -7,6 +7,7 @@ const Table = () => {
     () => import("@/pages/home/components/table/common/RenderRows")
   );
 
+
   return (
     <table className="table-auto w-full border-separate border-spacing-0 rounded-lg shadow shadow-gray-800">
       <caption className="mb-4">
