@@ -4,7 +4,7 @@ import { CampValidations } from '../validations/camp.validation'
 import { ResponseDTO } from 'src/common/dto/response.dto'
 import { CampDTO } from '../dtos/camp.dto'
 
-@Controller('/camp')
+@Controller('/camps')
 export class CampController {
   constructor (private readonly campService: CampService) { }
 
