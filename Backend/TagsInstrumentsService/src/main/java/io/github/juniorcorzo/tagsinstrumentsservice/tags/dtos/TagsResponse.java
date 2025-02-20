@@ -23,16 +23,6 @@ public class TagsResponse {
     private String typeUnit;
     private AlarmsDTO alarms;
     private boolean shutdown;
-    private String id;
-    private String tag;
-    private String description;
-    @JsonMerge
-    private InstrumentsDTO instrument;
-    @JsonMerge
-    private UnitProcessDTO unitProcess;
-    private String typeUnit;
-    private AlarmsDTO alarms;
-    private boolean shutdown;
 
     @JsonCreator()
     public TagsResponse(
