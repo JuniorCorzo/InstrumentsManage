@@ -2,7 +2,7 @@ package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.IDataCache;
+import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.interfaces.IDataCache;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.InMemoryInstrumentsCache;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.InMemoryUnitProcessCache;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.tasks.TaskExecutorContext;

@@ -1,4 +1,4 @@
-package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache;
+package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.interfaces;
 
 public interface IDataCache<T> {
 

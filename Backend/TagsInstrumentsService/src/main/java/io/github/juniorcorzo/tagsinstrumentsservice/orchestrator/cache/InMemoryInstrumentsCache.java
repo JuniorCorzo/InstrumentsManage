@@ -1,11 +1,9 @@
 package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache;
 
+import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.interfaces.IDataCache;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.InstrumentsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.InstrumentService;
-import org.springframework.context.annotation.Scope;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;

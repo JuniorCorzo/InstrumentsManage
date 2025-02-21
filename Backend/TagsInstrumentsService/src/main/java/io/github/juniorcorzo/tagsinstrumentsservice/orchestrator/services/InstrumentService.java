@@ -4,8 +4,6 @@ import io.github.juniorcorzo.tagsinstrumentsservice.common.dto.RetrieveDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.InstrumentsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
@@ -17,7 +15,7 @@ import java.util.Optional;
 
 @Service
 public class InstrumentService {
-    
+
     private final RestTemplate restTemplate;
     private final Logger LOGS = LoggerFactory.getLogger(InstrumentService.class);
     private final ParameterizedTypeReference<RetrieveDTO<InstrumentsDTO>> responseType;
@@ -44,8 +42,9 @@ public class InstrumentService {
                         this.restTemplate
                                 .exchange("lb://INSTRUMENTS-SERVICE/instruments?id={id}",
                                         HttpMethod.GET, null,
-                                        this.responseType)
-                                .getBody())
+                                        this.responseType,
+                                        id
+                                ).getBody())
                 .data()
                 .getFirst();
     }

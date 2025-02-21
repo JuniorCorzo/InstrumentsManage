@@ -1,6 +1,6 @@
 package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.tasks;
 
-import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.IDataCache;
+import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.interfaces.IDataCache;
 
 import java.util.concurrent.Callable;
 

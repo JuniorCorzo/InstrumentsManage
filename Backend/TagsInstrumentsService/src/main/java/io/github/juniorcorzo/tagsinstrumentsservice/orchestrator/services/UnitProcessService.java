@@ -35,7 +35,7 @@ public class UnitProcessService {
 	public UnitProcessDTO getUnitProcessById(String idUnitProcess) {
 		return Optional.ofNullable(
 				this.restTemplate
-						.exchange("lb://UNIT-PROCESS-SERVICE/unit-process?id=:id", HttpMethod.GET, null,
+						.exchange("lb://UNIT-PROCESS-SERVICE/unit-process/{id}", HttpMethod.GET, null,
 								this.responseType, idUnitProcess)
 						.getBody())
 				.get()

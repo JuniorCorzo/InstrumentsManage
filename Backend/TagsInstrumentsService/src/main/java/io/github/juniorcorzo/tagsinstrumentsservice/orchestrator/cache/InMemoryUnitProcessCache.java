@@ -1,12 +1,11 @@
 package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache;
 
+import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.interfaces.IDataCache;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.UnitProcessDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.UnitProcessService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.sql.Timestamp;
-import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;

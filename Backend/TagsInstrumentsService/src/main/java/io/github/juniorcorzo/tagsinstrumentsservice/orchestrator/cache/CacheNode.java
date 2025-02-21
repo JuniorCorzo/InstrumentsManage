@@ -1,15 +1,13 @@
 package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 import java.time.Instant;
 
 
 @Data
-public class CacheNode<T> {
+class CacheNode<T> {
     private T item;
     private Timestamp timestamp;
 
