@@ -1,5 +1,6 @@
-package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.context;
+package io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache;
 
+import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.cache.interfaces.IDataCache;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.dtos.InstrumentsDTO;
 import io.github.juniorcorzo.tagsinstrumentsservice.orchestrator.services.InstrumentService;
 
@@ -17,16 +18,15 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
  *
  * @author Junior Corzo
  */
-public class InMemoryInstrumentsContext implements IDataContext<InstrumentsDTO> {
-    private final static Object LOCK = new Object();
-    private static volatile InMemoryInstrumentsContext instance;
-    private final Map<String, InstrumentsDTO> instrumentsContext;
+public class InMemoryInstrumentsCache implements IDataCache<InstrumentsDTO> {
+    private static volatile InMemoryInstrumentsCache instance;
+    private final Map<String, CacheNode<InstrumentsDTO>> instrumentsCache;
     private final InstrumentService instrumentService;
     private final ReentrantReadWriteLock lock;
 
-    private InMemoryInstrumentsContext(InstrumentService instrumentService) {
+    private InMemoryInstrumentsCache(InstrumentService instrumentService) {
         this.instrumentService = instrumentService;
-        this.instrumentsContext = new ConcurrentHashMap<>();
+        this.instrumentsCache = new ConcurrentHashMap<>();
         this.lock = new ReentrantReadWriteLock();
     }
 
@@ -38,13 +38,13 @@ public class InMemoryInstrumentsContext implements IDataContext<InstrumentsDTO> 
      * @param instrumentService The service used to load instrument data
      * @return The singleton instance of InMemoryInstrumentsContext
      */
-    public synchronized static InMemoryInstrumentsContext getInstance(InstrumentService instrumentService) {
-        InMemoryInstrumentsContext result = instance;
+    public synchronized static InMemoryInstrumentsCache getInstance(InstrumentService instrumentService) {
+        InMemoryInstrumentsCache result = instance;
         if (result == null) {
-            synchronized (LOCK) {
+            synchronized (InMemoryInstrumentsCache.class) {
                 result = instance;
                 if (result == null) {
-                    instance = result = new InMemoryInstrumentsContext(instrumentService);
+                    instance = result = new InMemoryInstrumentsCache(instrumentService);
                 }
             }
         }
@@ -63,7 +63,11 @@ public class InMemoryInstrumentsContext implements IDataContext<InstrumentsDTO> 
     public InstrumentsDTO get(String key) {
         lock.readLock().lock();
         try {
-            return this.instrumentsContext.get(key);
+            if (!this.instrumentsCache.containsKey(key)) {
+                InstrumentsDTO instrumentResponse = this.instrumentService.getInstrumentById(key);
+                this.instrumentsCache.put(instrumentResponse.id(), new CacheNode<>(instrumentResponse));
+            }
+            return this.instrumentsCache.get(key).getItem();
         } finally {
             lock.readLock().unlock();
         }
@@ -78,10 +82,21 @@ public class InMemoryInstrumentsContext implements IDataContext<InstrumentsDTO> 
     public void refreshContext() {
         lock.writeLock().lock();
         try {
-            this.instrumentsContext.clear();
-            this.instrumentService.getAllInstruments().forEach(instrument -> {
-                this.instrumentsContext.put(instrument.id(), instrument);
-            });
+            this.instrumentsCache.clear();
+            for (InstrumentsDTO instrument : this.instrumentService.getAllInstruments()) {
+                if (this.instrumentsCache.containsKey(instrument.id())) {
+                    this.instrumentsCache.replace(
+                            instrument.id(),
+                            this.instrumentsCache.get(instrument.id()).setItem(instrument)
+                    );
+                    continue;
+                }
+
+                this.instrumentsCache.put(
+                        instrument.id(),
+                        new CacheNode<>(instrument)
+                );
+            }
         } finally {
             lock.writeLock().unlock();
         }
@@ -103,10 +118,20 @@ public class InMemoryInstrumentsContext implements IDataContext<InstrumentsDTO> 
     public void refreshValue(String key) {
         lock.writeLock().lock();
         try {
-            this.instrumentsContext.replace(key, this.instrumentService.getInstrumentById(key));
+            InstrumentsDTO instrumentResponse = this.instrumentService.getInstrumentById(key);
+            CacheNode<InstrumentsDTO> cacheUpdate = this.instrumentsCache.get(key).setItem(instrumentResponse);
+            this.instrumentsCache.replace(
+                    key,
+                    cacheUpdate
+            );
         } finally {
             lock.writeLock().unlock();
         }
+    }
+
+    @Override
+    public Map<String, CacheNode<InstrumentsDTO>> getCache() {
+        return this.instrumentsCache;
     }
 
 }

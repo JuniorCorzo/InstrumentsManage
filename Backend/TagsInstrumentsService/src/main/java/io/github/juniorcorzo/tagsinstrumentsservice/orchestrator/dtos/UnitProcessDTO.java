@@ -22,5 +22,5 @@ record Location(
         String municipality,
         String department,
         String country,
-        String[] coordinates
+        float[] coordinate
 ){}
