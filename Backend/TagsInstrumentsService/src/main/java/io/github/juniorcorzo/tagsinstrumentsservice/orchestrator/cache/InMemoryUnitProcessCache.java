@@ -84,4 +84,9 @@ public class InMemoryUnitProcessCache implements IDataCache<UnitProcessDTO> {
             lock.writeLock().unlock();
         }
     }
+
+    @Override
+    public Map<String, CacheNode<UnitProcessDTO>> getCache() {
+        return this.unitProcessCache;
+    }
 }

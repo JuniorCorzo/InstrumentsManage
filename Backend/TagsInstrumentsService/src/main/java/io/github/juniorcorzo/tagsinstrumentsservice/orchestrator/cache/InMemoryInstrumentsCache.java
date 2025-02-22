@@ -129,4 +129,9 @@ public class InMemoryInstrumentsCache implements IDataCache<InstrumentsDTO> {
         }
     }
 
+    @Override
+    public Map<String, CacheNode<InstrumentsDTO>> getCache() {
+        return this.instrumentsCache;
+    }
+
 }
