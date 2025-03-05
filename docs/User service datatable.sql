@@ -1,9 +1,9 @@
-CREATE SCHEMA 'user-service';
-SET search_path TO 'user-service';
+SET search_path TO 'user_service';
 
 CREATE TABLE "users" (
   "id" uuid PRIMARY KEY,
   "username" varchar,
+  "password" varchar,
   "email" varchar,
   "phone" varchar(15),
   "role" uuid,
