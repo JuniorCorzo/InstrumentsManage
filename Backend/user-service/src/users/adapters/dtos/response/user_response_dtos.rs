@@ -1,3 +1,4 @@
+use chrono::NaiveDateTime;
 use serde::Serialize;
 use uuid::Uuid;
 
@@ -11,4 +12,8 @@ pub struct ResponseUser {
     pub password: String,
     pub phone: String,
     pub role: RoleResponse,
+    pub camps: Vec<String>,
+    pub created_at: NaiveDateTime,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub updated_at: Option<NaiveDateTime>,
 }

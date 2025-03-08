@@ -3,7 +3,7 @@ use sea_orm::Set;
 use uuid::Uuid;
 
 use crate::{
-    roles::{RolesEntity, adapters::response::role_response::RoleResponse},
+    roles::adapters::response::role_response::RoleResponse,
     users::{
         UserEntity,
         adapters::dtos::{
@@ -13,16 +13,18 @@ use crate::{
     },
 };
 
-impl From<(UserEntity::Model, Vec<RolesEntity::Model>)> for ResponseUser {
-    fn from(value: (UserEntity::Model, Vec<RolesEntity::Model>)) -> Self {
-        let role = value.1.get(0).unwrap().clone();
+impl From<UserEntity::UserResponseQuery> for ResponseUser {
+    fn from(value: UserEntity::UserResponseQuery) -> Self {
         Self {
-            id: value.0.id,
-            username: value.0.username,
-            password: value.0.password,
-            email: value.0.email,
-            phone: value.0.phone,
-            role: RoleResponse::from(role),
+            id: value.id,
+            username: value.username,
+            password: value.password,
+            email: value.email,
+            phone: value.phone,
+            role: RoleResponse::from(value.rol),
+            camps: value.camps,
+            created_at: value.created_at,
+            updated_at: value.updated_at,
         }
     }
 }
@@ -51,7 +53,7 @@ impl From<UpdateUser> for UserEntity::ActiveModel {
             password: Set(value.password),
             phone: Set(value.phone),
             role: Set(value.role),
-            //created_at: Set(Utc::now().naive_local()),
+            updated_at: Set(Some(Utc::now().naive_local())),
             ..Default::default()
         }
     }

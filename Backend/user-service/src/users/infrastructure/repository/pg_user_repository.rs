@@ -1,12 +1,16 @@
-use migration::Expr;
-use sea_orm::{ColumnTrait, DatabaseConnection, DbErr, EntityTrait, QueryFilter};
+use sea_orm::{
+    ColumnTrait, ConnectionTrait, DatabaseConnection, DbErr, EntityTrait, FromQueryResult,
+    QueryFilter, Statement, Values,
+};
+use sea_query::{Alias, Expr, PostgresQueryBuilder, Query};
 use uuid::Uuid;
 
 use crate::users::adapters::dtos::request::user_request_dtos::ChangePassword;
 use crate::users::ports::repository::user_repository::UserRepository;
 
+use crate::camps_users::CampUserEntity as CampsUsers;
 use crate::roles::RolesEntity as Rol;
-use crate::users::UserEntity as User;
+use crate::users::UserEntity::{self as User, UserResponseQuery};
 pub struct PgUserRepository<'c> {
     conn: &'c DatabaseConnection,
 }
@@ -18,11 +22,61 @@ impl<'c> PgUserRepository<'c> {
 }
 
 impl<'c> UserRepository for PgUserRepository<'c> {
-    async fn get_by_id(self, id_user: Uuid) -> Result<Vec<(User::Model, Vec<Rol::Model>)>, DbErr> {
-        let user = User::Entity::find_by_id(id_user)
-            .find_with_related(Rol::Entity)
-            .all(self.conn)
-            .await;
+    async fn get_by_id(self, id_user: Uuid) -> Result<Option<UserResponseQuery>, DbErr> {
+        let user_query: (String, Values) = Query::select()
+            .columns(vec![
+                (User::Entity, User::Column::Id),
+                (User::Entity, User::Column::Username),
+                (User::Entity, User::Column::Email),
+                (User::Entity, User::Column::Password),
+                (User::Entity, User::Column::Phone),
+                (User::Entity, User::Column::CreatedAt),
+                (User::Entity, User::Column::UpdatedAt),
+            ])
+            .expr_as(
+                Expr::cust_with_exprs(
+                    "json_build_object('id', $1, 'name', $2, 'permissions', $3)",
+                    [
+                        Expr::column((Rol::Entity, Rol::Column::Id)),
+                        Expr::column((Rol::Entity, Rol::Column::Name)),
+                        Expr::column((Rol::Entity, Rol::Column::Permissions)),
+                    ],
+                ),
+                Alias::new("rol"),
+            )
+            .expr_as(
+                Expr::cust_with_expr(
+                    "ARRAY_AGG(COALESCE($1, 'Not Found'))",
+                    Expr::col((CampsUsers::Entity, CampsUsers::Column::IdCamp)),
+                ),
+                Alias::new("camps"),
+            )
+            .from(User::Entity)
+            .left_join(
+                Rol::Entity,
+                Expr::col((User::Entity, User::Column::Role))
+                    .equals((Rol::Entity, Rol::Column::Id)),
+            )
+            .left_join(
+                CampsUsers::Entity,
+                Expr::col((User::Entity, User::Column::Id))
+                    .equals((CampsUsers::Entity, CampsUsers::Column::IdUser)),
+            )
+            .and_where(Expr::col((User::Entity, User::Column::Id)).eq(id_user))
+            .group_by_col((User::Entity, User::Column::Id))
+            .group_by_col((Rol::Entity, Rol::Column::Id))
+            .to_owned()
+            .build(PostgresQueryBuilder);
+
+        let statement = Statement::from_sql_and_values(
+            self.conn.get_database_backend(),
+            user_query.0,
+            user_query.1,
+        );
+        let user: Result<Option<UserResponseQuery>, DbErr> =
+            UserResponseQuery::find_by_statement(statement)
+                .one(self.conn)
+                .await;
 
         user
     }
@@ -43,7 +97,7 @@ impl<'c> UserRepository for PgUserRepository<'c> {
     async fn insert_user(
         self,
         user: User::ActiveModel,
-    ) -> Result<Vec<(User::Model, Vec<Rol::Model>)>, DbErr> {
+    ) -> Result<Option<UserResponseQuery>, DbErr> {
         let user_inserted = User::Entity::insert(user).exec(self.conn).await.unwrap();
         self.get_by_id(user_inserted.last_insert_id).await
     }
@@ -51,7 +105,7 @@ impl<'c> UserRepository for PgUserRepository<'c> {
     async fn update_user(
         self,
         user: User::ActiveModel,
-    ) -> Result<Vec<(User::Model, Vec<Rol::Model>)>, DbErr> {
+    ) -> Result<Option<UserResponseQuery>, DbErr> {
         let user_updated = User::Entity::update(user).exec(self.conn).await.unwrap();
 
         self.get_by_id(user_updated.id).await

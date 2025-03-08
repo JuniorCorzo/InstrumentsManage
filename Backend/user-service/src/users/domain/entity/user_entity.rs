@@ -1,7 +1,9 @@
 use chrono::NaiveDateTime;
-use sea_orm::entity::prelude::*;
+use sea_orm::{FromQueryResult, entity::prelude::*};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
+
+use crate::roles::RolesEntity::RoleResponseQuery;
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, DeriveEntityModel)]
 #[sea_orm(table_name = "users")]
@@ -16,6 +18,19 @@ pub struct Model {
     #[sea_orm(column_type = "Timestamp")]
     pub created_at: NaiveDateTime,
     #[sea_orm(column_type = "Timestamp")]
+    pub updated_at: Option<NaiveDateTime>,
+}
+
+#[derive(Debug, Clone, FromQueryResult)]
+pub struct UserResponseQuery {
+    pub id: Uuid,
+    pub username: String,
+    pub email: String,
+    pub password: String,
+    pub phone: String,
+    pub rol: RoleResponseQuery,
+    pub camps: Vec<String>,
+    pub created_at: NaiveDateTime,
     pub updated_at: Option<NaiveDateTime>,
 }
 

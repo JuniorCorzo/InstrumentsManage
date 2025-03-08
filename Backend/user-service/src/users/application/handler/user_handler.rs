@@ -1,10 +1,9 @@
-use actix_web::{HttpResponse, Result, web};
+use actix_web::{Result, web};
 use sea_orm::DatabaseConnection;
 use uuid::Uuid;
 
 use crate::{
     AppState,
-    roles::RolesEntity,
     users::{
         UserEntity, adapters::dtos::response::user_response_dtos::ResponseUser,
         infrastructure::repository::pg_user_repository::PgUserRepository,
@@ -25,10 +24,10 @@ impl UserHandler {
         let conn: &DatabaseConnection = &self.app_state.conn;
         let user_repository: PgUserRepository<'_> = PgUserRepository::new(conn);
 
-        let user: Vec<(UserEntity::Model, Vec<RolesEntity::Model>)> =
+        let user: Option<UserEntity::UserResponseQuery> =
             user_repository.get_by_id(id_user).await.unwrap();
 
-        Ok(ResponseUser::from(user[0].clone()))
+        Ok(ResponseUser::from(user.unwrap().clone()))
     }
 
     pub async fn create_user(
@@ -38,10 +37,10 @@ impl UserHandler {
         let conn: &DatabaseConnection = &self.app_state.conn;
         let user_repository: PgUserRepository<'_> = PgUserRepository::new(conn);
 
-        let user_created: Vec<(UserEntity::Model, Vec<RolesEntity::Model>)> =
+        let user_created: Option<UserEntity::UserResponseQuery> =
             user_repository.insert_user(user).await.unwrap();
 
-        Ok(ResponseUser::from(user_created[0].clone()))
+        Ok(ResponseUser::from(user_created.unwrap().clone()))
     }
 
     pub async fn update_user(
@@ -51,10 +50,10 @@ impl UserHandler {
         let conn: &DatabaseConnection = &self.app_state.conn;
         let user_repository: PgUserRepository<'_> = PgUserRepository::new(conn);
 
-        let user_updated: Vec<(UserEntity::Model, Vec<RolesEntity::Model>)> =
+        let user_updated: Option<UserEntity::UserResponseQuery> =
             user_repository.update_user(user).await.unwrap();
 
-        Ok(ResponseUser::from(user_updated[0].clone()))
+        Ok(ResponseUser::from(user_updated.unwrap().clone()))
     }
 
     pub async fn delete_user(self, id_user: Uuid) -> actix_web::Result<bool> {

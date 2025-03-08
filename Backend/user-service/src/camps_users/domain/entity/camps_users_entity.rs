@@ -6,7 +6,7 @@ use uuid::Uuid;
 #[sea_orm(table_name = "camps_users")]
 pub struct Model {
     #[sea_orm(primary_key, auto_increment = false)]
-    pub id_users: Uuid,
+    pub id_user: Uuid,
     #[sea_orm(primary_key, auto_increment = false)]
     pub id_camp: String,
 }
@@ -15,7 +15,7 @@ pub struct Model {
 pub enum Relation {
     #[sea_orm(
         belongs_to = "crate::users::UserEntity::Entity",
-        from = "Column::IdUsers",
+        from = "Column::IdUser",
         to = "crate::users::UserEntity::Column::Id"
     )]
     Users,
