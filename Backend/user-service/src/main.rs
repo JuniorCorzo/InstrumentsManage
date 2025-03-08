@@ -7,6 +7,7 @@ mod users;
 use crate::common::infrastructure::connect_db::connect_db;
 use crate::users::adapters::routes::user_routes::init;
 use actix_web::{App, HttpServer, middleware, web};
+use roles::adapters::routes::role_routes::role_init;
 use sea_orm::DatabaseConnection;
 
 #[derive(Clone)]
@@ -25,6 +26,7 @@ async fn main() -> std::io::Result<()> {
             .app_data(web::Data::new(app_state.clone()))
             .wrap(middleware::Logger::default())
             .configure(init)
+            .configure(role_init)
     })
     .bind(("127.0.0.1", 8083))?
     .run()
