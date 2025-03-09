@@ -3,6 +3,7 @@ use std::time::Duration;
 
 use confik::{Configuration, EnvSource};
 use dotenvy::dotenv;
+use log::info;
 use migration::{Migrator, MigratorTrait};
 use sea_orm::{ConnectOptions, Database, DatabaseConnection};
 #[derive(Debug, Configuration)]
@@ -49,6 +50,6 @@ pub async fn connect_db() -> DatabaseConnection {
 
     Migrator::up(&connection, None).await.unwrap();
 
-    println!("Connected to database {}", db_config.get_url_connection());
+    info!("Connected to database");
     connection
 }
