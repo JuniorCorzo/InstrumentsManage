@@ -14,7 +14,12 @@ impl MigrationTrait for Migration {
                     .if_not_exists()
                     .col(ColumnDef::new(Users::Id).uuid().not_null().primary_key())
                     .col(ColumnDef::new(Users::Username).string().not_null())
-                    .col(ColumnDef::new(Users::Email).string().not_null())
+                    .col(
+                        ColumnDef::new(Users::Email)
+                            .string()
+                            .not_null()
+                            .unique_key(),
+                    )
                     .col(ColumnDef::new(Users::Password).string().not_null())
                     .col(ColumnDef::new(Users::Phone).string().not_null())
                     .col(ColumnDef::new(Users::Role).uuid().not_null())
