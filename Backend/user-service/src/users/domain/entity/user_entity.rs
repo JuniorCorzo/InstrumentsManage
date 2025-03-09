@@ -36,7 +36,7 @@ pub struct UserResponseQuery {
 
 #[derive(Debug, Clone, FromQueryResult)]
 pub struct UserValid {
-    pub is_valid: bool,
+    pub id_user: Uuid,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, EnumIter, DeriveRelation)]

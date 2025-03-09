@@ -1,6 +1,6 @@
 use sea_orm::{
-    ColumnTrait, ConnectionTrait, DatabaseConnection, DbBackend, DbErr, EntityTrait,
-    FromQueryResult, QueryFilter, QuerySelect, QueryTrait, Statement, Values,
+    ColumnTrait, ConnectionTrait, DatabaseConnection, DbErr, EntityTrait, FromQueryResult,
+    QueryFilter, QuerySelect, QueryTrait, Statement, Values,
 };
 use sea_query::{Alias, Expr, PostgresQueryBuilder, Query};
 use uuid::Uuid;
@@ -93,27 +93,24 @@ impl<'c> UserRepository for PgUserRepository<'c> {
 
         Ok(())
     }
-    async fn is_credential_valid(self, email: String, password: String) -> bool {
+    async fn is_credential_valid(
+        self,
+        email: String,
+        password: String,
+    ) -> Result<UserValid, DbErr> {
         let user_query = User::Entity::find()
             .select_only()
-            .expr_as(
-                Expr::cust_with_expr(
-                    "$1 = 1",
-                    Expr::count(Expr::col((User::Entity, User::Column::Id))),
-                ),
-                "is_valid",
-            )
+            .column_as(User::Column::Id, "id_user")
             .filter(Expr::col((User::Entity, User::Column::Email)).eq(email))
             .filter(Expr::col((User::Entity, User::Column::Password)).eq(password))
             .build(self.conn.get_database_backend())
             .to_owned();
 
-        UserValid::find_by_statement(user_query)
+        Ok(UserValid::find_by_statement(user_query)
             .one(self.conn)
             .await
             .unwrap()
-            .unwrap()
-            .is_valid
+            .unwrap())
     }
 
     async fn insert_user(

@@ -30,10 +30,12 @@ impl UserHandler {
         Ok(ResponseUser::from(user.unwrap().clone()))
     }
 
-    pub async fn valid_credential(self, email: String, password: String) -> Result<bool> {
+    pub async fn valid_credential(self, email: String, password: String) -> Result<Uuid> {
         Ok(PgUserRepository::new(&self.app_state.conn)
             .is_credential_valid(email, password)
-            .await)
+            .await
+            .unwrap()
+            .id_user)
     }
 
     pub async fn create_user(
