@@ -34,6 +34,11 @@ pub struct UserResponseQuery {
     pub updated_at: Option<NaiveDateTime>,
 }
 
+#[derive(Debug, Clone, FromQueryResult)]
+pub struct UserValid {
+    pub is_valid: bool,
+}
+
 #[derive(Clone, Copy, Debug, PartialEq, EnumIter, DeriveRelation)]
 pub enum Relation {
     #[sea_orm(

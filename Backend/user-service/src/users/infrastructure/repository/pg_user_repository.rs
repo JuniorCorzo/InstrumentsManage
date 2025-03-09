@@ -1,6 +1,6 @@
 use sea_orm::{
-    ColumnTrait, ConnectionTrait, DatabaseConnection, DbErr, EntityTrait, FromQueryResult,
-    QueryFilter, Statement, Values,
+    ColumnTrait, ConnectionTrait, DatabaseConnection, DbBackend, DbErr, EntityTrait,
+    FromQueryResult, QueryFilter, QuerySelect, QueryTrait, Statement, Values,
 };
 use sea_query::{Alias, Expr, PostgresQueryBuilder, Query};
 use uuid::Uuid;
@@ -10,7 +10,7 @@ use crate::users::ports::repository::user_repository::UserRepository;
 
 use crate::camps_users::CampUserEntity as CampsUsers;
 use crate::roles::RolesEntity as Rol;
-use crate::users::UserEntity::{self as User, UserResponseQuery};
+use crate::users::UserEntity::{self as User, UserResponseQuery, UserValid};
 pub struct PgUserRepository<'c> {
     conn: &'c DatabaseConnection,
 }
@@ -92,6 +92,28 @@ impl<'c> UserRepository for PgUserRepository<'c> {
             .await?;
 
         Ok(())
+    }
+    async fn is_credential_valid(self, email: String, password: String) -> bool {
+        let user_query = User::Entity::find()
+            .select_only()
+            .expr_as(
+                Expr::cust_with_expr(
+                    "$1 = 1",
+                    Expr::count(Expr::col((User::Entity, User::Column::Id))),
+                ),
+                "is_valid",
+            )
+            .filter(Expr::col((User::Entity, User::Column::Email)).eq(email))
+            .filter(Expr::col((User::Entity, User::Column::Password)).eq(password))
+            .build(self.conn.get_database_backend())
+            .to_owned();
+
+        UserValid::find_by_statement(user_query)
+            .one(self.conn)
+            .await
+            .unwrap()
+            .unwrap()
+            .is_valid
     }
 
     async fn insert_user(

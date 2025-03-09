@@ -30,6 +30,24 @@ pub async fn get_user(app_state: web::Data<AppState>, path: web::Path<String>) -
     ))
 }
 
+#[get("/is-valid/{email}/{password}")]
+pub async fn valid_credentials(
+    app_state: web::Data<AppState>,
+    path: web::Path<(String, String)>,
+) -> HttpResponse {
+    let (email, password) = path.into_inner();
+    let is_valid = UserHandler::new(app_state)
+        .valid_credential(email, password)
+        .await
+        .unwrap();
+
+    HttpResponse::Ok().json(Response::new(
+        StatusCode::OK,
+        Some(is_valid),
+        MessageResponse::OK.value(),
+    ))
+}
+
 #[post("/create")]
 pub async fn create_user(
     app_state: web::Data<AppState>,
@@ -78,6 +96,7 @@ pub fn init(cfg: &mut web::ServiceConfig) {
     cfg.service(
         web::scope("/users")
             .service(get_user)
+            .service(valid_credentials)
             .service(create_user)
             .service(update_user)
             .service(delete_user),
