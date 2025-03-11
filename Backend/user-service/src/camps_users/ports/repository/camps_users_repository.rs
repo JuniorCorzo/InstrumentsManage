@@ -1,5 +1,4 @@
 use sea_orm::DbErr;
-use uuid::Uuid;
 
 use crate::camps_users::CampUserEntity;
 
