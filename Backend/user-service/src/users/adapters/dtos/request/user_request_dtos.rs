@@ -1,5 +1,4 @@
 use serde::Deserialize;
-use uuid::Uuid;
 
 #[derive(Debug, Deserialize)]
 pub struct CreateUser {
@@ -7,20 +6,20 @@ pub struct CreateUser {
     pub email: String,
     pub password: String,
     pub phone: String,
-    pub role: Uuid,
+    pub role: String,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct UpdateUser {
-    pub id: Uuid,
+    pub id: String,
     pub username: String,
     pub email: String,
     pub password: String,
     pub phone: String,
-    pub role: Uuid,
+    pub role: String,
 }
 
 pub struct ChangePassword {
-    pub id: Uuid,
+    pub id: String,
     pub new_password: String,
 }

@@ -1,3 +1,5 @@
+use std::str::FromStr;
+
 use chrono::Utc;
 use sea_orm::Set;
 use uuid::Uuid;
@@ -37,7 +39,7 @@ impl From<CreateUser> for UserEntity::ActiveModel {
             email: Set(value.email),
             password: Set(value.password),
             phone: Set(value.phone),
-            role: Set(value.role),
+            role: Set(Uuid::parse_str(&value.role.as_str()).unwrap()),
             created_at: Set(Utc::now().naive_local()),
             ..Default::default()
         }
@@ -47,12 +49,12 @@ impl From<CreateUser> for UserEntity::ActiveModel {
 impl From<UpdateUser> for UserEntity::ActiveModel {
     fn from(value: UpdateUser) -> Self {
         Self {
-            id: Set(value.id),
+            id: Set(Uuid::from_str(value.id.as_str()).unwrap()),
             username: Set(value.username),
             email: Set(value.email),
             password: Set(value.password),
             phone: Set(value.phone),
-            role: Set(value.role),
+            role: Set(Uuid::from_str(&value.role.as_str()).unwrap()),
             updated_at: Set(Some(Utc::now().naive_local())),
             ..Default::default()
         }

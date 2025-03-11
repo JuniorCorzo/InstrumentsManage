@@ -1,33 +1,39 @@
-use std::str::FromStr;
-
-use actix_web::{Error, HttpResponse, delete, get, http::StatusCode, post, put, web};
+use actix_web::{HttpResponse, delete, get, http::StatusCode, post, put, web};
 use uuid::Uuid;
 
 use crate::{
     AppState,
+    camps_users::adapter::routes::camps_users_routes::{
+        assign_camps_to_user, remove_camps_to_user,
+    },
     common::adapter::{messages::message_response::MessageResponse, response::response::Response},
+    roles::application::validations::rol_validations::RolValidations,
     users::{
         UserEntity,
         adapters::dtos::{
             request::user_request_dtos::{CreateUser, UpdateUser},
             response::user_response_dtos::ResponseUser,
         },
-        application::handler::user_handler::UserHandler,
+        application::{
+            handler::user_handler::UserHandler, validations::user_validations::UserValidations,
+        },
+        domain::exceptions::user_exceptions::UserExceptions,
     },
 };
 
 #[get("/{id_user}")]
-pub async fn get_user(app_state: web::Data<AppState>, path: web::Path<String>) -> HttpResponse {
-    let id_user: String = path.into_inner();
-    let user: Result<ResponseUser, Error> = UserHandler::new(app_state)
-        .get_user_by_id(Uuid::from_str(&id_user.as_str()).unwrap())
-        .await;
+pub async fn get_user(
+    app_state: web::Data<AppState>,
+    path: web::Path<String>,
+) -> Result<HttpResponse, UserExceptions> {
+    let id_user: Uuid = UserValidations::valid_id_format(&path.into_inner())?;
+    let user = UserHandler::new(app_state).get_user_by_id(id_user).await?;
 
-    HttpResponse::Ok().json(Response::new(
+    Ok(HttpResponse::Ok().json(Response::new(
         StatusCode::OK,
-        Some(user.unwrap()),
+        Some(user),
         MessageResponse::OK.value(),
-    ))
+    )))
 }
 
 #[get("/is-valid/{email}/{password}")]
@@ -52,44 +58,52 @@ pub async fn valid_credentials(
 pub async fn create_user(
     app_state: web::Data<AppState>,
     user_create: web::Json<CreateUser>,
-) -> HttpResponse {
-    let user: UserEntity::ActiveModel = UserEntity::ActiveModel::from(user_create.into_inner());
-    let user: Result<ResponseUser, Error> = UserHandler::new(app_state).create_user(user).await;
+) -> Result<HttpResponse, UserExceptions> {
+    RolValidations::valid_id_format(&user_create.role)?;
 
-    HttpResponse::Created().json(Response::new(
+    let user: UserEntity::ActiveModel = UserEntity::ActiveModel::from(user_create.into_inner());
+    let user: ResponseUser = UserHandler::new(app_state).create_user(user).await?;
+
+    Ok(HttpResponse::Created().json(Response::new(
         StatusCode::CREATED,
-        Some(user.unwrap()),
+        Some(user),
         MessageResponse::OK.value(),
-    ))
+    )))
 }
 
 #[put("/update")]
 pub async fn update_user(
     app_state: web::Data<AppState>,
     user_update: web::Json<UpdateUser>,
-) -> HttpResponse {
-    let user: UserEntity::ActiveModel = UserEntity::ActiveModel::from(user_update.into_inner());
-    let user: Result<ResponseUser, Error> = UserHandler::new(app_state).update_user(user).await;
+) -> Result<HttpResponse, UserExceptions> {
+    UserValidations::valid_id_format(&user_update.id)?;
+    RolValidations::valid_id_format(&user_update.role)?;
 
-    HttpResponse::Ok().json(Response::new(
+    let user: UserEntity::ActiveModel = UserEntity::ActiveModel::from(user_update.into_inner());
+    let user: ResponseUser = UserHandler::new(app_state).update_user(user).await?;
+
+    Ok(HttpResponse::Ok().json(Response::new(
         StatusCode::OK,
-        Some(user.unwrap()),
+        Some(user),
         MessageResponse::OK.value(),
-    ))
+    )))
 }
 
 #[delete("/delete/{id_user}")]
-pub async fn delete_user(app_state: web::Data<AppState>, path: web::Path<String>) -> HttpResponse {
-    let id_user: String = path.into_inner();
+pub async fn delete_user(
+    app_state: web::Data<AppState>,
+    path: web::Path<String>,
+) -> Result<HttpResponse, UserExceptions> {
+    let id_user: Uuid = UserValidations::valid_id_format(&path.into_inner().as_str())?;
     UserHandler::new(app_state)
-        .delete_user(Uuid::from_str(&id_user.as_str()).unwrap())
+        .delete_user(id_user)
         .await
         .unwrap_err();
 
-    HttpResponse::Ok().json(Response::<()>::without_data(
+    Ok(HttpResponse::Ok().json(Response::<()>::without_data(
         StatusCode::OK,
         MessageResponse::OK.value(),
-    ))
+    )))
 }
 
 pub fn init(cfg: &mut web::ServiceConfig) {
@@ -99,6 +113,8 @@ pub fn init(cfg: &mut web::ServiceConfig) {
             .service(valid_credentials)
             .service(create_user)
             .service(update_user)
-            .service(delete_user),
+            .service(delete_user)
+            .service(assign_camps_to_user)
+            .service(remove_camps_to_user),
     );
 }

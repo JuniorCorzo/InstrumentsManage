@@ -6,7 +6,11 @@ mod users;
 
 use crate::common::infrastructure::connect_db::connect_db;
 use crate::users::adapters::routes::user_routes::init;
-use actix_web::{App, HttpServer, middleware::Logger, web};
+use actix_web::{
+    App, HttpServer,
+    middleware::{ErrorHandlers, Logger},
+    web,
+};
 use env_logger::Env;
 use roles::adapters::routes::role_routes::role_init;
 use sea_orm::DatabaseConnection;
@@ -27,6 +31,7 @@ async fn main() -> std::io::Result<()> {
             .configure(init)
             .configure(role_init)
             .wrap(Logger::new("%a \"%r\" %s %b \"%{User-Agent}i\" %T"))
+            .wrap(ErrorHandlers::new())
             .app_data(web::Data::new(app_state.clone()))
     })
     .bind(("127.0.0.1", 8083))?

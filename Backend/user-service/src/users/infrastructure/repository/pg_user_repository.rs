@@ -1,6 +1,6 @@
 use sea_orm::{
-    ColumnTrait, ConnectionTrait, DatabaseConnection, DbErr, EntityTrait, FromQueryResult,
-    QueryFilter, QuerySelect, QueryTrait, Statement, Values,
+    ActiveValue, ColumnTrait, ConnectionTrait, DatabaseConnection, DbErr, EntityTrait,
+    FromQueryResult, QueryFilter, QuerySelect, QueryTrait, Statement, Values,
 };
 use sea_query::{Alias, Expr, PostgresQueryBuilder, Query};
 use uuid::Uuid;
@@ -11,6 +11,8 @@ use crate::users::ports::repository::user_repository::UserRepository;
 use crate::camps_users::CampUserEntity as CampsUsers;
 use crate::roles::RolesEntity as Rol;
 use crate::users::UserEntity::{self as User, UserResponseQuery, UserValid};
+
+#[derive(Clone, Copy)]
 pub struct PgUserRepository<'c> {
     conn: &'c DatabaseConnection,
 }
@@ -93,6 +95,8 @@ impl<'c> UserRepository for PgUserRepository<'c> {
 
         Ok(())
     }
+
+    //TODO: Refactorizar la query para que solo busque por email y devuelva un option
     async fn is_credential_valid(
         self,
         email: String,
@@ -108,8 +112,7 @@ impl<'c> UserRepository for PgUserRepository<'c> {
 
         Ok(UserValid::find_by_statement(user_query)
             .one(self.conn)
-            .await
-            .unwrap()
+            .await?
             .unwrap())
     }
 
@@ -117,7 +120,7 @@ impl<'c> UserRepository for PgUserRepository<'c> {
         self,
         user: User::ActiveModel,
     ) -> Result<Option<UserResponseQuery>, DbErr> {
-        let user_inserted = User::Entity::insert(user).exec(self.conn).await.unwrap();
+        let user_inserted = User::Entity::insert(user).exec(self.conn).await?;
         self.get_by_id(user_inserted.last_insert_id).await
     }
 
@@ -125,7 +128,7 @@ impl<'c> UserRepository for PgUserRepository<'c> {
         self,
         user: User::ActiveModel,
     ) -> Result<Option<UserResponseQuery>, DbErr> {
-        let user_updated = User::Entity::update(user).exec(self.conn).await.unwrap();
+        let user_updated = User::Entity::update(user).exec(self.conn).await?;
 
         self.get_by_id(user_updated.id).await
     }
@@ -137,5 +140,50 @@ impl<'c> UserRepository for PgUserRepository<'c> {
             .unwrap()
             .rows_affected
             >= 1
+    }
+    async fn exist_by_email(self, email: ActiveValue<String>) -> Result<bool, DbErr> {
+        let query = User::Entity::find()
+            .select_only()
+            .expr_as(
+                Expr::cust_with_expr(
+                    "$1 = 1",
+                    Expr::count(Expr::col((User::Entity, User::Column::Email))),
+                ),
+                "is_exist",
+            )
+            .filter(Expr::col((User::Entity, User::Column::Email)).eq(email.into_value().unwrap()))
+            .build(self.conn.get_database_backend());
+
+        let is_exist: Result<bool, DbErr> = self
+            .conn
+            .query_one(query)
+            .await?
+            .unwrap()
+            .try_get("", "is_exist");
+
+        Ok(is_exist?)
+    }
+
+    async fn exist_by_id(self, id_user: &Uuid) -> Result<bool, DbErr> {
+        let query = User::Entity::find()
+            .select_only()
+            .expr_as(
+                Expr::cust_with_expr(
+                    "$1 = 1",
+                    Expr::count(Expr::col((User::Entity, User::Column::Id))),
+                ),
+                "is_exist",
+            )
+            .filter(Expr::col((User::Entity, User::Column::Id)).eq(id_user.clone()))
+            .build(self.conn.get_database_backend());
+
+        let is_exist: Result<bool, DbErr> = self
+            .conn
+            .query_one(query)
+            .await?
+            .unwrap()
+            .try_get("", "is_exist");
+
+        Ok(is_exist?)
     }
 }
