@@ -19,6 +19,7 @@ pub struct UpdateUser {
     pub role: String,
 }
 
+#[derive(Debug, Deserialize)]
 pub struct ChangePassword {
     pub id: String,
     pub new_password: String,

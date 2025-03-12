@@ -9,7 +9,10 @@ use crate::{
         infrastructure::repository::pg_role_repository::PgRoleRepository,
     },
     users::{
-        UserEntity, adapters::dtos::response::user_response_dtos::ResponseUser,
+        UserEntity,
+        adapters::dtos::{
+            request::user_request_dtos::ChangePassword, response::user_response_dtos::ResponseUser,
+        },
         application::validations::user_validations::UserValidations,
         domain::exceptions::user_exceptions::UserExceptions,
         infrastructure::repository::pg_user_repository::PgUserRepository,
@@ -88,6 +91,20 @@ impl UserHandler {
             user_repository.update_user(user).await?;
 
         Ok(ResponseUser::from(user_updated.unwrap().clone()))
+    }
+
+    pub async fn change_password(
+        self,
+        change_password: ChangePassword,
+    ) -> Result<(), UserExceptions> {
+        let user_repository: &PgUserRepository<'_> = &PgUserRepository::new(&self.app_state.conn);
+        UserValidations::exist_by_id(
+            user_repository,
+            &UserValidations::valid_id_format(change_password.id.as_str())?,
+        )
+        .await?;
+        user_repository.change_password(change_password).await?;
+        Ok(())
     }
 
     pub async fn delete_user(self, id_user: Uuid) -> actix_web::Result<bool, UserExceptions> {

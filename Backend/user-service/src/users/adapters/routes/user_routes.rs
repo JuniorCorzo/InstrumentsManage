@@ -1,4 +1,4 @@
-use actix_web::{HttpResponse, delete, get, http::StatusCode, post, put, web};
+use actix_web::{HttpResponse, delete, get, http::StatusCode, patch, post, put, web};
 use uuid::Uuid;
 
 use crate::{
@@ -11,7 +11,7 @@ use crate::{
     users::{
         UserEntity,
         adapters::dtos::{
-            request::user_request_dtos::{CreateUser, UpdateUser},
+            request::user_request_dtos::{ChangePassword, CreateUser, UpdateUser},
             response::user_response_dtos::ResponseUser,
         },
         application::{
@@ -85,6 +85,21 @@ pub async fn update_user(
     Ok(HttpResponse::Ok().json(Response::new(
         StatusCode::OK,
         Some(user),
+        MessageResponse::OK.value(),
+    )))
+}
+
+#[patch("/change-password")]
+pub async fn change_password(
+    app_state: web::Data<AppState>,
+    change_password: web::Json<ChangePassword>,
+) -> Result<HttpResponse, UserExceptions> {
+    UserHandler::new(app_state)
+        .change_password(change_password.into_inner())
+        .await?;
+
+    Ok(HttpResponse::Ok().json(Response::<()>::without_data(
+        StatusCode::OK,
         MessageResponse::OK.value(),
     )))
 }
