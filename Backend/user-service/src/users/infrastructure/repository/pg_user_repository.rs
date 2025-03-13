@@ -30,7 +30,6 @@ impl<'c> UserRepository for PgUserRepository<'c> {
                 (User::Entity, User::Column::Id),
                 (User::Entity, User::Column::Username),
                 (User::Entity, User::Column::Email),
-                (User::Entity, User::Column::Password),
                 (User::Entity, User::Column::Phone),
                 (User::Entity, User::Column::CreatedAt),
                 (User::Entity, User::Column::UpdatedAt),

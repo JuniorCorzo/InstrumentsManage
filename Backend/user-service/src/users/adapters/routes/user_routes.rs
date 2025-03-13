@@ -9,7 +9,6 @@ use crate::{
     common::adapter::{messages::message_response::MessageResponse, response::response::Response},
     roles::application::validations::rol_validations::RolValidations,
     users::{
-        UserEntity,
         adapters::dtos::{
             request::user_request_dtos::{
                 ChangePassword, CreateUser, UpdateUser, ValidUserCredentials,

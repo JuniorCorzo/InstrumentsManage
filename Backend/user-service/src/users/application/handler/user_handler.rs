@@ -55,10 +55,14 @@ impl UserHandler {
     ) -> Result<ResponseUser, UserExceptions> {
         let user_repository = &PgUserRepository::new(&self.app_state.conn);
 
-        let user_credentials: UserValid = user_repository
+        let user_is_valid: Option<UserValid> = user_repository
             .is_credential_valid(credentials.email)
-            .await?
-            .unwrap();
+            .await?;
+
+        let user_credentials: UserValid = match user_is_valid {
+            Some(user) => Ok(user),
+            None => Err(UserExceptions::CredentialsNotValid),
+        }?;
 
         let user = self.get_user_by_id(user_credentials.id_user).await?;
 

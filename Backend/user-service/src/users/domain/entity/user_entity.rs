@@ -26,7 +26,6 @@ pub struct UserResponseQuery {
     pub id: Uuid,
     pub username: String,
     pub email: String,
-    pub password: String,
     pub phone: String,
     pub rol: RoleResponseQuery,
     pub camps: Vec<String>,

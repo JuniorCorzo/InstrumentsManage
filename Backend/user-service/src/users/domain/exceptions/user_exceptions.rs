@@ -69,7 +69,7 @@ impl From<sea_orm::DbErr> for UserExceptions {
 }
 
 impl From<argon2::password_hash::Error> for UserExceptions {
-    fn from(value: argon2::password_hash::Error) -> Self {
+    fn from(_: argon2::password_hash::Error) -> Self {
         UserExceptions::InternalError
     }
 }
