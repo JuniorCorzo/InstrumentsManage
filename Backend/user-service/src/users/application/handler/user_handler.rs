@@ -1,5 +1,9 @@
 use actix_web::{Result, web};
-use sea_orm::DatabaseConnection;
+use argon2::{
+    Argon2, PasswordHash, PasswordHasher,
+    password_hash::{SaltString, rand_core::OsRng},
+};
+use sea_orm::{DatabaseConnection, Set};
 use uuid::Uuid;
 
 use crate::{
@@ -9,9 +13,12 @@ use crate::{
         infrastructure::repository::pg_role_repository::PgRoleRepository,
     },
     users::{
-        UserEntity,
+        UserEntity::{self, UserValid},
         adapters::dtos::{
-            request::user_request_dtos::ChangePassword, response::user_response_dtos::ResponseUser,
+            request::user_request_dtos::{
+                ChangePassword, CreateUser, UpdateUser, ValidUserCredentials,
+            },
+            response::user_response_dtos::ResponseUser,
         },
         application::validations::user_validations::UserValidations,
         domain::exceptions::user_exceptions::UserExceptions,
@@ -42,68 +49,92 @@ impl UserHandler {
         }
     }
 
-    pub async fn valid_credential(
+    pub async fn valid_credentials(
         self,
-        email: String,
-        password: String,
-    ) -> Result<Uuid, UserExceptions> {
-        Ok(PgUserRepository::new(&self.app_state.conn)
-            .is_credential_valid(email, password)
+        credentials: ValidUserCredentials,
+    ) -> Result<ResponseUser, UserExceptions> {
+        let user_repository = &PgUserRepository::new(&self.app_state.conn);
+
+        let user_credentials: UserValid = user_repository
+            .is_credential_valid(credentials.email)
             .await?
-            .id_user)
+            .unwrap();
+
+        let user = self.get_user_by_id(user_credentials.id_user).await?;
+
+        let password_hash = PasswordHash::new(&user_credentials.password)
+            .map_err(|_| UserExceptions::CredentialsNotValid)?;
+        password_hash
+            .verify_password(&[&Argon2::default()], credentials.password.as_bytes())
+            .map_err(|_| UserExceptions::CredentialsNotValid)?;
+
+        Ok(ResponseUser::from(user))
     }
 
-    pub async fn create_user(
-        self,
-        user: UserEntity::ActiveModel,
-    ) -> Result<ResponseUser, UserExceptions> {
+    pub async fn create_user(self, user: &mut CreateUser) -> Result<ResponseUser, UserExceptions> {
         let conn: &DatabaseConnection = &self.app_state.conn;
         let user_repository: &PgUserRepository<'_> = &PgUserRepository::new(conn);
 
-        UserValidations::exist_email(&user_repository, &user.email).await?;
+        UserValidations::exist_email(&user_repository, &Set(user.email.clone())).await?;
         RolValidations::exist_by_id(
             &PgRoleRepository::new(&self.app_state.conn),
-            user.role.as_ref(),
+            &RolValidations::valid_id_format(&user.role.as_str())?,
         )
         .await?;
 
-        let user_created: Option<UserEntity::UserResponseQuery> =
-            user_repository.insert_user(user).await.unwrap();
+        user.password = self.encrypt_password(&user.password)?;
+        let user_created: UserEntity::UserResponseQuery = user_repository
+            .insert_user(user.clone().into())
+            .await?
+            .unwrap();
 
-        Ok(ResponseUser::from(user_created.as_ref().cloned().unwrap()))
+        Ok(ResponseUser::from(user_created))
     }
 
     pub async fn update_user(
         self,
-        user: UserEntity::ActiveModel,
+        user: &mut UpdateUser,
     ) -> actix_web::Result<ResponseUser, UserExceptions> {
         let conn: &DatabaseConnection = &self.app_state.conn;
         let user_repository: &PgUserRepository<'_> = &PgUserRepository::new(conn);
 
-        UserValidations::exist_by_id(user_repository, user.id.as_ref()).await?;
-        RolValidations::exist_by_id(
-            &PgRoleRepository::new(&self.app_state.conn),
-            user.role.as_ref(),
+        UserValidations::exist_by_id(
+            user_repository,
+            &UserValidations::valid_id_format(&user.id)?,
         )
         .await?;
 
-        let user_updated: Option<UserEntity::UserResponseQuery> =
-            user_repository.update_user(user).await?;
+        RolValidations::exist_by_id(
+            &PgRoleRepository::new(&self.app_state.conn),
+            &RolValidations::valid_id_format(&user.role)?,
+        )
+        .await?;
 
-        Ok(ResponseUser::from(user_updated.unwrap().clone()))
+        user.password = self.encrypt_password(&user.password)?;
+        let user_updated: UserEntity::UserResponseQuery = user_repository
+            .update_user(user.clone().into())
+            .await?
+            .unwrap();
+
+        Ok(ResponseUser::from(user_updated))
     }
 
     pub async fn change_password(
         self,
-        change_password: ChangePassword,
+        change_password: &mut ChangePassword,
     ) -> Result<(), UserExceptions> {
         let user_repository: &PgUserRepository<'_> = &PgUserRepository::new(&self.app_state.conn);
+
         UserValidations::exist_by_id(
             user_repository,
             &UserValidations::valid_id_format(change_password.id.as_str())?,
         )
         .await?;
-        user_repository.change_password(change_password).await?;
+
+        change_password.new_password = self.encrypt_password(&change_password.new_password)?;
+        user_repository
+            .change_password(change_password.clone())
+            .await?;
         Ok(())
     }
 
@@ -112,9 +143,17 @@ impl UserHandler {
         let user_repository: &PgUserRepository<'_> = &PgUserRepository::new(conn);
 
         UserValidations::exist_by_id(user_repository, &id_user).await?;
-
         user_repository.delete_user(id_user).await;
 
         Ok(true)
+    }
+
+    fn encrypt_password(&self, password: &String) -> Result<String, UserExceptions> {
+        let password: &[u8] = password.as_bytes();
+        let salt: SaltString = SaltString::generate(&mut OsRng);
+
+        Ok(Argon2::default()
+            .hash_password(password, &salt)?
+            .to_string())
     }
 }

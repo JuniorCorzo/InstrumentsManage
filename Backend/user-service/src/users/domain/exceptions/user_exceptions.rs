@@ -9,8 +9,12 @@ use crate::{
 
 #[derive(Debug, Display, Error)]
 pub enum UserExceptions {
+    #[display("Unexpected Error")]
+    InternalError,
     #[display("User with id {id} not found")]
     NotFound { id: Uuid },
+    #[display("Credentials Not Valid")]
+    CredentialsNotValid,
     #[display("User Id not valid")]
     IdNotValid,
     #[display("Email exist")]
@@ -32,7 +36,9 @@ impl ResponseError for UserExceptions {
     }
     fn status_code(&self) -> StatusCode {
         match *self {
+            UserExceptions::InternalError => StatusCode::INTERNAL_SERVER_ERROR,
             UserExceptions::NotFound { .. } => StatusCode::NOT_FOUND,
+            UserExceptions::CredentialsNotValid => StatusCode::BAD_REQUEST,
             UserExceptions::IdNotValid => StatusCode::BAD_REQUEST,
             UserExceptions::EmailExist => StatusCode::BAD_REQUEST,
             UserExceptions::Database => StatusCode::INTERNAL_SERVER_ERROR,
@@ -59,5 +65,11 @@ impl From<uuid::Error> for UserExceptions {
 impl From<sea_orm::DbErr> for UserExceptions {
     fn from(_: sea_orm::DbErr) -> Self {
         UserExceptions::Database
+    }
+}
+
+impl From<argon2::password_hash::Error> for UserExceptions {
+    fn from(value: argon2::password_hash::Error) -> Self {
+        UserExceptions::InternalError
     }
 }

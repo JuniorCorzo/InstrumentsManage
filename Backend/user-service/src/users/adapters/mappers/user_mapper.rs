@@ -20,7 +20,6 @@ impl From<UserEntity::UserResponseQuery> for ResponseUser {
         Self {
             id: value.id,
             username: value.username,
-            password: value.password,
             email: value.email,
             phone: value.phone,
             role: RoleResponse::from(value.rol),

@@ -10,8 +10,7 @@ pub trait UserRepository {
     async fn change_password(self, change_password: ChangePassword) -> Result<(), DbErr>;
     async fn exist_by_id(self, id_user: &Uuid) -> Result<bool, DbErr>;
     async fn exist_by_email(self, email: ActiveValue<String>) -> Result<bool, DbErr>;
-    async fn is_credential_valid(self, email: String, password: String)
-    -> Result<UserValid, DbErr>;
+    async fn is_credential_valid(self, email: String) -> Result<Option<UserValid>, DbErr>;
     async fn insert_user(
         self,
         user: UserEntity::ActiveModel,

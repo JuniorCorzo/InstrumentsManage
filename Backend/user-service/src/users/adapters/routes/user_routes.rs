@@ -11,7 +11,9 @@ use crate::{
     users::{
         UserEntity,
         adapters::dtos::{
-            request::user_request_dtos::{ChangePassword, CreateUser, UpdateUser},
+            request::user_request_dtos::{
+                ChangePassword, CreateUser, UpdateUser, ValidUserCredentials,
+            },
             response::user_response_dtos::ResponseUser,
         },
         application::{
@@ -36,22 +38,20 @@ pub async fn get_user(
     )))
 }
 
-#[get("/is-valid/{email}/{password}")]
+#[get("/is-valid/")]
 pub async fn valid_credentials(
     app_state: web::Data<AppState>,
-    path: web::Path<(String, String)>,
-) -> HttpResponse {
-    let (email, password) = path.into_inner();
+    credentials: web::Json<ValidUserCredentials>,
+) -> Result<HttpResponse, UserExceptions> {
     let is_valid = UserHandler::new(app_state)
-        .valid_credential(email, password)
-        .await
-        .unwrap();
+        .valid_credentials(credentials.into_inner())
+        .await?;
 
-    HttpResponse::Ok().json(Response::new(
+    Ok(HttpResponse::Ok().json(Response::new(
         StatusCode::OK,
         Some(is_valid),
         MessageResponse::OK.value(),
-    ))
+    )))
 }
 
 #[post("/create")]
@@ -61,8 +61,9 @@ pub async fn create_user(
 ) -> Result<HttpResponse, UserExceptions> {
     RolValidations::valid_id_format(&user_create.role)?;
 
-    let user: UserEntity::ActiveModel = UserEntity::ActiveModel::from(user_create.into_inner());
-    let user: ResponseUser = UserHandler::new(app_state).create_user(user).await?;
+    let user: ResponseUser = UserHandler::new(app_state)
+        .create_user(&mut user_create.into_inner())
+        .await?;
 
     Ok(HttpResponse::Created().json(Response::new(
         StatusCode::CREATED,
@@ -79,8 +80,9 @@ pub async fn update_user(
     UserValidations::valid_id_format(&user_update.id)?;
     RolValidations::valid_id_format(&user_update.role)?;
 
-    let user: UserEntity::ActiveModel = UserEntity::ActiveModel::from(user_update.into_inner());
-    let user: ResponseUser = UserHandler::new(app_state).update_user(user).await?;
+    let user: ResponseUser = UserHandler::new(app_state)
+        .update_user(&mut user_update.into_inner())
+        .await?;
 
     Ok(HttpResponse::Ok().json(Response::new(
         StatusCode::OK,
@@ -95,7 +97,7 @@ pub async fn change_password(
     change_password: web::Json<ChangePassword>,
 ) -> Result<HttpResponse, UserExceptions> {
     UserHandler::new(app_state)
-        .change_password(change_password.into_inner())
+        .change_password(&mut change_password.into_inner())
         .await?;
 
     Ok(HttpResponse::Ok().json(Response::<()>::without_data(
@@ -110,10 +112,7 @@ pub async fn delete_user(
     path: web::Path<String>,
 ) -> Result<HttpResponse, UserExceptions> {
     let id_user: Uuid = UserValidations::valid_id_format(&path.into_inner().as_str())?;
-    UserHandler::new(app_state)
-        .delete_user(id_user)
-        .await
-        .unwrap_err();
+    UserHandler::new(app_state).delete_user(id_user).await?;
 
     Ok(HttpResponse::Ok().json(Response::<()>::without_data(
         StatusCode::OK,

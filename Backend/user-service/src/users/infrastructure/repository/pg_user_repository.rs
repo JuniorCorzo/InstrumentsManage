@@ -96,24 +96,18 @@ impl<'c> UserRepository for PgUserRepository<'c> {
         Ok(())
     }
 
-    //TODO: Refactorizar la query para que solo busque por email y devuelva un option
-    async fn is_credential_valid(
-        self,
-        email: String,
-        password: String,
-    ) -> Result<UserValid, DbErr> {
+    async fn is_credential_valid(self, email: String) -> Result<Option<UserValid>, DbErr> {
         let user_query = User::Entity::find()
             .select_only()
             .column_as(User::Column::Id, "id_user")
+            .column(User::Column::Password)
             .filter(Expr::col((User::Entity, User::Column::Email)).eq(email))
-            .filter(Expr::col((User::Entity, User::Column::Password)).eq(password))
             .build(self.conn.get_database_backend())
             .to_owned();
 
         Ok(UserValid::find_by_statement(user_query)
             .one(self.conn)
-            .await?
-            .unwrap())
+            .await?)
     }
 
     async fn insert_user(

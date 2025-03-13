@@ -37,6 +37,7 @@ pub struct UserResponseQuery {
 #[derive(Debug, Clone, FromQueryResult)]
 pub struct UserValid {
     pub id_user: Uuid,
+    pub password: String,
 }
 
 #[derive(Clone, Copy, Debug, PartialEq, EnumIter, DeriveRelation)]
