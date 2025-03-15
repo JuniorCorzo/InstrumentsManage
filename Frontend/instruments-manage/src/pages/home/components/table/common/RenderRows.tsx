@@ -1,101 +1,70 @@
-import { TableDataContext } from "@/context/TableContext";
 import { useParamRoute } from "@/pages/home/hook/useParamRoute";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
-  getFilteredRowModel,
-} from "@tanstack/react-table";
-import { useContext } from "react";
+import { useTableConfig } from "@/pages/home/hook/useTableConfig";
+import { flexRender } from "@tanstack/react-table";
 import Pagination from "./Pagination";
 
 const RenderRows = () => {
   useParamRoute();
-  const { tableData, maxRows, searchValue, setSearchValue } =
-    useContext(TableDataContext);
-  const { columns, data, messageEmpty } = tableData;
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    initialState: {
-      pagination: {
-        pageIndex: 0,
-        pageSize: maxRows,
-      },
-    },
-    state: {
-      globalFilter: searchValue,
-    },
-    onGlobalFilterChange: setSearchValue,
-  });
-
-  console.log(columns, data);
+  const { tableConfig } = useTableConfig();
+  let fixedSize = 0;
 
   return (
     <>
-      <thead>
-        {table.getHeaderGroups().map((headerGroup) => (
-          <tr key={headerGroup.id}>
-            {headerGroup.headers.map((header) => (
-              <th className="cells" key={header.id}>
-                {flexRender(
-                  header.column.columnDef.header,
-                  header.getContext()
-                )}
-              </th>
+      <div className="overflow-auto">
+        <table className="table-auto shadow shadow-gray-800">
+          <thead>
+            {tableConfig.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header, index) => {
+                  const prevFixed = fixedSize;
+                  fixedSize += header.getSize();
+                  return (
+                    <th
+                      className={`cells bg-slate-950 ${
+                        index < 3 ? `sticky left-[${prevFixed}px]` : ""
+                      }`}
+                      key={header.id}
+                    >
+                      {flexRender(
+                        header.column.columnDef.header,
+                        header.getContext()
+                      )}
+                    </th>
+                  );
+                })}
+              </tr>
             ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody>
-        {table.getRowModel().rows.map((rows) => (
-          <tr key={rows.id}>
-            {rows.getVisibleCells().map((cell) => (
-              <td className="cells" key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
-            ))}
-          </tr>
-        ))}
-        <tr>
-          <td className="cells" colSpan={columns.length}>
-            <button
-              className="pagination-item"
-              type="button"
-              onClick={table.firstPage}
-              disabled={!table.getCanPreviousPage()}
-            >
-              <span>{"<<"}</span>
-            </button>
-            <button
-              className="mx-2 pagination-item"
-              type="button"
-              onClick={table.previousPage}
-            >
-              <span>{"<"}</span>
-            </button>
-            <button
-              className="pagination-item"
-              type="button"
-              onClick={table.nextPage}
-              disabled={!table.getCanNextPage()}
-            >
-              <span>{">"}</span>
-            </button>
-            <button
-              className="ml-2 pagination-item"
-              type="button"
-              onClick={table.lastPage}
-            >
-              <span>{">>"}</span>
-            </button>
-          </td>
-        </tr>
-      </tbody>
+          </thead>
+          <tbody>
+            {tableConfig.getRowModel().rows.map((rows) => {
+              fixedSize = 0;
+
+              return (
+                <tr key={rows.id}>
+                  {rows.getVisibleCells().map((cell, index) => {
+                    const prevFixed = fixedSize;
+                    fixedSize += cell.column.getSize();
+                    return (
+                      <td
+                        className={`cells bg-zinc-950 ${
+                          index < 3 ? `sticky left-[${prevFixed}px]` : ""
+                        }`}
+                        key={cell.id}
+                      >
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
+                      </td>
+                    );
+                  })}
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+      <Pagination tableConfig={tableConfig} />
     </>
   );
 };

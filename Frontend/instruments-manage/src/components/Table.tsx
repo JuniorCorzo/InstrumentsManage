@@ -11,12 +11,10 @@ const Table = () => {
   return (
     <>
       <CardCaption />
-      <div className="max-w-screen-lg overflow-auto">
-        <table className="table-auto border-separate border-spacing-0 rounded-lg shadow shadow-gray-800">
-          <Suspense fallback={<LoadingTable />}>
-            <LazyTable />
-          </Suspense>
-        </table>
+      <div className="max-w-screen-lg border border-gray-800">
+        <Suspense fallback={<LoadingTable />}>
+          <LazyTable />
+        </Suspense>
       </div>
     </>
   );

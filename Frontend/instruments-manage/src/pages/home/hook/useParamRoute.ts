@@ -1,5 +1,5 @@
 import { useSearchParams } from "react-router";
-import useTableStrategy from "../components/table/useTableStrategy";
+import useTableStrategy from "./strategies/useTableStrategy";
 import useBrandStrategy from "./strategies/useBrandStrategy";
 import useInstrumentsStrategy from "./strategies/useInstrumentStrategy";
 import { useEffect } from "react";
@@ -7,7 +7,6 @@ import { useTagsStrategy } from "./strategies/useTagsStrategy";
 import { useUnitProcessStrategy } from "./strategies/useUnitProcessStrategy";
 import { useCampStrategy } from "./strategies/useCampStrategy";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
-
 
 export const useParamRoute = () => {
   const instrumentsStrategy = useInstrumentsStrategy();

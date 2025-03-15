@@ -1,4 +1,4 @@
-import { TableStrategy } from "./table-strategy.interface";
+import { TableStrategy } from "../../components/table/table-strategy.interface";
 
 const useTableStrategy = () => {
   let strategy: TableStrategy;

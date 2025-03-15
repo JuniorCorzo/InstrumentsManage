@@ -31,28 +31,47 @@ body {
 .cells {
   @apply table-cell h-14 px-4 border-b border-r border-gray-200/25 text-center whitespace-nowrap;
 
-  &:first-child {
-    @apply border-l;
-  }
   &:where(th) {
-    @apply first-of-type:rounded-ss-lg last-of-type:rounded-se-lg border-t;
+    @apply border;
   }
 }
 
 thead tr,
 tr:nth-of-type(even) {
-  @apply bg-gray-700/20;
+  @apply bg-slate-900;
 }
 
-table tbody tr:last-child {
+table tbody tr {
   & td {
-    @apply first:rounded-bl-lg last:rounded-br-lg;
+    @apply first:border-l last:border-r;
   }
 }
 
 .pagination-item {
-  @apply px-3 py-1 border rounded-md border-gray-200/25 cursor-pointer;
+  @apply h-10 px-3 py-1 border rounded-md border-gray-200/25 cursor-pointer;
   &:where(.active) {
     @apply border-slate-50;
   }
 }
+
+tr:nth-child(even) td {
+  @apply bg-slate-900;
+}
+
+/* th:first-child,
+td:first-child {
+  position: sticky;
+  left: 0;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+  position: sticky;
+  left: 160px;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+  position: sticky;
+  left: 310px;
+} */
