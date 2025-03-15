@@ -29,7 +29,7 @@ body {
 }
 
 .cells {
-  @apply table-cell h-14 border-b border-r border-gray-200/25 text-center;
+  @apply table-cell h-14 px-4 border-b border-r border-gray-200/25 text-center whitespace-nowrap;
 
   &:first-child {
     @apply border-l;

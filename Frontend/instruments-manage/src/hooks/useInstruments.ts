@@ -71,45 +71,45 @@ export const useInstruments = () => {
   const getFormatTable = useMemo((): TableData => {
     return {
       tableMetadata: TABLE_METADATA.instruments,
-      headers: [
+      columns: [
         {
-          key: "model",
-          value: "Modelo",
+          accessorKey: "model",
+          header: "Modelo",
         },
         {
-          key: "brand",
-          value: "Marca",
+          accessorKey: "brand",
+          header: "Marca",
         },
         {
-          key: "type",
-          value: "Tipo",
+          accessorKey: "type",
+          header: "Tipo",
         },
         {
-          key: "measurementRange",
-          value: "Rango",
+          accessorKey: "measurementRange",
+          header: "Rango",
         },
         {
-          key: "accuracy",
-          value: "Precisión",
+          accessorKey: "accuracy",
+          header: "Precisión",
         },
         {
-          key: "connectionType",
-          value: "Conexión",
+          accessorKey: "connectionType",
+          header: "Conexión",
         },
         {
-          key: "processConnection",
-          value: "Proceso de Conexión",
+          accessorKey: "processConnection",
+          header: "Proceso de Conexión",
         },
         {
-          key: "protectionClass",
-          value: "Protección",
+          accessorKey: "protectionClass",
+          header: "Protección",
         },
         {
-          key: "certifications",
-          value: "Certificaciones",
+          accessorKey: "certifications",
+          header: "Certificaciones",
         },
       ],
-      rows: instruments.map(
+      data: instruments.map(
         ({
           brand,
           model,

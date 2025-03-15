@@ -8,14 +8,14 @@ import {
 } from "react";
 
 export interface TableData {
-  headers: { key: string; value: string }[];
-  rows: Record<string, string>[];
+  columns: { header: string; accessorKey: string }[];
+  data: Record<string, string>[];
   messageEmpty?: string;
   tableMetadata?: TableMetadata;
 }
 
 export interface TableContext {
-  data: TableData;
+  tableData: TableData;
   setData: Dispatch<SetStateAction<TableData>>;
   loading: boolean;
   setLoading: Dispatch<SetStateAction<boolean>>;
@@ -30,13 +30,13 @@ export interface TableContext {
 }
 
 const initialTableContext: TableContext = {
-  data: {
+  tableData: {
     tableMetadata: {
       titleTable: "",
       urlParam: "",
     },
-    headers: [],
-    rows: [],
+    columns: [],
+    data: [],
     messageEmpty: "",
   },
   setData: () => {},
@@ -58,7 +58,7 @@ export const TableDataContext =
 export const TableContextProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
-  const [data, setData] = useState(initialTableContext.data);
+  const [data, setData] = useState(initialTableContext.tableData);
   const [loading, setLoading] = useState(initialTableContext.loading);
   const [maxRows, setMaxRows] = useState(initialTableContext.maxRows);
   const [searchValue, setSearchValue] = useState(
@@ -70,7 +70,7 @@ export const TableContextProvider: React.FC<{ children: ReactNode }> = ({
   return (
     <TableDataContext.Provider
       value={{
-        data,
+        tableData: data,
         setData,
         loading,
         setLoading,

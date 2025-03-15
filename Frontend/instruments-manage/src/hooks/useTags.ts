@@ -81,37 +81,37 @@ export const useTags = () => {
   const getFormatTable = useMemo((): TableData => {
     return {
       tableMetadata: TABLE_METADATA.tags,
-      headers: [
+      columns: [
         {
-          key: "tag",
-          value: "Tag",
+          accessorKey: "tag",
+          header: "Tag",
         },
         {
-          key: "description",
-          value: "Descripcion",
+          accessorKey: "description",
+          header: "Descripción",
         },
         {
-          key: "instruments",
-          value: "Instrumento",
+          accessorKey: "instruments",
+          header: "Instrumento",
         },
         {
-          key: "alarms",
-          value: "Alarmas",
+          accessorKey: "alarms",
+          header: "Alarmas",
         },
         {
-          key: "typeUnit",
-          value: "Unidad de Medicion",
+          accessorKey: "typeUnit",
+          header: "Unidad de Medición",
         },
         {
-          key: "unitProcces",
-          value: "Unidad del Proceso",
+          accessorKey: "unitProcess",
+          header: "Unidad del Proceso",
         },
         {
-          key: "shutDown",
-          value: "¿Detiene el Proceso?",
+          accessorKey: "shutDown",
+          header: "¿Detiene el Proceso?",
         },
       ],
-      rows: tags.map(
+      data: tags.map(
         ({
           tag,
           description,

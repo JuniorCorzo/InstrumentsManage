@@ -1,5 +1,6 @@
 import CardCaption from "@/pages/home/components/table/common/CardCaption";
 import LoadingTable from "@/pages/home/components/table/common/LoadingTable";
+import Pagination from "@/pages/home/components/table/common/Pagination";
 import { lazy, Suspense } from "react";
 
 const Table = () => {
@@ -7,16 +8,17 @@ const Table = () => {
     () => import("@/pages/home/components/table/common/RenderRows")
   );
 
-
   return (
-    <table className="table-auto w-full border-separate border-spacing-0 rounded-lg shadow shadow-gray-800">
-      <caption className="mb-4">
-        <CardCaption />
-      </caption>
-      <Suspense fallback={<LoadingTable />}>
-        <LazyTable />
-      </Suspense>
-    </table>
+    <>
+      <CardCaption />
+      <div className="max-w-screen-lg overflow-auto">
+        <table className="table-auto border-separate border-spacing-0 rounded-lg shadow shadow-gray-800">
+          <Suspense fallback={<LoadingTable />}>
+            <LazyTable />
+          </Suspense>
+        </table>
+      </div>
+    </>
   );
 };
 

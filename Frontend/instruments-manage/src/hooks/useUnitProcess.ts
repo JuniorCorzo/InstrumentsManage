@@ -68,21 +68,21 @@ export const useUnitProcess = () => {
   const getFormatTable = useMemo((): TableData => {
     return {
       tableMetadata: TABLE_METADATA.unitProcess,
-      headers: [
+      columns: [
         {
-          key: "name",
-          value: "Unidad de Proceso",
+          accessorKey: "name",
+          header: "Unidad de Proceso",
         },
         {
-          key: "description",
-          value: "Descripción",
+          accessorKey: "description",
+          header: "Descripción",
         },
         {
-          key: "camp",
-          value: "Campo",
+          accessorKey: "camp",
+          header: "Campo",
         },
       ],
-      rows: unitProcess.map(({ name, description, camp }) => ({
+      data: unitProcess.map(({ name, description, camp }) => ({
         name,
         description,
         camp: camp.name,
