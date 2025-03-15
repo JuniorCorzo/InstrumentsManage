@@ -1,0 +1,1000 @@
+[{
+  "_id": {
+    "$oid": "6797ee9447021836639daa76"
+  },
+  "model": "ModelA1",
+  "brand": "Emerson",
+  "type": "Pressure Transmitter",
+  "measurementRange": "0-100 bar",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP67",
+  "certifications": [
+    "ATEX",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa77"
+  },
+  "model": "FlowMaster 3000",
+  "brand": "Krohne",
+  "type": "Flow Meter",
+  "measurementRange": "0-500 m³/h",
+  "accuracy": "±0.2%",
+  "connectionType": [
+    "2\" ANSI",
+    "DN50"
+  ],
+  "processConnection": "Clamp",
+  "protectionClass": "IP68",
+  "certifications": [
+    "SIL2",
+    "NEPSI"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa78"
+  },
+  "model": "SITRANS P500",
+  "brand": "Siemens",
+  "type": "Pressure Sensor",
+  "measurementRange": "0-10 bar",
+  "accuracy": "±0.05%",
+  "connectionType": [
+    "1/4\" NPT",
+    "G1/4"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP65",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa79"
+  },
+  "model": "Proline Promag 50",
+  "brand": "Endress+Hauser",
+  "type": "Magnetic Flow Meter",
+  "measurementRange": "0-2000 l/min",
+  "accuracy": "±0.15%",
+  "connectionType": [
+    "3\" ANSI",
+    "DN80"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP66",
+  "certifications": [
+    "ATEX",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa7a"
+  },
+  "model": "YTA510",
+  "brand": "Yokogawa",
+  "type": "Temperature Transmitter",
+  "measurementRange": "-200 to 400 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "M20x1.5"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "SIL2",
+    "CE"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa7b"
+  },
+  "model": "ABB2600T",
+  "brand": "ABB",
+  "type": "Pressure Transmitter",
+  "measurementRange": "0-600 bar",
+  "accuracy": "±0.075%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "ATEX",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa7c"
+  },
+  "model": "ST3000",
+  "brand": "Honeywell",
+  "type": "Pressure Transmitter",
+  "measurementRange": "0-1000 bar",
+  "accuracy": "±0.065%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "SIL2",
+    "CE"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa7d"
+  },
+  "model": "Foxboro IMT25",
+  "brand": "Foxboro",
+  "type": "Flow Meter",
+  "measurementRange": "0-100 m³/h",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "2\" ANSI",
+    "DN50"
+  ],
+  "processConnection": "Clamp",
+  "protectionClass": "IP66",
+  "certifications": [
+    "ATEX",
+    "NEPSI"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa7e"
+  },
+  "model": "Rosemount 3051",
+  "brand": "Rosemount",
+  "type": "Pressure Transmitter",
+  "measurementRange": "0-400 bar",
+  "accuracy": "±0.04%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "SIL2",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ee9447021836639daa7f"
+  },
+  "model": "EJA110E",
+  "brand": "Yokogawa",
+  "type": "Differential Pressure Transmitter",
+  "measurementRange": "0-1000 mbar",
+  "accuracy": "±0.035%",
+  "connectionType": [
+    "1/4\" NPT",
+    "G1/4"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa81"
+  },
+  "model": "Micro Motion 5700",
+  "brand": "Emerson",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-2000 kg/h",
+  "accuracy": "±0.05%",
+  "connectionType": [
+    "1\" NPT",
+    "DN25"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "ATEX",
+    "SIL2"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa82"
+  },
+  "model": "OPTIMASS 7400",
+  "brand": "Krohne",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-5000 kg/h",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "2\" ANSI",
+    "DN50"
+  ],
+  "processConnection": "Clamp",
+  "protectionClass": "IP67",
+  "certifications": [
+    "NEPSI",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa83"
+  },
+  "model": "SITRANS FC430",
+  "brand": "Siemens",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-1000 kg/h",
+  "accuracy": "±0.15%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP66",
+  "certifications": [
+    "CE",
+    "ATEX"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa84"
+  },
+  "model": "Proline Promass 80",
+  "brand": "Endress+Hauser",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-3000 kg/h",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "3\" ANSI",
+    "DN80"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "SIL2",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa85"
+  },
+  "model": "Rotalyzers RX100",
+  "brand": "Yokogawa",
+  "type": "Gas Analyzer",
+  "measurementRange": "0-100% Vol",
+  "accuracy": "±0.5%",
+  "connectionType": [
+    "1/4\" NPT",
+    "G1/4"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP65",
+  "certifications": [
+    "ATEX",
+    "CE"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa86"
+  },
+  "model": "ABB Ability™",
+  "brand": "ABB",
+  "type": "Vibration Sensor",
+  "measurementRange": "0-20 mm/s",
+  "accuracy": "±0.01%",
+  "connectionType": [
+    "M12",
+    "1/2\" NPT"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "SIL2",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa87"
+  },
+  "model": "STT750",
+  "brand": "Honeywell",
+  "type": "Smart Temperature Transmitter",
+  "measurementRange": "-200 to 850 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa88"
+  },
+  "model": "Foxboro 843DP",
+  "brand": "Foxboro",
+  "type": "Differential Pressure Transmitter",
+  "measurementRange": "0-100 bar",
+  "accuracy": "±0.075%",
+  "connectionType": [
+    "1/4\" NPT",
+    "G1/4"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP66",
+  "certifications": [
+    "ATEX",
+    "NEPSI"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa89"
+  },
+  "model": "Rosemount 648",
+  "brand": "Rosemount",
+  "type": "Wireless Temperature Transmitter",
+  "measurementRange": "-200 to 400 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "SIL2",
+    "CE"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa8a"
+  },
+  "model": "YTA320",
+  "brand": "Yokogawa",
+  "type": "Temperature Transmitter",
+  "measurementRange": "-50 to 250 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa8b"
+  },
+  "model": "PanaFlow MV100",
+  "brand": "Yokogawa",
+  "type": "Vortex Flow Meter",
+  "measurementRange": "0-500 m³/h",
+  "accuracy": "±0.5%",
+  "connectionType": [
+    "2\" ANSI",
+    "DN50"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP66",
+  "certifications": [
+    "ATEX",
+    "SIL2"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa8c"
+  },
+  "model": "MagMaster 7000",
+  "brand": "Krohne",
+  "type": "Magnetic Flow Meter",
+  "measurementRange": "0-2000 l/min",
+  "accuracy": "±0.2%",
+  "connectionType": [
+    "3\" ANSI",
+    "DN80"
+  ],
+  "processConnection": "Clamp",
+  "protectionClass": "IP68",
+  "certifications": [
+    "NEPSI",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa8d"
+  },
+  "model": "SITRANS FUS060",
+  "brand": "Siemens",
+  "type": "Ultrasonic Flow Meter",
+  "measurementRange": "0-10000 m³/h",
+  "accuracy": "±0.3%",
+  "connectionType": [
+    "4\" ANSI",
+    "DN100"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "ATEX"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa8e"
+  },
+  "model": "Prosonic Flow 95",
+  "brand": "Endress+Hauser",
+  "type": "Ultrasonic Flow Meter",
+  "measurementRange": "0-5000 m³/h",
+  "accuracy": "±0.2%",
+  "connectionType": [
+    "3\" ANSI",
+    "DN80"
+  ],
+  "processConnection": "Clamp",
+  "protectionClass": "IP66",
+  "certifications": [
+    "SIL2",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa8f"
+  },
+  "model": "Titanium T20",
+  "brand": "Emerson",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-1000 kg/h",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "ATEX",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa90"
+  },
+  "model": "FCX-AIII",
+  "brand": "Yokogawa",
+  "type": "Differential Pressure Transmitter",
+  "measurementRange": "0-200 bar",
+  "accuracy": "±0.075%",
+  "connectionType": [
+    "1/4\" NPT",
+    "G1/4"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP65",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa91"
+  },
+  "model": "Promass 84",
+  "brand": "Endress+Hauser",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-2000 kg/h",
+  "accuracy": "±0.05%",
+  "connectionType": [
+    "1\" NPT",
+    "DN25"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "ATEX",
+    "SIL2"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa92"
+  },
+  "model": "SITRANS TH500",
+  "brand": "Siemens",
+  "type": "Temperature Transmitter",
+  "measurementRange": "-100 to 500 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa93"
+  },
+  "model": "FieldBar M",
+  "brand": "Krohne",
+  "type": "Pressure Transmitter",
+  "measurementRange": "0-1000 bar",
+  "accuracy": "±0.065%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "ATEX",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797ef6347021836639daa94"
+  },
+  "model": "Rosemount 3144Q",
+  "brand": "Rosemount",
+  "type": "Temperature Transmitter",
+  "measurementRange": "-200 to 600 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "SIL2",
+    "CE"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaa3"
+  },
+  "model": "Micro Motion 5700X",
+  "brand": "Emerson",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-3000 kg/h",
+  "accuracy": "±0.05%",
+  "connectionType": [
+    "1\" NPT",
+    "DN25"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "ATEX",
+    "SIL2"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaa4"
+  },
+  "model": "OPTIMASS 7400X",
+  "brand": "Krohne",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-6000 kg/h",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "2\" ANSI",
+    "DN50"
+  ],
+  "processConnection": "Clamp",
+  "protectionClass": "IP67",
+  "certifications": [
+    "NEPSI",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaa5"
+  },
+  "model": "SITRANS FC430X",
+  "brand": "Siemens",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-1500 kg/h",
+  "accuracy": "±0.15%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP66",
+  "certifications": [
+    "CE",
+    "ATEX"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaa6"
+  },
+  "model": "Proline Promass 80X",
+  "brand": "Endress+Hauser",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-4000 kg/h",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "3\" ANSI",
+    "DN80"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "SIL2",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaa7"
+  },
+  "model": "Rotalyzers RX200",
+  "brand": "Yokogawa",
+  "type": "Gas Analyzer",
+  "measurementRange": "0-100% Vol",
+  "accuracy": "±0.5%",
+  "connectionType": [
+    "1/4\" NPT",
+    "G1/4"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP65",
+  "certifications": [
+    "ATEX",
+    "CE"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaa8"
+  },
+  "model": "ABB Ability™ X",
+  "brand": "ABB",
+  "type": "Vibration Sensor",
+  "measurementRange": "0-25 mm/s",
+  "accuracy": "±0.01%",
+  "connectionType": [
+    "M12",
+    "1/2\" NPT"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "SIL2",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaa9"
+  },
+  "model": "STT750X",
+  "brand": "Honeywell",
+  "type": "Smart Temperature Transmitter",
+  "measurementRange": "-200 to 900 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaaa"
+  },
+  "model": "Foxboro 843DPX",
+  "brand": "Foxboro",
+  "type": "Differential Pressure Transmitter",
+  "measurementRange": "0-150 bar",
+  "accuracy": "±0.075%",
+  "connectionType": [
+    "1/4\" NPT",
+    "G1/4"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP66",
+  "certifications": [
+    "ATEX",
+    "NEPSI"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaab"
+  },
+  "model": "Rosemount 648X",
+  "brand": "Rosemount",
+  "type": "Wireless Temperature Transmitter",
+  "measurementRange": "-200 to 500 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "SIL2",
+    "CE"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaac"
+  },
+  "model": "YTA320X",
+  "brand": "Yokogawa",
+  "type": "Temperature Transmitter",
+  "measurementRange": "-50 to 300 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaad"
+  },
+  "model": "PanaFlow MV200",
+  "brand": "Yokogawa",
+  "type": "Vortex Flow Meter",
+  "measurementRange": "0-1000 m³/h",
+  "accuracy": "±0.5%",
+  "connectionType": [
+    "2\" ANSI",
+    "DN50"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP66",
+  "certifications": [
+    "ATEX",
+    "SIL2"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaae"
+  },
+  "model": "MagMaster 8000",
+  "brand": "Krohne",
+  "type": "Magnetic Flow Meter",
+  "measurementRange": "0-3000 l/min",
+  "accuracy": "±0.2%",
+  "connectionType": [
+    "3\" ANSI",
+    "DN80"
+  ],
+  "processConnection": "Clamp",
+  "protectionClass": "IP68",
+  "certifications": [
+    "NEPSI",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daaaf"
+  },
+  "model": "SITRANS FUS080",
+  "brand": "Siemens",
+  "type": "Ultrasonic Flow Meter",
+  "measurementRange": "0-15000 m³/h",
+  "accuracy": "±0.3%",
+  "connectionType": [
+    "4\" ANSI",
+    "DN100"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "ATEX"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daab0"
+  },
+  "model": "Prosonic Flow 97",
+  "brand": "Endress+Hauser",
+  "type": "Ultrasonic Flow Meter",
+  "measurementRange": "0-7000 m³/h",
+  "accuracy": "±0.2%",
+  "connectionType": [
+    "3\" ANSI",
+    "DN80"
+  ],
+  "processConnection": "Clamp",
+  "protectionClass": "IP66",
+  "certifications": [
+    "SIL2",
+    "FM"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daab1"
+  },
+  "model": "Titanium T30",
+  "brand": "Emerson",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-2000 kg/h",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "ATEX",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daab2"
+  },
+  "model": "FCX-AIV",
+  "brand": "Yokogawa",
+  "type": "Differential Pressure Transmitter",
+  "measurementRange": "0-300 bar",
+  "accuracy": "±0.075%",
+  "connectionType": [
+    "1/4\" NPT",
+    "G1/4"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP65",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daab3"
+  },
+  "model": "Promass 85",
+  "brand": "Endress+Hauser",
+  "type": "Coriolis Flow Meter",
+  "measurementRange": "0-3000 kg/h",
+  "accuracy": "±0.05%",
+  "connectionType": [
+    "1\" NPT",
+    "DN25"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "ATEX",
+    "SIL2"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daab4"
+  },
+  "model": "SITRANS TH600",
+  "brand": "Siemens",
+  "type": "Temperature Transmitter",
+  "measurementRange": "-150 to 600 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "CE",
+    "RoHS"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daab5"
+  },
+  "model": "FieldBar L",
+  "brand": "Krohne",
+  "type": "Pressure Transmitter",
+  "measurementRange": "0-1500 bar",
+  "accuracy": "±0.065%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Flanged",
+  "protectionClass": "IP68",
+  "certifications": [
+    "ATEX",
+    "IECEx"
+  ]
+},
+{
+  "_id": {
+    "$oid": "6797efeb47021836639daab6"
+  },
+  "model": "Rosemount 3144R",
+  "brand": "Rosemount",
+  "type": "Temperature Transmitter",
+  "measurementRange": "-200 to 800 °C",
+  "accuracy": "±0.1%",
+  "connectionType": [
+    "1/2\" NPT",
+    "G1/2"
+  ],
+  "processConnection": "Threaded",
+  "protectionClass": "IP67",
+  "certifications": [
+    "SIL2",
+    "CE"
+  ]
+}]
