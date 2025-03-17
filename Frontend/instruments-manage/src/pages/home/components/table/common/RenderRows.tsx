@@ -11,7 +11,7 @@ const RenderRows = () => {
   return (
     <>
       <div className="overflow-auto">
-        <table className="table-auto shadow shadow-gray-800">
+        <table className="table-auto shadow-sm shadow-gray-800">
           <thead>
             {tableConfig.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>

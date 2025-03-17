@@ -11,7 +11,7 @@ const Table = () => {
   return (
     <>
       <CardCaption />
-      <div className="max-w-screen-lg border border-gray-800">
+      <div className="max-w-(--breakpoint-lg) border border-gray-800">
         <Suspense fallback={<LoadingTable />}>
           <LazyTable />
         </Suspense>
