@@ -5,7 +5,7 @@ import { lazy, Suspense } from "react";
 
 const Table = () => {
   const LazyTable = lazy(
-    () => import("@/pages/home/components/table/common/RenderRows")
+    () => import("@/pages/home/components/table/common/RenderTable")
   );
 
   return (
