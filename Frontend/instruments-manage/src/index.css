@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
 @theme {
   --border-width-0: 0.5;
@@ -49,22 +49,16 @@ body {
 }
 
 .cells {
-  @apply table-cell h-14 px-4 border-b border-r border-gray-200/25 text-center whitespace-nowrap;
+  @apply table-cell h-14 bg-zinc-950 px-4 text-center whitespace-nowrap;
 
   &:where(th) {
-    @apply border;
+    @apply bg-slate-900;
   }
 }
 
 thead tr,
 tr:nth-of-type(even) {
   @apply bg-slate-900;
-}
-
-table tbody tr {
-  & td {
-    @apply first:border-l last:border-r;
-  }
 }
 
 .pagination-item {
@@ -78,20 +72,7 @@ tr:nth-child(even) td {
   @apply bg-slate-900;
 }
 
-/* th:first-child,
+th:first-child,
 td:first-child {
-  position: sticky;
-  left: 0;
+  @apply sticky left-0;
 }
-
-th:nth-child(2),
-td:nth-child(2) {
-  position: sticky;
-  left: 160px;
-}
-
-th:nth-child(3),
-td:nth-child(3) {
-  position: sticky;
-  left: 310px;
-} */
