@@ -1,6 +1,26 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --border-width-0: 0.5;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -29,30 +49,30 @@ body {
 }
 
 .cells {
-  @apply table-cell h-14 border-b border-r border-gray-200/25 text-center;
+  @apply table-cell h-14 bg-zinc-950 px-4 text-center whitespace-nowrap;
 
-  &:first-child {
-    @apply border-l;
-  }
   &:where(th) {
-    @apply first-of-type:rounded-ss-lg last-of-type:rounded-se-lg border-t;
+    @apply bg-slate-900;
   }
 }
 
 thead tr,
 tr:nth-of-type(even) {
-  @apply bg-gray-700/20;
-}
-
-table tbody tr:last-child {
-  & td {
-    @apply first:rounded-bl-lg last:rounded-br-lg;
-  }
+  @apply bg-slate-900;
 }
 
 .pagination-item {
-  @apply px-3 py-1 border rounded-md border-gray-200/25 cursor-pointer;
+  @apply h-10 px-3 py-1 border rounded-md border-gray-200/25 cursor-pointer;
   &:where(.active) {
     @apply border-slate-50;
   }
+}
+
+tr:nth-child(even) td {
+  @apply bg-slate-900;
+}
+
+th:first-child,
+td:first-child {
+  @apply sticky left-0;
 }

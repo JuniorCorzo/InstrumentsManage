@@ -49,21 +49,21 @@ export const useCamps = () => {
   const getFormatTable = useMemo((): TableData => {
     return {
       tableMetadata: TABLE_METADATA.camps,
-      headers: [
+      columns: [
         {
-          key: "name",
-          value: "Campo",
+          accessorKey: "name",
+          header: "Campo",
         },
         {
-          key: "location",
-          value: "Ubicación",
+          accessorKey: "location",
+          header: "Ubicación",
         },
         {
-          key: "coordinates",
-          value: "Coordenadas",
+          accessorKey: "coordinates",
+          header: "Coordenadas",
         },
       ],
-      rows: camps.map(({ name, location }) => {
+      data: camps.map(({ name, location }) => {
         const { municipality, department, country, coordinate } = location;
         return {
           name,

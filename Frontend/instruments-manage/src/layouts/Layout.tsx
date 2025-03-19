@@ -10,7 +10,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Navbar />
-      <main className="grid grid-flow-col grid-cols-[14rem,1fr]">
+      <main className="w-screen grid grid-flow-col grid-cols-[minmax(14rem,auto)_1fr]">
         <Sidebar />
         {children}
       </main>

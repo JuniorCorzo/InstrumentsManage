@@ -87,21 +87,21 @@ export const useBrands = () => {
   const getFormatTable = useMemo((): TableData => {
     return {
       tableMetadata: TABLE_METADATA.brands,
-      headers: [
+      columns: [
         {
-          key: "name",
-          value: "Marca",
+          accessorKey: "name",
+          header: "Marca",
         },
         {
-          key: "country",
-          value: "País de Origen",
+          accessorKey: "country",
+          header: "País de Origen",
         },
         {
-          key: "website",
-          value: "Website",
+          accessorKey: "website",
+          header: "Website",
         },
       ],
-      rows: brands.map(({ name, country, website }) => {
+      data: brands.map(({ name, country, website }) => {
         return {
           name,
           country,
