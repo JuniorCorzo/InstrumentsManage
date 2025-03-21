@@ -1,21 +1,22 @@
 import { Link } from "react-router";
 import { SidebarOptions } from "../const/sidebar.const";
-import PixelCanvas from "./PixelCanvas";
+import PixelCard from "./PixelCard";
 
 const Sidebar = () => {
   return (
-    <aside className="border-r border-gray-800/40">
+    <aside className="border-r border-border-color/40">
       <nav className="flex flex-col gap-4 pt-4 items-center">
         {SidebarOptions.map(({ label, uri }, index) => {
           return (
             <Link
               to={uri}
-              className="relative w-11/12 h-10 flex items-center border rounded-lg border-gray-800/40 hover:border-slate-300 hover:font-semibold hover:text-slate-100"
+              className="relative w-10/12 h-10 flex items-center border rounded-lg border-border-color/40 hover:border-border-color hover:font-semibold hover:text-slate-100 hover:scale-x-105"
               key={index}
               viewTransition
             >
-              <PixelCanvas />
-              <h2 className="absolute ml-4">{label}</h2>
+              <PixelCard colors="#1F2937, #3B4147, #798591, #fa8d3e, #0d1017">
+                <h2 className="absolute">{label}</h2>
+              </PixelCard>
             </Link>
           );
         })}
