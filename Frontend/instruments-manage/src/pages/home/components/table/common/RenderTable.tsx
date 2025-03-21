@@ -14,11 +14,10 @@ const RenderRows = () => {
   return (
     <>
       <div
-        className="border-b border-slate-50/50 overflow-auto [&::-webkit-scrollbar]:h-1
-  [&::-webkit-scrollbar-track]:bg-gray-100
-  [&::-webkit-scrollbar-thumb]:bg-gray-300
-  dark:[&::-webkit-scrollbar-track]:bg-transparent
-  dark:[&::-webkit-scrollbar-thumb]:bg-zinc-800"
+        className="border-b border-border-color/75 overflow-auto [&::-webkit-scrollbar]:h-0.5
+                    dark:[&::-webkit-scrollbar-track]:bg-transparent
+                  dark:[&::-webkit-scrollbar-thumb]:bg-secondary/50
+                  [&::-webkit-scrollbar-thumb]:rounded-sm"
       >
         <table className="w-full table-auto">
           <thead>
