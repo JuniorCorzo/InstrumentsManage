@@ -1,8 +1,14 @@
-import { CampDomain } from "@/interfaces/camp-domain.interface";
-import { CampDTO } from "@/models";
+import { CampDomain, LocationDomain } from "@/interfaces/camp-domain.interface";
+import { CampDTO, LocationDTO } from "@/models";
 
 export const CampAdapter = (camp: CampDTO): CampDomain => {
-    const { _id, name, location } = camp
+  const { id, name, location } = camp;
 
-    return { id: _id, name, location }
-}
+  return { id: id, name, location: LocationAdapter(location) } as CampDomain;
+};
+
+const LocationAdapter = (location: LocationDTO): LocationDomain => {
+  const { municipality, department, country, coordinate } = location;
+
+  return { municipality, department, country, coordinate } as LocationDomain;
+};

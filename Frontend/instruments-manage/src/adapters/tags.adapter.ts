@@ -5,7 +5,7 @@ import { unitProcessAdapter } from "./unit-process.adapter";
 
 export const TagsAdapter = (tags: TagsDTO): TagsDomain => {
   const {
-    _id,
+    id,
     tag,
     description,
     instrument,
@@ -16,7 +16,7 @@ export const TagsAdapter = (tags: TagsDTO): TagsDomain => {
   } = tags;
 
   return {
-    id: _id,
+    id,
     tag,
     description,
     instrument: instrumentAdapter(instrument),

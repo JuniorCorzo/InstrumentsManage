@@ -4,3 +4,6 @@ export interface BrandDTO {
   country: string;
   website: string;
 }
+
+export interface CreateBrandDTO extends Omit<BrandDTO, "id"> {}
+export interface UpdateBrandDTO extends BrandDTO {}

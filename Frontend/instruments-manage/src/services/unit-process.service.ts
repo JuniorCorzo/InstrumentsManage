@@ -11,6 +11,7 @@ export const getAllUnitProcesses = async (): Promise<UnitProcessDomain[]> => {
     .get(`${GATEWAY_HOST}/unit-process/all`)
     .then((response) => {
       if (response.status !== 200) throw Error(response.statusText);
+
       return response.data as RetrieveDataDTO;
     });
 
@@ -22,31 +23,43 @@ export const getAllUnitProcesses = async (): Promise<UnitProcessDomain[]> => {
 export const getUnitProcessById = async (
   id: string
 ): Promise<UnitProcessDomain> => {
-  return await axios
+  const response: RetrieveDataDTO = await axios
     .get(`${GATEWAY_HOST}/unit-process?id=${id}`)
     .then((response) => {
       if (response.status !== 200) throw Error(response.statusText);
 
-      return unitProcessAdapter(
-        (response.data as RetrieveDataDTO).data[0] as UnitProcessDTO
-      );
+      return response.data as RetrieveDataDTO;
     });
+
+  return unitProcessAdapter(response.data[0] as UnitProcessDTO);
 };
 
-export const createUnitProcess = async (unitProcess: UnitProcessDomain) => {
-  axios
+export const createUnitProcess = async (
+  unitProcess: UnitProcessDTO
+): Promise<UnitProcessDomain> => {
+  const response: RetrieveDataDTO = await axios
     .post(`${GATEWAY_HOST}/unit-process/create`, unitProcess)
     .then((response) => {
       if (response.status !== 201) throw Error(response.statusText);
+
+      return response.data as RetrieveDataDTO;
     });
+
+  return unitProcessAdapter(response.data[0] as UnitProcessDTO);
 };
 
-export const updateUnitProcess = async (unitProcess: UnitProcessDomain) => {
-  axios
+export const updateUnitProcess = async (
+  unitProcess: UnitProcessDTO
+): Promise<UnitProcessDomain> => {
+  const response: RetrieveDataDTO = await axios
     .put(`${GATEWAY_HOST}/unit-process/update`, unitProcess)
     .then((response) => {
       if (response.status !== 200) throw Error(response.statusText);
+
+      return response.data as RetrieveDataDTO;
     });
+
+  return unitProcessAdapter(response.data[0] as UnitProcessDTO);
 };
 
 export const deleteUnitProcess = async (id: string) => {
