@@ -7,12 +7,11 @@ export const useUnitProcessStrategy = () => {
 
   const { setTableContext } = useUpdateTable(
     getFormatTable,
-    unitProcessState.loading
+    unitProcessState.isLoading
   );
-
   useEffect(() => {
     setTableContext();
-  }, [unitProcessState.unitProcess]);
-  
+  }, [unitProcessState.unitProcess.length > 0]);
+
   return { setTableContext };
 };

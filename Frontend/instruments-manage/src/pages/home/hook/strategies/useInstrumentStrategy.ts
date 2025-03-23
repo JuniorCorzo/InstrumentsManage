@@ -7,12 +7,12 @@ const useInstrumentsStrategy = (): TableStrategy => {
   const { instrumentingState, getFormatTable } = useInstruments();
   const { setTableContext } = useUpdateTable(
     getFormatTable,
-    instrumentingState.loading
+    instrumentingState.isLoading
   );
 
   useEffect(() => {
     setTableContext();
-  }, [instrumentingState.instruments]);
+  }, [instrumentingState.instruments.length > 0]);
 
   return { setTableContext };
 };

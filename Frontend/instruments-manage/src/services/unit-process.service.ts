@@ -4,7 +4,7 @@ import { unitProcessAdapter } from "@/adapters/unit-process.adapter";
 import { GATEWAY_HOST } from "@/config/env.config";
 import { RetrieveDataDTO } from "@/interfaces/retrieve-data.interface";
 import { UnitProcessDomain } from "@/interfaces/unit-process-domain.interface";
-import { UnitProcessDTO } from "@/models";
+import { CreateUnitProcessDTO, UnitProcessDTO } from "@/models";
 
 export const getAllUnitProcesses = async (): Promise<UnitProcessDomain[]> => {
   const response = await axios
@@ -35,7 +35,7 @@ export const getUnitProcessById = async (
 };
 
 export const createUnitProcess = async (
-  unitProcess: UnitProcessDTO
+  unitProcess: CreateUnitProcessDTO
 ): Promise<UnitProcessDomain> => {
   const response: RetrieveDataDTO = await axios
     .post(`${GATEWAY_HOST}/unit-process/create`, unitProcess)
@@ -49,7 +49,7 @@ export const createUnitProcess = async (
 };
 
 export const updateUnitProcess = async (
-  unitProcess: UnitProcessDTO
+  unitProcess: CreateUnitProcessDTO
 ): Promise<UnitProcessDomain> => {
   const response: RetrieveDataDTO = await axios
     .put(`${GATEWAY_HOST}/unit-process/update`, unitProcess)

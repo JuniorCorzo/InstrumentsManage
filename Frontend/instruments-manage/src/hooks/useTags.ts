@@ -1,17 +1,8 @@
 import { TABLE_METADATA } from "@/const/table-metadata.const";
 import { TableData } from "@/context/TableContext";
-import { TagsDomain } from "@/interfaces/tags-domain.interface";
-import {
-  setTag,
-  fetchTags,
-  updateTag,
-  removeTag,
-} from "@/redux/reducers/tags.reducer";
-import { Dispatch, RootState } from "@/redux/stores/general.store";
-import { createTags, deleteTags, updateTags } from "@/services/tags.service";
-import { useEffect, useMemo } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useTagsState } from "@/states/queries/tags.query";
+import { useMemo } from "react";
+import { CreateTagDTO, UpdateTagsDTO } from "@/models";
 
 /**
  * Custom hook for managing tags in the application
@@ -29,17 +20,10 @@ import { useSelector } from "react-redux";
  *   - deleteTag: (id: string) => Promise<void> - Function to delete a tag
  */
 export const useTags = () => {
-  const dispatch = useDispatch<Dispatch>();
-  const tagsState = useSelector((state: RootState) => state.tags);
-  const { tags } = tagsState;
-  /**
-   * Fetches all tags from the store
-   * If there are no tags, makes a request to get them
-   */
-  const refreshTagsContext = () => {
-    dispatch(fetchTags());
-  };
-  useEffect(() => refreshTagsContext(), []);
+  const { tagQuery, createTagMutation, updateTagMutation, deleteTagMutation } =
+    useTagsState();
+  const { tags } = tagQuery();
+
   /**
    * Generates the table format for displaying tag data.
    *
@@ -140,10 +124,10 @@ export const useTags = () => {
    * Adds a new tag
    * @param tag - The tag to add
    */
-  const addTag = async (tag: TagsDomain) => {
+  const createTag = async (tag: CreateTagDTO) => {
     try {
-      await createTags(tag);
-      dispatch(setTag(tag));
+      const { mutate } = createTagMutation();
+      mutate(tag);
     } catch (error) {
       console.error(error);
     }
@@ -153,10 +137,10 @@ export const useTags = () => {
    * Updates an existing tag
    * @param tag - The tag with updated data
    */
-  const update = async (tag: TagsDomain) => {
+  const updateTag = async (tag: UpdateTagsDTO) => {
     try {
-      await updateTags(tag);
-      dispatch(updateTag(tag));
+      const { mutate } = updateTagMutation();
+      mutate(tag);
     } catch (error) {
       console.error(error);
     }
@@ -166,20 +150,20 @@ export const useTags = () => {
    * Deletes a tag by its ID
    * @param id - The ID of the tag to delete
    */
-  const deleteTagById = async (id: string) => {
+  const deleteTag = async (id: string) => {
     try {
-      await deleteTags(id);
-      dispatch(removeTag(id));
+      const { mutate } = deleteTagMutation();
+      mutate(id);
     } catch (error) {
       console.error(error);
     }
   };
 
   return {
-    tagsState,
+    tagsState: tagQuery(),
     getFormatTable,
-    addTag,
-    updateTag: update,
-    deleteTag: deleteTagById,
+    createTag,
+    updateTag,
+    deleteTag,
   };
 };
