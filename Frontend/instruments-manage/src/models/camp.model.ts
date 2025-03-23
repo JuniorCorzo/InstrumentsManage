@@ -1,7 +1,15 @@
-import { Location } from "@/interfaces/location.inteface";
-
 export interface CampDTO {
-  _id: string;
+  id: string;
   name: string;
-  location: Location;
+  location: LocationDTO;
+}
+
+export interface CreateCampDTO extends Omit<CampDTO, "id"> {}
+export interface UpdateCampDTO extends CampDTO {}
+
+export interface LocationDTO {
+  municipality: string;
+  department: string;
+  country: string;
+  coordinate: number[];
 }

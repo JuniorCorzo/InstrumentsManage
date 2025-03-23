@@ -4,11 +4,14 @@ import { useEffect } from "react";
 
 export const useCampStrategy = () => {
   const { campState, getFormatTable } = useCamps();
-  const { setTableContext } = useUpdateTable(getFormatTable, campState.loading);
+  const { setTableContext } = useUpdateTable(
+    getFormatTable,
+    campState.isLoading
+  );
 
   useEffect(() => {
     setTableContext();
-  }, [campState.camps]);
+  }, [campState.camps.length > 0]);
 
   return { setTableContext };
 };

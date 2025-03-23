@@ -5,7 +5,7 @@ export const instrumentAdapter = (
   instruments: InstrumentDTO
 ): InstrumentDomain => {
   const {
-    _id,
+    id,
     model,
     brand,
     type,
@@ -18,7 +18,7 @@ export const instrumentAdapter = (
   } = instruments;
 
   return {
-    id: _id,
+    id,
     model,
     brand,
     type,

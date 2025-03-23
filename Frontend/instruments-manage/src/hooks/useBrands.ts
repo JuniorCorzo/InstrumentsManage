@@ -1,20 +1,8 @@
-import { useSelector } from "react-redux";
-
-import { Dispatch, RootState } from "@/redux/stores/general.store";
-
-import { BrandDomain } from "@/interfaces/brand-domain.interface";
-import {
-  fetchBrands,
-  removeBrand,
-  setBrand,
-  setUpdateBrand,
-} from "@/redux/reducers/brands.reducer";
-import { useDispatch } from "react-redux";
-import { createBrand, updateBrand } from "@/services/brands.service";
-import { BrandsState } from "@/interfaces/states.interface";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { TableData } from "@/context/TableContext";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
+import { CreateBrandDTO, UpdateBrandDTO } from "@/models";
+import { useBrandState } from "@/states/queries/brands.query";
 
 /**
  * @fileoverview Custom hook for managing CRUD operations for brands using Redux.
@@ -47,21 +35,14 @@ import { TABLE_METADATA } from "@/const/table-metadata.const";
  * ```
  */
 export const useBrands = () => {
-  const dispatch = useDispatch<Dispatch>();
-  const brandsState = useSelector<RootState, BrandsState>(
-    (state) => state.brands
-  );
-  const { brands } = brandsState;
-  /**
-   * Fetches all brands from the server and stores them in the state.
-   * @private
-   */
-  const refreshBrandsState = () => {
-    useEffect(() => {
-      dispatch(fetchBrands());
-    }, []);
-  };
-  refreshBrandsState();
+  const {
+    brandQuery,
+    createBrandMutation,
+    deleteBrandMutation,
+    updateBrandMutation,
+  } = useBrandState();
+  const { brands } = brandQuery();
+
   /**
    * Generates the table format for displaying brand data.
    *
@@ -116,22 +97,22 @@ export const useBrands = () => {
    * Adds a new brand to the system.
    *
    * @async
-   * @param {BrandDomain} brand - Object containing the brand information to create.
+   * @param {CreateBrandDTO} brand - Object containing the brand information to create.
    * @throws {Error} If there's an error creating the brand on the server.
    *
    * @example
    * ```typescript
-   * await addBrand({
+   *  addBrand({
    *   id: '123',
    *   name: 'New Brand',
    *   description: 'Brand description'
    * });
    * ```
    */
-  const addBrand = async (brand: BrandDomain) => {
+  const createBrand = (brand: CreateBrandDTO) => {
     try {
-      await createBrand(brand);
-      dispatch(setBrand(brand));
+      const { mutate } = createBrandMutation();
+      mutate(brand);
     } catch (error) {
       console.error("Error creating brand:", error);
       throw error;
@@ -142,22 +123,22 @@ export const useBrands = () => {
    * Updates an existing brand in the system.
    *
    * @async
-   * @param {BrandDomain} brand - Object containing the updated brand information.
+   * @param {UpdateBrandDTO} brand - Object containing the updated brand information.
    * @throws {Error} If there's an error updating the brand on the server.
    *
    * @example
    * ```typescript
-   * await updateBrand({
+   *  updateBrand({
    *   id: '123',
    *   name: 'Updated Brand',
    *   description: 'New description'
    * });
    * ```
    */
-  const update = async (brand: BrandDomain) => {
+  const updateBrand = (brand: UpdateBrandDTO) => {
     try {
-      await updateBrand(brand);
-      dispatch(setUpdateBrand(brand));
+      const { mutate } = updateBrandMutation();
+      mutate(brand);
     } catch (error) {
       console.error("Error updating brand:", error);
       throw error;
@@ -173,13 +154,13 @@ export const useBrands = () => {
    *
    * @example
    * ```typescript
-   * await deleteBrand('123');
+   *    deleteBrand('123');
    * ```
    */
   const deleteBrand = async (id: string) => {
     try {
-      await deleteBrand(id);
-      dispatch(removeBrand(id));
+      const { mutate } = deleteBrandMutation();
+      mutate(id);
     } catch (error) {
       console.error("Error deleting brand:", error);
       throw error;
@@ -187,11 +168,10 @@ export const useBrands = () => {
   };
 
   return {
-    brandsState,
-    refreshBrandsState,
+    brandsState: brandQuery(),
     getFormatTable,
-    addBrand,
-    updateBrand: update,
+    createBrand,
+    updateBrand,
     deleteBrand,
   };
 };

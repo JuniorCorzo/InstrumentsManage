@@ -1,5 +1,5 @@
 export interface InstrumentDTO {
-  _id: string;
+  id: string;
   model: string;
   brand: string;
   type: string;
@@ -10,3 +10,6 @@ export interface InstrumentDTO {
   protectionClass: string;
   certifications: string[];
 }
+
+export interface CreateInstrumentsDTO extends Omit<InstrumentDTO, "id"> {}
+export interface UpdateInstrumentsDTO extends InstrumentDTO {}

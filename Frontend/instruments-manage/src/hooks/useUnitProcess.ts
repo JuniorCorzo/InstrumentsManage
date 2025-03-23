@@ -3,23 +3,11 @@
  * @module useUnitProcess
  */
 
-import { useDispatch, useSelector } from "react-redux";
-import { Dispatch, RootState } from "@/redux/stores/general.store";
-import {
-  fetchUnitProcess,
-  removeUnitProcess,
-  setUnitProcess,
-  setUpdateUnitProcess,
-} from "@/redux/reducers/unit-process.reducer";
-import { UnitProcessDomain } from "@/interfaces/unit-process-domain.interface";
-import {
-  createUnitProcess,
-  updateUnitProcess,
-} from "@/services/unit-process.service";
-import { UnitProcessState } from "@/interfaces/states.interface";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { TableData } from "@/context/TableContext";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
+import { useUnitProcessState } from "@/states/queries/unit-process.query";
+import { CreateUnitProcessDTO } from "@/models";
 
 /**
  * Custom hook for managing unit processes in the application.
@@ -47,18 +35,13 @@ import { TABLE_METADATA } from "@/const/table-metadata.const";
  * ```
  */
 export const useUnitProcess = () => {
-  const dispatch = useDispatch<Dispatch>();
-  const unitProcessState = useSelector<RootState, UnitProcessState>(
-    (state) => state.unitProcess
-  );
-  const { unitProcess } = unitProcessState;
-
-  const refreshUnitProcessState = () => {
-    useEffect(() => {
-      dispatch(fetchUnitProcess());
-    }, []);
-  };
-  refreshUnitProcessState();
+  const {
+    unitProcessQuery,
+    createUnitProcessMutation,
+    updateUnitProcessMutation,
+    deleteUnitProcessMutation,
+  } = useUnitProcessState();
+  const { unitProcess } = unitProcessQuery();
 
   /**
    * Generates the table format for displaying unit process data.
@@ -94,7 +77,7 @@ export const useUnitProcess = () => {
    * Adds a new unit process to the system.
    *
    * @async
-   * @param {UnitProcessDomain} unitProcess - Object containing the unit process information to create.
+   * @param {CreateUnitProcessDTO} unitProcess - Object containing the unit process information to create.
    * @throws {Error} If there's an error creating the unit process on the server.
    *
    * @example
@@ -106,10 +89,10 @@ export const useUnitProcess = () => {
    * });
    * ```
    */
-  const addUnitProcess = async (unitProcess: UnitProcessDomain) => {
+  const createUnitProcess = (unitProcess: CreateUnitProcessDTO) => {
     try {
-      await createUnitProcess(unitProcess);
-      dispatch(setUnitProcess(unitProcess));
+      const { mutate } = createUnitProcessMutation();
+      mutate(unitProcess);
     } catch (error) {
       console.error("Error creating unit process:", error);
       throw error;
@@ -120,7 +103,7 @@ export const useUnitProcess = () => {
    * Updates an existing unit process in the system.
    *
    * @async
-   * @param {UnitProcessDomain} unitProcess - Object containing the updated unit process information.
+   * @param {CreateUnitProcessDTO} unitProcess - Object containing the updated unit process information.
    * @throws {Error} If there's an error updating the unit process on the server.
    *
    * @example
@@ -132,10 +115,10 @@ export const useUnitProcess = () => {
    * });
    * ```
    */
-  const update = async (unitProcess: UnitProcessDomain) => {
+  const updateUnitProcess = async (unitProcess: CreateUnitProcessDTO) => {
     try {
-      await updateUnitProcess(unitProcess);
-      dispatch(setUpdateUnitProcess(unitProcess));
+      const { mutate } = updateUnitProcessMutation();
+      mutate(unitProcess);
     } catch (error) {
       console.error("Error updating unit process:", error);
       throw error;
@@ -156,8 +139,8 @@ export const useUnitProcess = () => {
    */
   const deleteUnitProcess = async (id: string) => {
     try {
-      await deleteUnitProcess(id);
-      dispatch(removeUnitProcess(id));
+      const { mutate } = deleteUnitProcessMutation();
+      mutate(id);
     } catch (error) {
       console.error("Error deleting unit process:", error);
       throw error;
@@ -165,11 +148,10 @@ export const useUnitProcess = () => {
   };
 
   return {
-    unitProcessState,
-    refreshUnitProcessState,
+    unitProcessState: unitProcessQuery(),
     getFormatTable,
-    addUnitProcess,
-    updateUnitProcess: update,
+    createUnitProcess,
+    updateUnitProcess,
     deleteUnitProcess,
   };
 };

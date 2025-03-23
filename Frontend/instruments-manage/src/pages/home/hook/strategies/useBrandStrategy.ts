@@ -7,12 +7,12 @@ const useBrandStrategy = (): TableStrategy => {
   const { brandsState, getFormatTable } = useBrands();
   const { setTableContext } = useUpdateTable(
     getFormatTable,
-    brandsState.loading
+    brandsState.isLoading
   );
 
   useEffect(() => {
     setTableContext();
-  }, [brandsState.brands]);
+  }, [brandsState.brands.length > 0]);
 
   return {
     setTableContext,

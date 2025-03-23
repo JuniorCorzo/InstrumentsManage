@@ -1,22 +1,9 @@
-import { InstrumentDomain } from "../interfaces/instrument-domain.interface";
-import { Dispatch, RootState } from "../redux/stores/general.store";
-import {
-  fetchInstruments,
-  removeInstrument,
-  setInstrument,
-  setUpdateInstrument,
-} from "../redux/reducers/instruments.reducer";
-import {
-  createInstruments,
-  deleteInstruments,
-  updateInstruments,
-} from "../services/instruments.service";
-import { useDispatch, useSelector } from "react-redux";
+import { useInstrumentState } from "../states/queries/instruments.query";
 import { TableData } from "@/context/TableContext";
-import { useEffect, useMemo } from "react";
-import { InstrumentsState } from "@/interfaces/states.interface";
+import { useMemo } from "react";
 import { transformToString } from "@/utils/transform-string.utils";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
+import { CreateInstrumentsDTO, UpdateInstrumentsDTO } from "@/models";
 
 /**
  * Custom hook for managing instruments in the application
@@ -34,17 +21,13 @@ import { TABLE_METADATA } from "@/const/table-metadata.const";
  *   - removeInstrument: (id: string) => Promise<void> - Function to delete an instrument
  */
 export const useInstruments = () => {
-  const dispatch = useDispatch<Dispatch>();
-  const { instruments, loading } = useSelector<RootState, InstrumentsState>(
-    (state) => state.instruments
-  );
-
-  const refreshInstrumentsState = () => {
-    useEffect(() => {
-      dispatch(fetchInstruments());
-    }, []);
-  };
-  refreshInstrumentsState();
+  const {
+    instrumentQuery,
+    createInstrumentMutation,
+    updateInstrumentMutation,
+    deleteInstrumentMutation,
+  } = useInstrumentState();
+  const { instruments } = instrumentQuery();
 
   /**
    ** Formats instrument data into a table structure
@@ -142,10 +125,10 @@ export const useInstruments = () => {
    * Adds a new instrument
    * @param instrument - The instrument to add
    */
-  const addInstrument = async (instrument: InstrumentDomain) => {
+  const createInstrument = async (instrument: CreateInstrumentsDTO) => {
     try {
-      await createInstruments(instrument);
-      dispatch(setInstrument(instrument));
+      const { mutate } = createInstrumentMutation();
+      mutate(instrument);
     } catch (err) {
       console.error(err);
     }
@@ -155,10 +138,10 @@ export const useInstruments = () => {
    * Updates an existing instrument
    * @param instrument - The instrument with updated data
    */
-  const update = async (instrument: InstrumentDomain) => {
+  const updateInstrument = async (instrument: UpdateInstrumentsDTO) => {
     try {
-      await updateInstruments(instrument);
-      dispatch(setUpdateInstrument(instrument));
+      const { mutate } = updateInstrumentMutation();
+      mutate(instrument);
     } catch (err) {
       console.error(err);
     }
@@ -168,21 +151,20 @@ export const useInstruments = () => {
    * Deletes an instrument by its ID
    * @param id - The ID of the instrument to delete
    */
-  const deleteInstrumentById = async (id: string) => {
+  const deleteInstrument = async (id: string) => {
     try {
-      await deleteInstruments(id);
-      dispatch(removeInstrument(id));
+      const { mutate } = deleteInstrumentMutation();
+      mutate(id);
     } catch (err) {
       console.error(err);
     }
   };
 
   return {
-    instrumentingState: { instruments, loading },
+    instrumentingState: instrumentQuery(),
     getFormatTable,
-    refreshInstrumentsState,
-    addInstrument,
-    updateInstrument: update,
-    deleteInstrument: deleteInstrumentById,
+    createInstrument,
+    updateInstrument,
+    deleteInstrument,
   };
 };

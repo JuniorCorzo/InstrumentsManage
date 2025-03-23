@@ -2,7 +2,7 @@ import { InstrumentDTO } from "./instruments.model";
 import { UnitProcessDTO } from "./unit-process.model";
 
 export interface TagsDTO {
-  _id: string;
+  id: string;
   tag: string;
   description: string;
   instrument: InstrumentDTO;
@@ -16,3 +16,11 @@ export interface TagsDTO {
   };
   shutDown: boolean;
 }
+
+export interface UpdateTagsDTO
+  extends Omit<TagsDTO, "instruments" | "unitProcess"> {
+  idInstruments: string;
+  idUnitProcess: string;
+}
+
+export interface CreateTagDTO extends Omit<UpdateTagsDTO, "id"> {}

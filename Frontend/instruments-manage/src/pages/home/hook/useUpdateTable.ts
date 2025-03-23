@@ -15,7 +15,6 @@ const useUpdateTable = (
   return {
     setTableContext() {
       if (tableMetadata?.urlParam !== param) {
-        console.log("hola");
         return;
       }
       setData(formattedData);

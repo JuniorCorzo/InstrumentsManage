@@ -1,7 +1,12 @@
-import { Location } from "./location.inteface"
-
 export interface CampDomain {
-    id: string
-    name: string
-    location: Location
+  id: string;
+  name: string;
+  location: LocationDomain;
+}
+
+export interface LocationDomain {
+  municipality: string;
+  department: string;
+  country: string;
+  coordinate: number[];
 }

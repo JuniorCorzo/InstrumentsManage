@@ -1,8 +1,11 @@
 import { CampDTO } from "@/models";
 
 export interface UnitProcessDTO {
-  _id: string;
+  id: string;
   name: string;
   description: string;
   camp: CampDTO;
 }
+
+export interface CreateUnitProcessDTO extends Omit<UnitProcessDTO, "id"> {}
+export interface UpdateUnitProcessDTO extends UnitProcessDTO {}
