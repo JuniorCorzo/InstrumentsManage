@@ -3,8 +3,9 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import Home from "./pages/home/home.page";
 import { BrowserRouter, Route, Routes } from "react-router";
-import { Provider } from "react-redux";
-import { store } from "./redux/stores/general.store";
+import { clientQuery } from "./states/client/client-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -13,9 +14,10 @@ createRoot(document.getElementById("root")!).render(
         <Route
           path="/home"
           element={
-            <Provider store={store}>
+            <QueryClientProvider client={clientQuery}>
               <Home />
-            </Provider>
+              <ReactQueryDevtools />
+            </QueryClientProvider>
           }
         ></Route>
       </Routes>
