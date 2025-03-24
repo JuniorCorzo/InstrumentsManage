@@ -19,6 +19,7 @@
     "react-dom": "^19.0.0",
     "react-router": "^7.4.0",
     "react-scan": "^0.1.4",
+
     "spinners-react": "^1.0.10"
   },
   "devDependencies": {
