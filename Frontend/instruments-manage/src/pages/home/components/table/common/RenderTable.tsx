@@ -13,12 +13,7 @@ const RenderRows = () => {
 
   return (
     <>
-      <div
-        className="border-b border-border-color/75 overflow-auto [&::-webkit-scrollbar]:h-0.5
-                    dark:[&::-webkit-scrollbar-track]:bg-transparent
-                  dark:[&::-webkit-scrollbar-thumb]:bg-secondary/50
-                  [&::-webkit-scrollbar-thumb]:rounded-sm"
-      >
+      <div className="border-b border-border-color/75 overflow-auto scrollbar">
         <table className="w-full table-auto">
           <thead>
             {tableConfig.getHeaderGroups().map((headerGroup) => (

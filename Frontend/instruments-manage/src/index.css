@@ -10,6 +10,12 @@
   --color-fixed-header: #ed853b;
 }
 
+@layer utilities {
+  .scrollbar {
+    @apply [&::-webkit-scrollbar]:h-0.5 dark:[&::-webkit-scrollbar-track]:bg-transparent dark:[&::-webkit-scrollbar-thumb]:bg-secondary/50 [&::-webkit-scrollbar-thumb]:rounded-sm;
+  }
+}
+
 @layer base {
   *,
   ::after,
@@ -36,6 +42,7 @@ body {
   min-width: 100vw;
   min-height: 100vh;
 }
+
 #root {
   min-width: 100vw;
 }
