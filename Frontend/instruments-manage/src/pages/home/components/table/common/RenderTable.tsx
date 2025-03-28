@@ -1,4 +1,4 @@
-import { useParamRoute } from "@/pages/home/hook/useParamRoute";
+import { useParamStrategy } from "@/pages/home/hook/useParamStrategy";
 import { useTableConfig } from "@/pages/home/hook/useTableConfig";
 import { flexRender } from "@tanstack/react-table";
 import Pagination from "./Pagination";
@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { TableDataContext } from "@/context/TableContext";
 
 const RenderRows = () => {
-  useParamRoute();
+  useParamStrategy();
   const { tableData } = useContext(TableDataContext);
 
   const { tableConfig } = useTableConfig();
