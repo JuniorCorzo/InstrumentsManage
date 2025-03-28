@@ -1,9 +1,7 @@
 import { BrandDomain } from "@/interfaces/brand-domain.interface";
 import { ModalConfig } from "@/interfaces/modal-config.interface";
 
-export const INSTRUMENTS_MODAL_CONFIG = (
-  brands: BrandDomain[]
-): ModalConfig => {
+export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
   return {
     title: "Añadir un Nuevo Instrumento",
     fields: [

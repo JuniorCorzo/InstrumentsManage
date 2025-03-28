@@ -1,15 +1,16 @@
 import { XMarkIcon } from "@heroicons/react/24/solid";
 import TextField from "./TextField";
 import SelectField from "./SelectField";
-import { ModalConfig } from "@/interfaces/modal-config.interface";
+import { useModal } from "@/hooks/useModal";
+import Checkbox from "../Checkbox";
 
 interface Props {
   showModal: boolean;
   onClose: () => void;
-  modalConfig: ModalConfig;
 }
 
-const Modal = ({ showModal, onClose, modalConfig }: Props) => {
+const Modal = ({ showModal, onClose }: Props) => {
+  const { modalConfig } = useModal();
   return (
     <dialog
       id="form_modal"
@@ -22,7 +23,7 @@ const Modal = ({ showModal, onClose, modalConfig }: Props) => {
       <div className="flex border-b justify-between">
         <div>
           <span className="text-text-primary font-bold text-lg">
-            {modalConfig.title}
+            {modalConfig?.title}
           </span>
         </div>
         <div>
@@ -37,9 +38,12 @@ const Modal = ({ showModal, onClose, modalConfig }: Props) => {
       </div>
       <div className="">
         <form className="flex flex-col gap-3">
-          {modalConfig.fields.map(({ type, field }) => {
+          {modalConfig?.fields.map(({ type, field }) => {
             if (type === "text") {
               return <TextField {...field} />;
+            }
+            if (type === "checkbox") {
+              return <Checkbox {...field} />;
             }
 
             return <SelectField {...field} />;

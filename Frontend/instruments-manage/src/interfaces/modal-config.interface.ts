@@ -1,15 +1,15 @@
 export interface ModalConfig {
   title: string;
   fields: {
-    type: "select" | "text";
+    type: "select" | "text" | "checkbox";
     field: Field;
   }[];
 }
 
 export interface Field {
   label: string;
-  placeholder: string;
   name: string;
+  placeholder?: string;
   options?: { value: string | undefined; label: string }[];
   isMulti?: boolean;
 }

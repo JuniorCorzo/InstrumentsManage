@@ -2,7 +2,7 @@ import CardCaption from "@/pages/home/components/table/common/CardCaption";
 import LoadingTable from "@/pages/home/components/table/common/LoadingTable";
 
 import { lazy, Suspense } from "react";
-import Button from "./modal/Button";
+import AddButton from "./modal/AddButton";
 
 const Table = () => {
   const LazyTable = lazy(
@@ -14,7 +14,7 @@ const Table = () => {
     <article className="flex flex-col p-10 gap-3">
       <CardCaption />
       <div className="flex pr-2 justify-end">
-        <Button />
+        <AddButton />
       </div>
       <div className="w-(--breakpoint-lg) border border-border-color/50 shadow-[2px_2px_10px_0px_#2A3747]">
         <Suspense fallback={<LoadingTable />}>
