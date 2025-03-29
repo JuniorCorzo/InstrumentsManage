@@ -3,7 +3,7 @@ import Modal from "./Modal";
 import { useModal } from "@/hooks/useModal";
 
 const AddButton = () => {
-  const { showModal, setShowModal } = useModal();
+  const { showModal, setShowModal, modalConfig } = useModal();
   const handleClick = () => {
     setShowModal(!showModal);
   };
@@ -11,7 +11,7 @@ const AddButton = () => {
   return (
     <>
       <Button
-        text="Añadir Instrumento"
+        text={`Añadir ${modalConfig?.title.split(" ")[3]}`}
         type="button"
         handleClick={handleClick}
       />

@@ -28,7 +28,7 @@ export const TAGS_MODAL_FORM = (
       {
         type: "select",
         field: {
-          name: "id_instrument",
+          name: "idInstruments",
           label: "Instrumento",
           placeholder: "Instrumento",
           options: instruments?.map(({ id, model }) => {
@@ -39,7 +39,7 @@ export const TAGS_MODAL_FORM = (
       {
         type: "select",
         field: {
-          name: "id_unit_process",
+          name: "idUnitProcess",
           label: "Unidad de Proceso",
           placeholder: "Unidad de Proceso",
           options: unitProcess?.map(({ id, name }) => {
@@ -51,7 +51,7 @@ export const TAGS_MODAL_FORM = (
       {
         type: "select",
         field: {
-          name: "type_unit",
+          name: "typeUnit",
           label: "Unidad de Medición",
           placeholder: "PSI",
           options: TAGS_TYPE_UNIT,
@@ -92,7 +92,7 @@ export const TAGS_MODAL_FORM = (
       {
         type: "checkbox",
         field: {
-          name: "is_shutdown",
+          name: "shutDown",
           label: "Shutdown",
         },
       },

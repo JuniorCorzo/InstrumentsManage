@@ -36,7 +36,7 @@ export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
       {
         type: "text",
         field: {
-          name: "range",
+          name: "measurementRange",
           label: "Rango",
           placeholder: "0-100 PSI ...",
         },
@@ -52,7 +52,7 @@ export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
       {
         type: "select",
         field: {
-          name: "connection",
+          name: "connectionType",
           label: "Conexión",
           placeholder: '1/2" NPT, G1/2 ...',
           options: INSTRUMENTS_CONNECTION,
@@ -62,7 +62,7 @@ export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
       {
         type: "select",
         field: {
-          name: "connection_process",
+          name: "processConnection",
           label: "Proceso de Conexión",
           placeholder: "Flanged ...",
           options: INSTRUMENTS_CONNECTION_PROCESS,
@@ -71,7 +71,7 @@ export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
       {
         type: "select",
         field: {
-          name: "protection_type",
+          name: "protectionClass",
           label: "Protección",
           placeholder: "IP20 ...",
           options: INSTRUMENTS_PROTECTION_TYPE,
@@ -80,7 +80,7 @@ export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
       {
         type: "select",
         field: {
-          name: "certification",
+          name: "certifications",
           label: "Certificaciones",
           placeholder: "ATEX, CE ...",
           options: INSTRUMENTS_CERTIFICATIONS,

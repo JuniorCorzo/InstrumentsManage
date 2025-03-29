@@ -3,6 +3,8 @@ import TextField from "./TextField";
 import SelectField from "./SelectField";
 import { useModal } from "@/hooks/useModal";
 import Checkbox from "../Checkbox";
+import Button from "../Button";
+import { useFormModal } from "@/hooks/useFormModal";
 
 interface Props {
   showModal: boolean;
@@ -11,6 +13,16 @@ interface Props {
 
 const Modal = ({ showModal, onClose }: Props) => {
   const { modalConfig } = useModal();
+  const { sendData } = useFormModal();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const names = Object.fromEntries(new window.FormData(event.currentTarget));
+    // console.table(names);
+    if (sendData) {
+      sendData(names);
+    }
+  };
   return (
     <dialog
       id="form_modal"
@@ -37,7 +49,7 @@ const Modal = ({ showModal, onClose }: Props) => {
         </div>
       </div>
       <div className="">
-        <form className="flex flex-col gap-3">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-3">
           {modalConfig?.fields.map(({ type, field }) => {
             if (type === "text") {
               return <TextField {...field} />;
@@ -48,6 +60,7 @@ const Modal = ({ showModal, onClose }: Props) => {
 
             return <SelectField {...field} />;
           })}
+          <Button text="Enviar" type="submit" />
         </form>
       </div>
     </dialog>

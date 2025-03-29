@@ -1,7 +1,7 @@
 import { INSTRUMENTS_MODAL_FORM } from "@/const/instruments.const";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
 import { ModalConfig } from "@/interfaces/modal-config.interface";
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { useBrands } from "./useBrands";
 import { TAGS_MODAL_FORM } from "@/const/tags.const";
