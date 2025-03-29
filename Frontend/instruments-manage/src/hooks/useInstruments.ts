@@ -1,4 +1,4 @@
-import { useInstrumentState } from "../states/queries/instruments.query";
+import { useInstrumentState } from "../states/queries/useInstrumentState";
 import { TableData } from "@/context/TableContext";
 import { useMemo } from "react";
 import { transformToString } from "@/utils/transform-string.utils";
@@ -127,7 +127,7 @@ export const useInstruments = () => {
    */
   const createInstrument = async (instrument: CreateInstrumentsDTO) => {
     try {
-      const { mutate } = createInstrumentMutation();
+      const { mutate } = createInstrumentMutation;
       mutate(instrument);
     } catch (err) {
       console.error(err);
@@ -140,7 +140,7 @@ export const useInstruments = () => {
    */
   const updateInstrument = async (instrument: UpdateInstrumentsDTO) => {
     try {
-      const { mutate } = updateInstrumentMutation();
+      const { mutate } = updateInstrumentMutation;
       mutate(instrument);
     } catch (err) {
       console.error(err);
@@ -153,7 +153,7 @@ export const useInstruments = () => {
    */
   const deleteInstrument = async (id: string) => {
     try {
-      const { mutate } = deleteInstrumentMutation();
+      const { mutate } = deleteInstrumentMutation;
       mutate(id);
     } catch (err) {
       console.error(err);

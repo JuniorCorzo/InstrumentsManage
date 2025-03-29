@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { transformToString } from "@/utils/transform-string.utils";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
 import { CreateCampDTO, UpdateCampDTO } from "@/models";
-import { useCampState } from "@/states/queries/camp.query";
+import { useCampState } from "@/states/queries/useCampState";
 
 export const useCamps = () => {
   const {
@@ -66,7 +66,7 @@ export const useCamps = () => {
 
   const createCamp = async (camp: CreateCampDTO) => {
     try {
-      const { mutate } = createCampMutation();
+      const { mutate } = createCampMutation;
       mutate(camp);
     } catch (error) {
       console.error(error);
@@ -75,7 +75,7 @@ export const useCamps = () => {
 
   const updateCamp = async (camp: UpdateCampDTO) => {
     try {
-      const { mutate } = updateCampMutation();
+      const { mutate } = updateCampMutation;
       mutate(camp);
     } catch (error) {
       console.error(error);
@@ -84,7 +84,7 @@ export const useCamps = () => {
 
   const deleteCamp = async (id: string) => {
     try {
-      const { mutate } = deleteCampMutation();
+      const { mutate } = deleteCampMutation;
       mutate(id);
     } catch (error) {
       console.error(error);
