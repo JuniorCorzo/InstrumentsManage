@@ -28,7 +28,7 @@ export const TAGS_MODAL_FORM = (
       {
         type: "select",
         field: {
-          name: "idInstruments",
+          name: "idInstrument",
           label: "Instrumento",
           placeholder: "Instrumento",
           options: instruments?.map(({ id, model }) => {

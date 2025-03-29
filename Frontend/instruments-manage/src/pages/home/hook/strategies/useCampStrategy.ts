@@ -11,7 +11,7 @@ export const useCampStrategy = () => {
 
   useEffect(() => {
     setTableContext();
-  }, [campState.camps.length > 0]);
+  }, [campState.isLoading]);
 
   return { setTableContext };
 };

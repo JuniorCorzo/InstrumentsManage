@@ -33,7 +33,7 @@ export const formToTagsDTO = (names: {
   const {
     tag,
     description,
-    idInstruments,
+    idInstrument,
     idUnitProcess,
     typeUnit,
     hh,
@@ -44,7 +44,7 @@ export const formToTagsDTO = (names: {
   return {
     tag,
     description,
-    idInstruments,
+    idInstrument,
     idUnitProcess,
     typeUnit,
     alarms: {

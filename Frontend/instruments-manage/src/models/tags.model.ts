@@ -19,7 +19,7 @@ export interface TagsDTO {
 
 export interface UpdateTagsDTO
   extends Omit<TagsDTO, "instruments" | "unitProcess"> {
-  idInstruments: string;
+  idInstrument: string;
   idUnitProcess: string;
 }
 

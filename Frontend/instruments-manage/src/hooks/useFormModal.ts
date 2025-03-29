@@ -1,11 +1,6 @@
 import { formToTagsDTO } from "@/adapters/tags.adapter";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
-import {
-  CreateBrandDTO,
-  CreateCampDTO,
-  CreateInstrumentsDTO,
-  CreateUnitProcessDTO,
-} from "@/models";
+import { CreateBrandDTO, CreateCampDTO, CreateUnitProcessDTO } from "@/models";
 import { useEffect, useRef } from "react";
 import { useSearchParams } from "react-router";
 import { useInstruments } from "./useInstruments";
@@ -13,6 +8,7 @@ import { useBrands } from "./useBrands";
 import { useTags } from "./useTags";
 import { useUnitProcess } from "./useUnitProcess";
 import { useCamps } from "./useCamps";
+import { formToInstrumentsDTO } from "@/adapters/instruments.adapter";
 
 export const useFormModal = () => {
   const [searchParams] = useSearchParams();
@@ -24,39 +20,37 @@ export const useFormModal = () => {
   const { createUnitProcess } = useUnitProcess();
   const { createCamp } = useCamps();
 
-  const sendData =
-    useRef<(names: { [key: string]: FormDataEntryValue }) => boolean>();
+  const sendData = useRef<(formData: FormData) => boolean>();
 
-  const sendInstrument = (names: {
-    [key: string]: FormDataEntryValue;
-  }): boolean => {
-    const instrument = names as unknown as CreateInstrumentsDTO;
+  const sendInstrument = (formData: FormData): boolean => {
+    const instrument = formToInstrumentsDTO(formData);
     createInstrument(instrument);
     return true;
   };
 
-  const sendBrand = (names: { [key: string]: FormDataEntryValue }): boolean => {
+  const sendBrand = (formData: FormData): boolean => {
+    const names = Object.fromEntries(formData.entries());
     const brand = names as CreateBrandDTO;
     createBrand(brand);
     return true;
   };
 
-  const sendTag = (names: { [key: string]: FormDataEntryValue }): boolean => {
+  const sendTag = (formData: FormData): boolean => {
+    const names = Object.fromEntries(formData.entries());
     const tag = formToTagsDTO(names);
-    console.table(tag);
     createTag(tag);
     return true;
   };
 
-  const sendUnitProcess = (names: {
-    [key: string]: FormDataEntryValue;
-  }): boolean => {
+  const sendUnitProcess = (formData: FormData): boolean => {
+    const names = Object.fromEntries(formData.entries());
     const unitProcess = names as unknown as CreateUnitProcessDTO;
     createUnitProcess(unitProcess);
     return true;
   };
 
-  const sendCamp = (names: { [key: string]: FormDataEntryValue }): boolean => {
+  const sendCamp = (formData: FormData): boolean => {
+    const names = Object.fromEntries(formData.entries());
     const camp = names as unknown as CreateCampDTO;
     createCamp(camp);
     return true;

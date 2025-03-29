@@ -17,10 +17,11 @@ const Modal = ({ showModal, onClose }: Props) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const names = Object.fromEntries(new window.FormData(event.currentTarget));
-    // console.table(names);
+    const formData = new window.FormData(event.currentTarget);
+
+    console.table(formData);
     if (sendData) {
-      sendData(names);
+      sendData(formData);
     }
   };
   return (

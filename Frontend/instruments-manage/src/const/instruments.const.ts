@@ -17,10 +17,10 @@ export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
         type: "select",
         field: {
           label: "Marca",
-          name: "marca",
+          name: "brand",
           placeholder: "Marca",
-          options: brands.map(({ id, name }) => {
-            return { value: id, label: name };
+          options: brands.map(({ name }) => {
+            return { value: name, label: name };
           }),
         },
       },
@@ -46,7 +46,7 @@ export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
         field: {
           name: "accuracy",
           label: "Precisión",
-          placeholder: "±0.05% ...",
+          placeholder: "0.05 ...",
         },
       },
       {
@@ -92,37 +92,37 @@ export const INSTRUMENTS_MODAL_FORM = (brands: BrandDomain[]): ModalConfig => {
 };
 
 export const INSTRUMENTS_TYPES = [
-  { value: "analizadores_gases", label: "Analizadores de gases" },
-  { value: "analizadores_particulas", label: "Analizadores de partículas" },
-  { value: "analizadores_quimicos", label: "Analizadores químicos" },
-  { value: "celdas_carga", label: "Celdas de carga" },
-  { value: "interruptores_flujo", label: "Interruptores de flujo" },
-  { value: "medidores_caudal", label: "Medidores de caudal" },
-  { value: "medidores_conductividad", label: "Medidores de conductividad" },
-  { value: "medidores_energia", label: "Medidores de energía" },
-  { value: "medidores_flujo", label: "Medidores de flujo" },
-  { value: "medidores_ph", label: "Medidores de pH" },
-  { value: "medidores_torque", label: "Medidores de torque" },
-  { value: "medidores_turbidez", label: "Medidores de turbidez" },
-  { value: "sensores_co2", label: "Sensores de CO2" },
-  { value: "sensores_densidad", label: "Sensores de densidad" },
-  { value: "sensores_humedad", label: "Sensores de humedad" },
-  { value: "sensores_nivel", label: "Sensores de nivel" },
-  { value: "sensores_oxigeno", label: "Sensores de oxígeno" },
+  { value: "Analizadores de gases", label: "Analizadores de gases" },
+  { value: "Analizadores de partículas", label: "Analizadores de partículas" },
+  { value: "Analizadores químicos", label: "Analizadores químicos" },
+  { value: "Celdas de carga", label: "Celdas de carga" },
+  { value: "Interruptores de flujo", label: "Interruptores de flujo" },
+  { value: "Medidores de caudal", label: "Medidores de caudal" },
+  { value: "Medidores de conductividad", label: "Medidores de conductividad" },
+  { value: "Medidores de energía", label: "Medidores de energía" },
+  { value: "Medidores de flujo", label: "Medidores de flujo" },
+  { value: "Medidores de pH", label: "Medidores de pH" },
+  { value: "Medidores de torque", label: "Medidores de torque" },
+  { value: "Medidores de turbidez", label: "Medidores de turbidez" },
+  { value: "Sensores de CO2", label: "Sensores de CO2" },
+  { value: "Sensores de densidad", label: "Sensores de densidad" },
+  { value: "Sensores de humedad", label: "Sensores de humedad" },
+  { value: "Sensores de nivel", label: "Sensores de nivel" },
+  { value: "Sensores de oxígeno", label: "Sensores de oxígeno" },
   {
-    value: "sensores_presion_diferencial",
+    value: "Sensores de presión diferencial",
     label: "Sensores de presión diferencial",
   },
-  { value: "sensores_temperatura", label: "Sensores de temperatura" },
-  { value: "sensores_velocidad", label: "Sensores de velocidad" },
-  { value: "sensores_vibracion", label: "Sensores de vibración" },
-  { value: "transmisores_nivel", label: "Transmisor de nivel" },
-  { value: "transmisores_presion", label: "Transmisor de presión" },
-  { value: "transmisores_temperatura", label: "Transmisor de Temperatura" },
-  { value: "termopares", label: "Termopares" },
+  { value: "Sensores de temperatura", label: "Sensores de temperatura" },
+  { value: "Sensores de velocidad", label: "Sensores de velocidad" },
+  { value: "Sensores de vibración", label: "Sensores de vibración" },
+  { value: "Transmisor de nivel", label: "Transmisor de nivel" },
+  { value: "Transmisor de presión", label: "Transmisor de presión" },
+  { value: "Transmisor de Temperatura", label: "Transmisor de Temperatura" },
+  { value: "Termopares", label: "Termopares" },
 ];
 
-const INSTRUMENTS_CONNECTION = [
+export const INSTRUMENTS_CONNECTION = [
   { value: "1_2_npt", label: '1/2" NPT' },
   { value: "1_4_npt", label: '1/4" NPT' },
   { value: "1_8_npt", label: '1/8" NPT' },
@@ -138,31 +138,31 @@ const INSTRUMENTS_CONNECTION = [
 ];
 
 const INSTRUMENTS_CONNECTION_PROCESS = [
-  { value: "camlock", label: "Camlock" },
-  { value: "clamp", label: "Clamp" },
-  { value: "compression", label: "Compression" },
-  { value: "flanged", label: "Flanged" },
-  { value: "quick_connect", label: "Quick Connect" },
-  { value: "soldered", label: "Soldered" },
-  { value: "threaded", label: "Threaded" },
-  { value: "welded", label: "Welded" },
+  { value: "Camlock", label: "Camlock" },
+  { value: "Clamp", label: "Clamp" },
+  { value: "Compression", label: "Compression" },
+  { value: "Flanged", label: "Flanged" },
+  { value: "Quick Connect", label: "Quick Connect" },
+  { value: "Soldered", label: "Soldered" },
+  { value: "Threaded", label: "Threaded" },
+  { value: "Welded", label: "Welded" },
 ];
 
 const INSTRUMENTS_PROTECTION_TYPE = [
-  { value: "ip20", label: "IP20" },
-  { value: "ip44", label: "IP44" },
-  { value: "ip54", label: "IP54" },
-  { value: "ip55", label: "IP55" },
-  { value: "ip65", label: "IP65" },
-  { value: "ip66", label: "IP66" },
-  { value: "ip67", label: "IP67" },
-  { value: "ip68", label: "IP68" },
-  { value: "ip69k", label: "IP69K" },
-  { value: "nema_4", label: "NEMA 4" },
-  { value: "nema_4x", label: "NEMA 4X" },
+  { value: "IP20", label: "IP20" },
+  { value: "IP44", label: "IP44" },
+  { value: "IP54", label: "IP54" },
+  { value: "IP55", label: "IP55" },
+  { value: "IP65", label: "IP65" },
+  { value: "IP66", label: "IP66" },
+  { value: "IP67", label: "IP67" },
+  { value: "IP68", label: "IP68" },
+  { value: "IP69K", label: "IP69K" },
+  { value: "NEMA 4", label: "NEMA 4" },
+  { value: "NEMA 4X", label: "NEMA 4X" },
 ];
 
-const INSTRUMENTS_CERTIFICATIONS = [
+export const INSTRUMENTS_CERTIFICATIONS = [
   { value: "atex", label: "ATEX" },
   { value: "ce", label: "CE" },
   { value: "csa", label: "CSA" },
