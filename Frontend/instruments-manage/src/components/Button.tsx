@@ -10,7 +10,7 @@ interface Props {
 const Button = ({ text, type, handleClick, handleSubmit }: Props) => {
   return (
     <button
-      className="px-1.5 py-0.5 rounded-md bg-secondary text-background-color/80 cursor-pointer"
+      className="px-1.5 py-1 rounded-md bg-secondary text-background-color/80 cursor-pointer"
       type={type}
       onClick={handleClick}
       onSubmit={handleSubmit}
