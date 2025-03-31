@@ -3,7 +3,6 @@ import {
   DepartmentAdapter,
   MunicipalityAdapter,
 } from "@/adapters/location-service.adapter";
-import { LOCATION_SERVICE_URL } from "@/config/env.config";
 import {
   DepartmentServiceDomain,
   MunicipalityServiceDomain,
