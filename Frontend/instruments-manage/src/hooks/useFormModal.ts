@@ -9,6 +9,7 @@ import { useTags } from "./useTags";
 import { useUnitProcess } from "./useUnitProcess";
 import { useCamps } from "./useCamps";
 import { formToInstrumentsDTO } from "@/adapters/instruments.adapter";
+import { formToCampsDTO } from "@/adapters/camp.adapter";
 
 export const useFormModal = () => {
   const [searchParams] = useSearchParams();
@@ -51,7 +52,7 @@ export const useFormModal = () => {
 
   const sendCamp = (formData: FormData): boolean => {
     const names = Object.fromEntries(formData.entries());
-    const camp = names as unknown as CreateCampDTO;
+    const camp = formToCampsDTO(names);
     createCamp(camp);
     return true;
   };

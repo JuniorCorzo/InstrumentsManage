@@ -24,6 +24,7 @@ const Modal = ({ showModal, onClose }: Props) => {
       sendData(formData);
     }
   };
+
   return (
     <dialog
       id="form_modal"

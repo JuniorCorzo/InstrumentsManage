@@ -1,6 +1,15 @@
 import { ModalConfig } from "@/interfaces/modal-config.interface";
+import {
+  DepartmentServiceDomain,
+  MunicipalityServiceDomain,
+} from "@/interfaces/location-service.interface";
+import type { onChangeSelect } from "@/interfaces/modal-config.interface";
 
-export const CAMPS_MODAL_FORM = (): ModalConfig => {
+export const CAMPS_MODAL_FORM = (
+  departments: DepartmentServiceDomain[],
+  municipalities: MunicipalityServiceDomain[],
+  setDepartmentCode: onChangeSelect
+): ModalConfig => {
   return {
     title: "Añadir un Nuevo Campo",
     fields: [
@@ -13,11 +22,28 @@ export const CAMPS_MODAL_FORM = (): ModalConfig => {
         },
       },
       {
-        type: "text",
+        type: "select",
         field: {
-          name: "ubication",
-          label: "Ubicación",
-          placeholder: "municipio, departamento",
+          name: "department",
+          label: "Departamento",
+          placeholder: "Norte de Santander",
+          options: departments.map((department) => ({
+            label: department.departmentName,
+            value: department.departmentName,
+          })),
+          onChange: setDepartmentCode,
+        },
+      },
+      {
+        type: "select",
+        field: {
+          name: "municipality",
+          label: "Municipio",
+          placeholder: "Cúcuta",
+          options: municipalities.map((municipality) => ({
+            label: municipality.municipalityName,
+            value: municipality.municipalityName,
+          })),
         },
       },
       {
@@ -25,7 +51,7 @@ export const CAMPS_MODAL_FORM = (): ModalConfig => {
         field: {
           name: "coordinate",
           label: "Coordenadas",
-          placeholder: "1,0000 1,0000",
+          placeholder: "1,0000, 1,0000",
         },
       },
     ],

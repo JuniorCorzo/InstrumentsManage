@@ -7,6 +7,7 @@ const SelectField = ({
   name,
   options,
   isMulti = false,
+  onChange,
 }: Field) => {
   return (
     <label className="flex gap-3 items-center justify-between">
@@ -14,6 +15,7 @@ const SelectField = ({
       <Select
         isMulti={isMulti}
         className="w-3xs rounded-md"
+        onChange={onChange}
         styles={{
           control: (styles, state) => {
             return {

@@ -13,15 +13,15 @@ export const TABLE_METADATA = Object.freeze({
     urlParam: "brands",
   },
   tags: {
-    titleTable: "Tabla de tags",
+    titleTable: "Tabla de Tags",
     urlParam: "tags",
   },
   unitProcess: {
-    titleTable: "Tabla de unidades de proceso",
+    titleTable: "Tabla de Unidades de Proceso",
     urlParam: "process-units",
   },
   camps: {
-    titleTable: "Tabla de campos",
+    titleTable: "Tabla de Campos",
     urlParam: "camps",
   },
 });
