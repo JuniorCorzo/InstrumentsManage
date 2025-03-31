@@ -19,7 +19,6 @@ const Modal = ({ showModal, onClose }: Props) => {
     event.preventDefault();
     const formData = new window.FormData(event.currentTarget);
 
-    console.table(formData);
     if (sendData) {
       sendData(formData);
     }
@@ -52,15 +51,15 @@ const Modal = ({ showModal, onClose }: Props) => {
       </div>
       <div className="">
         <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-          {modalConfig?.fields.map(({ type, field }) => {
+          {modalConfig?.fields.map(({ type, field }, index) => {
             if (type === "text") {
-              return <TextField {...field} />;
+              return <TextField key={index} {...field} />;
             }
             if (type === "checkbox") {
-              return <Checkbox {...field} />;
+              return <Checkbox key={index} {...field} />;
             }
 
-            return <SelectField {...field} />;
+            return <SelectField key={index} {...field} />;
           })}
           <Button text="Enviar" type="submit" />
         </form>

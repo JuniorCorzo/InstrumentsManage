@@ -8,7 +8,8 @@ import type { onChangeSelect } from "@/interfaces/modal-config.interface";
 export const CAMPS_MODAL_FORM = (
   departments: DepartmentServiceDomain[],
   municipalities: MunicipalityServiceDomain[],
-  setDepartmentCode: onChangeSelect
+  setDepartmentCode: onChangeSelect,
+  disable: boolean
 ): ModalConfig => {
   return {
     title: "Añadir un Nuevo Campo",
@@ -44,6 +45,7 @@ export const CAMPS_MODAL_FORM = (
             label: municipality.municipalityName,
             value: municipality.municipalityName,
           })),
+          disable,
         },
       },
       {

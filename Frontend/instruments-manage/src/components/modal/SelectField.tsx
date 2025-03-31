@@ -1,5 +1,5 @@
 import { Field } from "@/interfaces/modal-config.interface";
-import Select from "react-select";
+import Select, { ActionMeta, MultiValue, SingleValue } from "react-select";
 
 const SelectField = ({
   label,
@@ -7,6 +7,7 @@ const SelectField = ({
   name,
   options,
   isMulti = false,
+  disable,
   onChange,
 }: Field) => {
   return (
@@ -15,7 +16,15 @@ const SelectField = ({
       <Select
         isMulti={isMulti}
         className="w-3xs rounded-md"
-        onChange={onChange}
+        onChange={
+          onChange as (
+            newValue:
+              | SingleValue<{ value: string | undefined; label: string }>
+              | MultiValue<{ value: string | undefined; label: string }>,
+            actionMeta: ActionMeta<{ value: string | undefined; label: string }>
+          ) => void
+        }
+        isDisabled={disable}
         styles={{
           control: (styles, state) => {
             return {

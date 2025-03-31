@@ -18,5 +18,6 @@ export interface Field {
   placeholder?: string;
   options?: { value: string | undefined; label: string }[];
   isMulti?: boolean;
+  disable?: boolean;
   onChange?: onChangeSelect;
 }
