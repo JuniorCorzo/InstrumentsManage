@@ -18,6 +18,12 @@ export const useTagsState = () => {
     } = useQuery<TagsDomain[]>({
       queryKey: ["tags"],
       queryFn: getAllTags,
+      throwOnError: () => {
+        clientQuery.setQueryData(["tags"], () => {
+          return [];
+        });
+        return false;
+      },
     });
     return { tags, isLoading, isError, refetch };
   };

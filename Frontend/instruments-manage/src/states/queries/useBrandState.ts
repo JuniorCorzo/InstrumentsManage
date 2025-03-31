@@ -18,6 +18,12 @@ const useBrandState = () => {
     } = useQuery<BrandDomain[]>({
       queryKey: ["brands"],
       queryFn: getAllBrands,
+      throwOnError: () => {
+        clientQuery.setQueryData(["brands"], () => {
+          return [];
+        });
+        return false;
+      },
     });
 
     return { brands, isLoading, isError, refetch };

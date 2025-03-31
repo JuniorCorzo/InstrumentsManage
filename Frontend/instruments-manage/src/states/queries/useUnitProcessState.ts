@@ -18,6 +18,12 @@ export const useUnitProcessState = () => {
     } = useQuery<UnitProcessDomain[]>({
       queryKey: ["unitProcess"],
       queryFn: getAllUnitProcesses,
+      throwOnError: () => {
+        clientQuery.setQueryData(["unitProcess"], () => {
+          return [];
+        });
+        return false;
+      },
     });
     return { unitProcess, isLoading, isError, refetch };
   };

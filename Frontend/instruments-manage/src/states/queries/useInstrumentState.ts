@@ -18,6 +18,12 @@ export const useInstrumentState = () => {
     } = useQuery<InstrumentDomain[]>({
       queryKey: ["instruments"],
       queryFn: getAllInstruments,
+      throwOnError: () => {
+        clientQuery.setQueryData(["instruments"], () => {
+          return [];
+        });
+        return false;
+      },
     });
 
     return { instruments, isLoading, isError, refetch };

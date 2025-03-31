@@ -18,6 +18,12 @@ export const useCampState = () => {
     } = useQuery<CampDomain[]>({
       queryKey: ["camps"],
       queryFn: getAllCamps,
+      throwOnError: () => {
+        clientQuery.setQueryData(["camps"], () => {
+          return [];
+        });
+        return false;
+      },
     });
     return { camps, isLoading, isError, refetch };
   };
