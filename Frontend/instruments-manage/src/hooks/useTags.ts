@@ -1,6 +1,6 @@
 import { TABLE_METADATA } from "@/const/table-metadata.const";
 import { TableData } from "@/context/TableContext";
-import { useTagsState } from "@/states/queries/tags.query";
+import { useTagsState } from "@/states/queries/useTagState";
 import { useMemo } from "react";
 import { CreateTagDTO, UpdateTagsDTO } from "@/models";
 
@@ -126,8 +126,9 @@ export const useTags = () => {
    */
   const createTag = async (tag: CreateTagDTO) => {
     try {
-      const { mutate } = createTagMutation();
+      const { mutate } = createTagMutation;
       mutate(tag);
+      console.log(tag);
     } catch (error) {
       console.error(error);
     }
@@ -139,7 +140,7 @@ export const useTags = () => {
    */
   const updateTag = async (tag: UpdateTagsDTO) => {
     try {
-      const { mutate } = updateTagMutation();
+      const { mutate } = updateTagMutation;
       mutate(tag);
     } catch (error) {
       console.error(error);
@@ -152,7 +153,7 @@ export const useTags = () => {
    */
   const deleteTag = async (id: string) => {
     try {
-      const { mutate } = deleteTagMutation();
+      const { mutate } = deleteTagMutation;
       mutate(id);
     } catch (error) {
       console.error(error);

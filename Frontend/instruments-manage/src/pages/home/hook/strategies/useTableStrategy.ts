@@ -9,6 +9,7 @@ const useTableStrategy = () => {
   const executeStrategy = () => {
     if (strategy) {
       strategy?.setTableContext();
+      strategy?.setModalForm();
     }
   };
 

@@ -6,11 +6,9 @@ const Home = () => {
   return (
     <Layout>
       <section className="w-full flex flex-col items-center gap-3">
-        <article className="flex flex-col p-10 gap-6">
-          <TableContextProvider>
-            <Table />
-          </TableContextProvider>
-        </article>
+        <TableContextProvider>
+          <Table />
+        </TableContextProvider>
       </section>
     </Layout>
   );

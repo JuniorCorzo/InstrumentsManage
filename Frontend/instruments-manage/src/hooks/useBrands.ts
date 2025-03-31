@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { TableData } from "@/context/TableContext";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
 import { CreateBrandDTO, UpdateBrandDTO } from "@/models";
-import { useBrandState } from "@/states/queries/brands.query";
+import { useBrandState } from "@/states/queries/useBrandState";
 
 /**
  * @fileoverview Custom hook for managing CRUD operations for brands using Redux.
@@ -111,7 +111,7 @@ export const useBrands = () => {
    */
   const createBrand = (brand: CreateBrandDTO) => {
     try {
-      const { mutate } = createBrandMutation();
+      const { mutate } = createBrandMutation;
       mutate(brand);
     } catch (error) {
       console.error("Error creating brand:", error);
@@ -137,7 +137,7 @@ export const useBrands = () => {
    */
   const updateBrand = (brand: UpdateBrandDTO) => {
     try {
-      const { mutate } = updateBrandMutation();
+      const { mutate } = updateBrandMutation;
       mutate(brand);
     } catch (error) {
       console.error("Error updating brand:", error);
@@ -159,7 +159,7 @@ export const useBrands = () => {
    */
   const deleteBrand = async (id: string) => {
     try {
-      const { mutate } = deleteBrandMutation();
+      const { mutate } = deleteBrandMutation;
       mutate(id);
     } catch (error) {
       console.error("Error deleting brand:", error);

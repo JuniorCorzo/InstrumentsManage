@@ -1,12 +1,8 @@
 import { TableData, TableDataContext } from "@/context/TableContext";
 import { useContext } from "react";
-import { TableStrategy } from "../components/table/table-strategy.interface";
 import { useSearchParams } from "react-router";
 
-const useUpdateTable = (
-  formattedData: TableData,
-  isLoading: boolean
-): TableStrategy => {
+const useUpdateTable = (formattedData: TableData, isLoading: boolean) => {
   const { setData, setLoading } = useContext(TableDataContext);
   const [urlParam] = useSearchParams("table");
   const param = urlParam.get("table");

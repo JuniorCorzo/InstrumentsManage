@@ -4,7 +4,7 @@
   },
   "name": "Emerson",
   "website": "www.emerson.com",
-  "countryOrigin": "USA"
+  "country": "USA"
 },
 {
   "_id": {
@@ -12,7 +12,7 @@
   },
   "name": "Krohne",
   "website": "www.krohne.com",
-  "countryOrigin": "Germany"
+  "country": "Germany"
 },
 {
   "_id": {
@@ -20,7 +20,7 @@
   },
   "name": "Siemens",
   "website": "www.siemens.com",
-  "countryOrigin": "Germany"
+  "country": "Germany"
 },
 {
   "_id": {
@@ -28,7 +28,7 @@
   },
   "name": "Endress+Hauser",
   "website": "www.endress.com",
-  "countryOrigin": "Switzerland"
+  "country": "Switzerland"
 },
 {
   "_id": {
@@ -36,7 +36,7 @@
   },
   "name": "Yokogawa",
   "website": "www.yokogawa.com",
-  "countryOrigin": "Japan"
+  "country": "Japan"
 },
 {
   "_id": {
@@ -44,7 +44,7 @@
   },
   "name": "ABB",
   "website": "www.abb.com",
-  "countryOrigin": "Switzerland"
+  "country": "Switzerland"
 },
 {
   "_id": {
@@ -52,7 +52,7 @@
   },
   "name": "Honeywell",
   "website": "www.honeywell.com",
-  "countryOrigin": "USA"
+  "country": "USA"
 },
 {
   "_id": {
@@ -60,7 +60,7 @@
   },
   "name": "Schneider Electric",
   "website": "www.se.com",
-  "countryOrigin": "France"
+  "country": "France"
 },
 {
   "_id": {
@@ -68,7 +68,7 @@
   },
   "name": "Rosemount",
   "website": "www.rosemount.com",
-  "countryOrigin": "USA"
+  "country": "USA"
 },
 {
   "_id": {
@@ -76,5 +76,5 @@
   },
   "name": "Foxboro",
   "website": "www.foxboro.com",
-  "countryOrigin": "USA"
+  "country": "USA"
 }]

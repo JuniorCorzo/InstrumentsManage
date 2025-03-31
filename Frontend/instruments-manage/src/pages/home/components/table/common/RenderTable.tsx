@@ -1,4 +1,4 @@
-import { useParamRoute } from "@/pages/home/hook/useParamRoute";
+import { useParamStrategy } from "@/pages/home/hook/useParamStrategy";
 import { useTableConfig } from "@/pages/home/hook/useTableConfig";
 import { flexRender } from "@tanstack/react-table";
 import Pagination from "./Pagination";
@@ -6,19 +6,14 @@ import { useContext } from "react";
 import { TableDataContext } from "@/context/TableContext";
 
 const RenderRows = () => {
-  useParamRoute();
+  useParamStrategy();
   const { tableData } = useContext(TableDataContext);
 
   const { tableConfig } = useTableConfig();
 
   return (
     <>
-      <div
-        className="border-b border-border-color/75 overflow-auto [&::-webkit-scrollbar]:h-0.5
-                    dark:[&::-webkit-scrollbar-track]:bg-transparent
-                  dark:[&::-webkit-scrollbar-thumb]:bg-secondary/50
-                  [&::-webkit-scrollbar-thumb]:rounded-sm"
-      >
+      <div className="border-b border-border-color/75 overflow-auto scrollbar">
         <table className="w-full table-auto">
           <thead>
             {tableConfig.getHeaderGroups().map((headerGroup) => (

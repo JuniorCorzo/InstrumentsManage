@@ -6,7 +6,7 @@
 import { useMemo } from "react";
 import { TableData } from "@/context/TableContext";
 import { TABLE_METADATA } from "@/const/table-metadata.const";
-import { useUnitProcessState } from "@/states/queries/unit-process.query";
+import { useUnitProcessState } from "@/states/queries/useUnitProcessState";
 import { CreateUnitProcessDTO } from "@/models";
 
 /**
@@ -91,7 +91,7 @@ export const useUnitProcess = () => {
    */
   const createUnitProcess = (unitProcess: CreateUnitProcessDTO) => {
     try {
-      const { mutate } = createUnitProcessMutation();
+      const { mutate } = createUnitProcessMutation;
       mutate(unitProcess);
     } catch (error) {
       console.error("Error creating unit process:", error);
@@ -117,7 +117,7 @@ export const useUnitProcess = () => {
    */
   const updateUnitProcess = async (unitProcess: CreateUnitProcessDTO) => {
     try {
-      const { mutate } = updateUnitProcessMutation();
+      const { mutate } = updateUnitProcessMutation;
       mutate(unitProcess);
     } catch (error) {
       console.error("Error updating unit process:", error);
@@ -139,7 +139,7 @@ export const useUnitProcess = () => {
    */
   const deleteUnitProcess = async (id: string) => {
     try {
-      const { mutate } = deleteUnitProcessMutation();
+      const { mutate } = deleteUnitProcessMutation;
       mutate(id);
     } catch (error) {
       console.error("Error deleting unit process:", error);

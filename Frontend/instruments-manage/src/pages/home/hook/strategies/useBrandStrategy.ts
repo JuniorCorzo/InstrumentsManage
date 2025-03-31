@@ -1,7 +1,8 @@
 import { useBrands } from "@/hooks/useBrands";
 import { TableStrategy } from "../../components/table/table-strategy.interface";
 import useUpdateTable from "../useUpdateTable";
-import { useEffect } from "react";
+import { useUpdateModal } from "../useUpdateModal";
+import { BRANDS_MODAL_FORM } from "@/const/brands.const";
 
 const useBrandStrategy = (): TableStrategy => {
   const { brandsState, getFormatTable } = useBrands();
@@ -10,12 +11,13 @@ const useBrandStrategy = (): TableStrategy => {
     brandsState.isLoading
   );
 
-  useEffect(() => {
-    setTableContext();
-  }, [brandsState.brands.length > 0]);
-
+  const { setModalForm } = useUpdateModal(
+    BRANDS_MODAL_FORM(),
+    getFormatTable.tableMetadata?.urlParam
+  );
   return {
     setTableContext,
+    setModalForm,
   };
 };
 
