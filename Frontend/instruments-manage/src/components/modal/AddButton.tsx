@@ -1,3 +1,4 @@
+import { ToastContainer } from "react-toastify";
 import Button from "../Button";
 import Modal from "./Modal";
 import { useModal } from "@/hooks/useModal";
@@ -15,6 +16,7 @@ const AddButton = () => {
         type="button"
         handleClick={handleClick}
       />
+      <ToastContainer />
       <Modal showModal={showModal} onClose={handleClick} />
     </>
   );
