@@ -7,8 +7,10 @@ import {
 } from "../../services/brands.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { clientQuery } from "../client/client-query";
+import { useToast } from "@/hooks/useToast";
 
 const useBrandState = () => {
+  const { displayToast } = useToast();
   const brandQuery = () => {
     const {
       data: brands = [],
@@ -36,6 +38,17 @@ const useBrandState = () => {
         if (brandState == null) return [newBrand];
         return [...brandState, newBrand];
       });
+
+      displayToast({
+        type: "success",
+        message: "La marca se añadió correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo añadir la marca, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -48,6 +61,18 @@ const useBrandState = () => {
         if (index !== -1) return;
         brandState[index] = updatedBrand;
       });
+
+      displayToast({
+        type: "success",
+        message: "La marca se actualizó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message:
+          "No se pudo actualizar la marca, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -58,6 +83,17 @@ const useBrandState = () => {
         return brandState.filter(({ id }) => {
           id !== idDelete;
         });
+      });
+
+      displayToast({
+        type: "success",
+        message: "La marca se eliminó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo eliminar la marca, vuelve a intentarlo mas tarde.",
+        type: "error",
       });
     },
   });

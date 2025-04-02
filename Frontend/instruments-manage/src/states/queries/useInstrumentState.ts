@@ -7,8 +7,10 @@ import {
 } from "../../services/instruments.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { clientQuery } from "../client/client-query";
+import { useToast } from "@/hooks/useToast";
 
 export const useInstrumentState = () => {
+  const { displayToast } = useToast();
   const instrumentQuery = () => {
     const {
       data: instruments = [],
@@ -39,6 +41,18 @@ export const useInstrumentState = () => {
           return [...instrumentState, newInstrument];
         }
       );
+
+      displayToast({
+        type: "success",
+        message: "El instrumento se añadió correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message:
+          "No se pudo añadir el Instrumento, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -59,6 +73,18 @@ export const useInstrumentState = () => {
           instrumentState[index] = updatedInstrument;
         }
       );
+
+      displayToast({
+        type: "success",
+        message: "El Instrumento se actualizó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message:
+          "No se pudo actualizar el Instrumento, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -72,6 +98,18 @@ export const useInstrumentState = () => {
           return instrumentState.filter(({ id }) => id !== idDelete);
         }
       );
+
+      displayToast({
+        type: "success",
+        message: "El Instrumento se eliminó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message:
+          "No se pudo eliminar el Instrumento, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 

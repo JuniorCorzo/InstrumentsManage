@@ -8,6 +8,8 @@
   --color-border-color: #ffd580;
   --color-fixed-body: #0c1014;
   --color-fixed-header: #ed853b;
+  --color-error: #d95757;
+  --color-success: #aad94c;
 }
 
 @layer utilities {

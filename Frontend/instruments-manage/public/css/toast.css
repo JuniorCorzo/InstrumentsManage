@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+:root {
+  --toastify-color-light: var(--color-fixed-body);
+  --toastify-color-progress-light: var(--color-success)
+  --toastify-toast-width: 350px;
+  --toastify-toast-shadow: 0px 4px 12px #2a3747;
+}
+
+.Toastify__close-button > svg {
+  color: var(--color-text-primary);
+}
