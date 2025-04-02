@@ -7,8 +7,10 @@ import {
 } from "../../services/camp.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { clientQuery } from "../client/client-query";
+import { useToast } from "@/hooks/useToast";
 
 export const useCampState = () => {
+  const { displayToast } = useToast();
   const campQuery = () => {
     const {
       data: camps = [],
@@ -35,6 +37,16 @@ export const useCampState = () => {
         if (campState == null) return [newCamp];
         return [...campState, newCamp];
       });
+      displayToast({
+        type: "success",
+        message: "El campo se añadió correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo añadir el campo, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -50,6 +62,18 @@ export const useCampState = () => {
 
         campState[index] = updatedCamp;
       });
+
+      displayToast({
+        type: "success",
+        message: "El campo se actualizó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message:
+          "No se pudo actualizar el campo, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -59,6 +83,17 @@ export const useCampState = () => {
       clientQuery.setQueryData(["camps"], (campState: CampDomain[]) => {
         if (campState == null) return;
         return campState.filter(({ id }) => id !== idDelete);
+      });
+
+      displayToast({
+        type: "success",
+        message: "El campo se eliminó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo eliminar el campo, vuelve a intentarlo mas tarde.",
+        type: "error",
       });
     },
   });

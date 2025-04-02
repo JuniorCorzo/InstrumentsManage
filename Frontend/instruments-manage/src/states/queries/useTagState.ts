@@ -7,8 +7,10 @@ import {
 } from "../../services/tags.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { clientQuery } from "../client/client-query";
+import { useToast } from "@/hooks/useToast";
 
 export const useTagsState = () => {
+  const { displayToast } = useToast();
   const tagQuery = () => {
     const {
       data: tags = [],
@@ -35,6 +37,17 @@ export const useTagsState = () => {
         if (tagState == null) return [newTag];
         return [...tagState, newTag];
       });
+
+      displayToast({
+        type: "success",
+        message: "El tag se añadió correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo añadir el tag, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -50,6 +63,17 @@ export const useTagsState = () => {
 
         tagState[index] = updatedTag;
       });
+
+      displayToast({
+        type: "success",
+        message: "El tag se actualizó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo actualizar el tag, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -59,6 +83,17 @@ export const useTagsState = () => {
       clientQuery.setQueryData(["tags"], (tagState: TagsDomain[]) => {
         if (tagState == null) return;
         return tagState.filter(({ id }) => id !== idDelete);
+      });
+
+      displayToast({
+        type: "success",
+        message: "El tag se eliminó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo eliminar el tag, vuelve a intentarlo mas tarde.",
+        type: "error",
       });
     },
   });

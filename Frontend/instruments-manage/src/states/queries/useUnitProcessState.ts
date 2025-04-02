@@ -7,8 +7,10 @@ import {
 } from "@/services/unit-process.service";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { clientQuery } from "../client/client-query";
+import { useToast } from "@/hooks/useToast";
 
 export const useUnitProcessState = () => {
+  const { displayToast } = useToast();
   const unitProcessQuery = () => {
     const {
       data: unitProcess = [],
@@ -38,6 +40,17 @@ export const useUnitProcessState = () => {
           return [...unitProcessState, newUnitProcess];
         }
       );
+
+      displayToast({
+        type: "success",
+        message: "El proceso se añadió correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo añadir el proceso, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -58,6 +71,17 @@ export const useUnitProcessState = () => {
           unitProcessState[index] = updatedUnitProcess;
         }
       );
+
+      displayToast({
+        type: "success",
+        message: "El proceso se actualizó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo actualizar el proceso, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
@@ -71,6 +95,17 @@ export const useUnitProcessState = () => {
           return unitProcessState.filter(({ id }) => id !== idDelete);
         }
       );
+
+      displayToast({
+        type: "success",
+        message: "El proceso se eliminó correctamente",
+      });
+    },
+    onError: () => {
+      displayToast({
+        message: "No se pudo eliminar el proceso, vuelve a intentarlo mas tarde.",
+        type: "error",
+      });
     },
   });
 
