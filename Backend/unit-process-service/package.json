@@ -20,9 +20,9 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
-    "@nestjs/common": "^11.0.12",
+    "@nestjs/common": "^11.1.14",
     "@nestjs/core": "^11.0.12",
-    "@nestjs/platform-express": "^11.0.12",
+    "@nestjs/platform-express": "^11.1.14",
     "http-status-codes": "^2.3.0",
     "mongodb": "^6.10.0",
     "reflect-metadata": "^0.2.0",
@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.15.0",
-    "@nestjs/cli": "^10.0.0",
+    "@nestjs/cli": "^11.0.16",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^11.0.12",
     "@types/express": "^5.0.0",
